@@ -9,8 +9,6 @@ services:
 
   mongo:
     image: mongo:latest
-    env_file:
-      - .env
     volumes:
       - mongo_data:/data/db
 
