@@ -1,3 +1,13 @@
+<!-- Suggested use: Capture notes about RFID firmware, hardware specs, and integration points. -->
 # Firmware
 
-This directory will hold firmware references for RFID devices. It is intentionally empty in this scaffold.
+## Overview
+This directory is reserved for firmware references, hardware configuration notes, and embedded build artifacts that support RFID devices.
+
+## Suggested Contents
+- Device setup instructions and pin mappings.
+- Firmware binaries and flashing guides.
+- Status LED behavior and hardware troubleshooting notes.
+
+## Status
+No firmware implementation is included in this scaffold; use this space to document hardware decisions and future firmware work.

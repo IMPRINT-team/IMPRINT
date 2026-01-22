@@ -1,3 +1,4 @@
+<!-- Suggested use: Start here for repository overview, setup steps, and shared workflows. -->
 # IMPRINT
 
 IMPRINT is a distributed RFID activation and interaction platform that treats RFID scans as intentional, authenticated physical inputs. The repository is designed to run inside a consistent VS Code Dev Container.
@@ -10,6 +11,19 @@ IMPRINT is a distributed RFID activation and interaction platform that treats RF
 5. Wait for initialization (npm install runs automatically).
 6. Run `npm run verify` to check database connection.
 7. Run `npm run dev` to start coding.
+
+## Workspace Layout
+- `backend/`: Node.js API service for ingesting scan events and returning status responses.
+- `web-dashboard/`: Vite-powered React UI for real-time visibility.
+- `infra/`: Docker orchestration and networking notes.
+- `setup/`: Bootstrap and connectivity verification scripts.
+- `docs/`: Architecture and onboarding documentation.
+- `firmware/`: Hardware and firmware reference materials.
+- `scripts/`: Repository-level automation scripts.
+
+## Common Commands
+- `npm run dev`: Run backend + web dashboard concurrently.
+- `npm run verify`: Validate database connectivity from inside the dev container.
 
 ## MongoDB Authentication
 The dev container copies `.env.example` to `.env` on first boot. The MongoDB
