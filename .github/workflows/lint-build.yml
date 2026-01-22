@@ -1,0 +1,35 @@
+name: Lint and Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint backend
+        run: npm run lint -w backend
+
+      - name: Lint web dashboard
+        run: npm run lint -w web-dashboard
+
+      - name: Build backend
+        run: npm run build -w backend
+
+      - name: Build web dashboard
+        run: npm run build -w web-dashboard

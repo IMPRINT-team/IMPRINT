@@ -4,6 +4,12 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "node index.js",
+    "lint": "eslint .",
+    "test": "node --test",
+    "build": "node --check index.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
   }
 }
