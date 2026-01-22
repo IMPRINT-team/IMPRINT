@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Structure check
+        run: |
+          test -f AGENTS.md
+          test -f docker-compose.yml
+          test -f setup/bootstrap.sh
+          test -f setup/verify_connections.sh
+
+      - name: Compose config
+        run: docker compose config
+
+      - name: Compose build
+        run: docker compose build
