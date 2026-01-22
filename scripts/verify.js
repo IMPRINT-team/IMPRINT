@@ -1,6 +1,19 @@
 const { MongoClient } = require("mongodb");
+require("dotenv").config();
 
-const uri = "mongodb://mongo:27017";
+const mongoHost = process.env.MONGO_HOST || "mongo";
+const mongoPort = process.env.MONGO_PORT || "27017";
+const mongoUser = process.env.MONGO_INITDB_ROOT_USERNAME;
+const mongoPassword = process.env.MONGO_INITDB_ROOT_PASSWORD;
+
+const authSegment =
+  mongoUser && mongoPassword
+    ? `${encodeURIComponent(mongoUser)}:${encodeURIComponent(
+        mongoPassword
+      )}@`
+    : "";
+const authSource = authSegment ? "?authSource=admin" : "";
+const uri = `mongodb://${authSegment}${mongoHost}:${mongoPort}/${authSource}`;
 
 async function verifyConnection() {
   const client = new MongoClient(uri);
