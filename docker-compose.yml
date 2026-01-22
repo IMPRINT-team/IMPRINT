@@ -1,35 +1,16 @@
 services:
-  mongo:
-    image: mongo:7
-    container_name: imprint-mongo
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-imprint}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-imprint}
+  app:
+    image: mcr.microsoft.com/devcontainers/javascript-node:18
     volumes:
-      - mongo_data:/data/db
-    ports:
-      - "27017:27017"
-
-  backend:
-    build:
-      context: ./backend
-    container_name: imprint-backend
-    restart: unless-stopped
+      - .:/workspace
+    command: sleep infinity
     depends_on:
       - mongo
-    ports:
-      - "8080:8080"
 
-  web-dashboard:
-    build:
-      context: ./web-dashboard
-    container_name: imprint-web-dashboard
-    restart: unless-stopped
-    depends_on:
-      - backend
-    ports:
-      - "3000:3000"
+  mongo:
+    image: mongo:latest
+    volumes:
+      - mongo_data:/data/db
 
 volumes:
   mongo_data:
