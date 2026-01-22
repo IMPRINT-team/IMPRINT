@@ -7,7 +7,6 @@
     "verify": "node scripts/verify.js"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
     "mongodb": "^6.3.0"
   },
   "devDependencies": {
