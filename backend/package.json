@@ -7,9 +7,17 @@
     "dev": "node index.js",
     "lint": "eslint .",
     "test": "node --test",
-    "build": "node --check index.js"
+    "build": "node --check index.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev --name init",
+    "db:verify": "node ../scripts/verify.js",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0"
   },
   "devDependencies": {
-    "eslint": "^8.57.0"
+    "eslint": "^8.57.0",
+    "prisma": "^5.22.0"
   }
 }

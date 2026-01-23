@@ -4,11 +4,14 @@
   "workspaces": ["backend", "web-dashboard"],
   "scripts": {
     "dev": "concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
-    "verify": "node scripts/verify.js"
+    "verify": "node scripts/verify.js",
+    "db:generate": "npm run db:generate -w backend",
+    "db:migrate": "npm run db:migrate -w backend",
+    "db:verify": "node scripts/verify.js",
+    "prisma:studio": "npm run prisma:studio -w backend"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "mongodb": "^6.3.0"
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

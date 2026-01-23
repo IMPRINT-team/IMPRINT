@@ -6,7 +6,7 @@ The infrastructure folder documents Docker orchestration and networking details 
 
 ## Responsibilities
 - Describe container relationships and shared networks.
-- Document MongoDB host expectations (`mongo` within the Docker network).
+- Document PostgreSQL host expectations (`postgres` within the Docker network).
 - Capture deployment or hosting notes as they evolve.
 
 ## Key References

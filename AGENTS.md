@@ -9,7 +9,7 @@ IMPRINT is a distributed platform that treats RFID scans as intentional, authent
 ## Architecture Philosophy
 - **Dev Container:** Development occurs inside a standardized Docker container managed by VS Code.
 - **Monorepo:** Uses NPM Workspaces.
-- **Network:** Services communicate via Docker network (hostname: `mongo`), not localhost.
+- **Network:** Services communicate via Docker network (hostname: `postgres`), not localhost.
 
 ## Ownership Boundaries
 - .devcontainer/: Configuration for the VS Code environment.

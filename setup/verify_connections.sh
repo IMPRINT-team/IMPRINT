@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-services=(mongo backend web-dashboard)
+if [ -f .env ]; then
+  set -a
+  # shellcheck disable=SC1091
+  source .env
+  set +a
+fi
+
+services=(postgres)
 missing=0
 
 echo "Checking running containers..."
@@ -33,9 +40,12 @@ check() {
   fi
 }
 
+postgres_user="${POSTGRES_USER:-imprint}"
+postgres_db="${POSTGRES_DB:-imprint}"
+
 echo "Verifying container connectivity..."
-check "backend can reach mongo" "docker compose exec -T backend sh -c 'nc -z mongo 27017'"
-check "web-dashboard can reach backend" "docker compose exec -T web-dashboard sh -c 'curl -sf http://backend:8080/ >/dev/null'"
+check "postgres is accepting connections" "docker compose exec -T postgres pg_isready -U \"$postgres_user\" -d \"$postgres_db\""
+check "prisma can reach postgres" "npm run verify"
 
 if [ "$failures" -eq 0 ]; then
   echo "All connectivity checks passed."
