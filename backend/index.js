@@ -1,8 +1,9 @@
 const http = require("http");
 const path = require("path");
-const { prisma } = require("./db/prisma");
 
 require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
+
+const { prisma } = require("./db/prisma");
 
 const port = process.env.PORT || 8080;
 
