@@ -5,15 +5,18 @@ services:
       - .:/workspace
     command: sleep infinity
     depends_on:
-      - mongo
+      - postgres
 
-  mongo:
-    image: mongo:latest
+  postgres:
+    image: postgres:16
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-}
+      POSTGRES_USER: ${POSTGRES_USER:-imprint}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-imprint}
+      POSTGRES_DB: ${POSTGRES_DB:-imprint}
+    ports:
+      - "5432:5432"
     volumes:
-      - mongo_data:/data/db
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  mongo_data:
+  postgres_data:

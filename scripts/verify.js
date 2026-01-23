@@ -1,32 +1,19 @@
-const { MongoClient } = require("mongodb");
-require("dotenv").config();
+const path = require("path");
+const { PrismaClient } = require("@prisma/client");
 
-const mongoHost = process.env.MONGO_HOST || "mongo";
-const mongoPort = process.env.MONGO_PORT || "27017";
-const mongoUser = process.env.MONGO_INITDB_ROOT_USERNAME;
-const mongoPassword = process.env.MONGO_INITDB_ROOT_PASSWORD;
+require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
 
-const authSegment =
-  mongoUser && mongoPassword
-    ? `${encodeURIComponent(mongoUser)}:${encodeURIComponent(
-        mongoPassword
-      )}@`
-    : "";
-const authSource = authSegment ? "?authSource=admin" : "";
-const uri = `mongodb://${authSegment}${mongoHost}:${mongoPort}/${authSource}`;
+const prisma = new PrismaClient();
 
 async function verifyConnection() {
-  const client = new MongoClient(uri);
-
   try {
-    await client.connect();
-    await client.db("admin").command({ ping: 1 });
-    console.log("MongoDB connection verified at", uri);
+    await prisma.$queryRaw`SELECT 1`;
+    console.log("PostgreSQL connection verified");
   } catch (error) {
-    console.error("Failed to connect to MongoDB:", error.message);
+    console.error("Failed to connect to PostgreSQL:", error.message);
     process.exitCode = 1;
   } finally {
-    await client.close();
+    await prisma.$disconnect();
   }
 }
 

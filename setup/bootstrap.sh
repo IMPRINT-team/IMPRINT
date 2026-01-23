@@ -6,8 +6,13 @@ if [ ! -f .env ]; then
   echo "Created .env from .env.example"
 fi
 
-docker compose build
+cp .env backend/.env
 
-echo "Bootstrap complete. Next steps:"
-echo "1) docker compose up -d"
-echo "2) ./setup/verify_connections.sh"
+docker compose up -d postgres
+npm install
+
+npm run db:generate -w backend
+npm run db:migrate -w backend
+npm run verify
+
+echo "Bootstrap complete."

@@ -31,12 +31,12 @@ Each scanner provides immediate user feedback via LED indicators (green/red) and
 ## Common Commands
 - `npm run dev`: Run backend + web dashboard concurrently.
 - `npm run verify`: Validate database connectivity from inside the dev container.
+- `npm run db:generate`: Generate Prisma client.
+- `npm run db:migrate`: Run Prisma migrations for the local database.
 
-## MongoDB Authentication
-The dev container copies `.env.example` to `.env` on first boot. The MongoDB
-service in `docker-compose.yml` loads values from `.env`, so setting
-`MONGO_INITDB_ROOT_USERNAME` and `MONGO_INITDB_ROOT_PASSWORD` enables Mongo
-authentication for the local database. If you prefer an unauthenticated local
-Mongo instance, remove those two variables from `.env` (or leave them empty)
-and restart the container. Update `MONGO_HOST` and `MONGO_PORT` in `.env` if
-your database host or port differs from the defaults.
+## PostgreSQL Configuration
+The dev container copies `.env.example` to `.env` on first boot. The PostgreSQL
+service in `docker-compose.yml` loads values from `.env`, and Prisma reads
+`DATABASE_URL` to connect. Update `POSTGRES_USER`, `POSTGRES_PASSWORD`,
+`POSTGRES_DB`, or `DATABASE_URL` in `.env` if your database settings differ
+from the defaults.
