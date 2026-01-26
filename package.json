@@ -1,7 +1,7 @@
 {
   "name": "imprint",
   "private": true,
-  "workspaces": ["backend", "web-dashboard"],
+  "workspaces": ["backend", "web-dashboard", "packages/*"],
   "scripts": {
     "dev": "concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
     "verify": "node scripts/verify.js",
