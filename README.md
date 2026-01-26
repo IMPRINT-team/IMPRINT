@@ -52,6 +52,14 @@ Each scanner provides immediate user feedback via LED indicators (green/red) and
 - `npm run db:generate`: Generate Prisma client.
 - `npm run db:migrate`: Run Prisma migrations for the local database.
 
+## Dependency Management Notes
+This repo uses npm workspaces, which rely on a single root `package-lock.json`.
+Keeping one lockfile is intentional so workspace dependency resolution stays
+consistent across `backend/`, `web-dashboard/`, and `packages/`. To avoid
+workspace lockfile conflicts, always run installs from the repository root
+(`npm install`) and update dependency versions in each package’s
+`package.json` rather than running `npm install` inside a workspace folder.
+
 ## PostgreSQL Configuration
 The dev container copies `.env.example` to `.env` on first boot. The PostgreSQL
 service in `docker-compose.yml` loads values from `.env`, and Prisma reads
