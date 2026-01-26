@@ -4,29 +4,30 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = env("DATABASE_URL")
 }
 
-model Device {
-  id         String   @id @default(uuid()) @db.Uuid
-  deviceId   String   @unique
-  lastSeenAt DateTime?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model Scanner {
+  id          String   @id @default(uuid()) @db.Uuid
+  deviceName  String   @unique
+  location    String
+  status      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   events Event[]
 }
 
 model Event {
-  id         String   @id @default(uuid()) @db.Uuid
-  deviceId   String
-  uid        String
-  eventType  String   @default("scan")
-  occurredAt DateTime @default(now())
+  id          String   @id @default(uuid()) @db.Uuid
+  deviceName  String
+  uid         String
+  eventType   String   @default("scan")
+  occurredAt  DateTime @default(now())
 
-  device Device @relation(fields: [deviceId], references: [deviceId])
+  scanner Scanner @relation(fields: [deviceName], references: [deviceName])
 
   @@index([occurredAt])
-  @@index([deviceId])
+  @@index([deviceName])
   @@index([uid])
 }
