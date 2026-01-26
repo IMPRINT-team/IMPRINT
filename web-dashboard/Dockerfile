@@ -1,7 +1,15 @@
-FROM alpine:3.19
+FROM node:18-alpine
 
-RUN apk add --no-cache curl
+WORKDIR /workspace
 
-WORKDIR /app
+COPY package.json package-lock.json ./
+COPY backend/package.json backend/package.json
+COPY web-dashboard/package.json web-dashboard/package.json
 
-CMD ["sh", "-c", "tail -f /dev/null"]
+RUN npm install
+
+COPY . .
+
+WORKDIR /workspace/web-dashboard
+
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
