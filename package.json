@@ -6,7 +6,7 @@
     "web-dashboard"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
+    "dev": "npm install && concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
     "verify": "node scripts/verify.js",
     "db:generate": "npm run db:generate -w backend",
     "db:migrate": "npm run db:migrate -w backend",
