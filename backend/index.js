@@ -1,6 +1,8 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
+import cors from "cors";
+import homeRouter from "./routes/homeRoutes.js";
 
 dotenv.config({ path: "../.env" });
 
@@ -9,6 +11,7 @@ const prisma = new PrismaClient();
 const port = process.env.PORT || 8080;
 
 app.use(express.json());
+app.use(cors());
 
 async function connectToDatabase() {
   try {
@@ -24,12 +27,4 @@ app.listen(port, () => {
   connectToDatabase();
 });
 
-
-app.get("/", async (req, res) => {
-    try {
-        const scanners = await prisma.scanner.findMany();
-        res.status(200).json(scanners);
-    } catch (err) {
-        res.status(500).json({success: false, error: err})
-    }
-})
+app.use("/", homeRouter);
