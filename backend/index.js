@@ -2,10 +2,15 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import cors from "cors";
 import homeRouter from "./routes/homeRoutes.js";
 =======
 >>>>>>> 7f642ec (Added get all scanners routes)
+=======
+import cors from "cors";
+import homeRouter from "./routes/homeRoutes.js";
+>>>>>>> b65cdbb (Added get all scanner route)
 
 dotenv.config({ path: "../.env" });
 
@@ -15,9 +20,13 @@ const port = process.env.PORT || 8080;
 
 app.use(express.json());
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.use(cors());
 =======
 >>>>>>> 7f642ec (Added get all scanners routes)
+=======
+app.use(cors());
+>>>>>>> b65cdbb (Added get all scanner route)
 
 async function connectToDatabase() {
   try {
@@ -34,6 +43,7 @@ app.listen(port, () => {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.use("/", homeRouter);
 =======
 
@@ -46,3 +56,6 @@ app.get("/", async (req, res) => {
     }
 })
 >>>>>>> 7f642ec (Added get all scanners routes)
+=======
+app.use("/", homeRouter);
+>>>>>>> b65cdbb (Added get all scanner route)
