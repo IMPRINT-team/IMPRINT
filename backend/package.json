@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "test": "node --test",
     "build": "npm install && node --check index.js",
-    "db:init": "node scripts/resolve-user-migration.js && prisma migrate deploy && prisma generate",
+    "db:init": "prisma migrate deploy && prisma generate",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --name init",
     "db:verify": "node ../scripts/verify.js",
