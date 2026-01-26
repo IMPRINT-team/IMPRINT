@@ -9,5 +9,4 @@ This directory is reserved for firmware references, hardware configuration notes
 - Firmware binaries and flashing guides.
 - Status LED behavior and hardware troubleshooting notes.
 
-## Status
-No firmware implementation is included in this scaffold; use this space to document hardware decisions and future firmware work.
+
