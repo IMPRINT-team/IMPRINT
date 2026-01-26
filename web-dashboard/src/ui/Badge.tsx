@@ -12,6 +12,8 @@ const Badge = ({ children, tone = 'cyan' }: BadgeProps) => {
   return (
     <span
       className={`rounded border px-2 py-1 text-[9px] uppercase tracking-[0.2em] ${toneClasses[tone]}`}
+      role="note"
+      aria-label={`Tag: ${children}`}
     >
       {children}
     </span>
