@@ -3,6 +3,7 @@ const path = require("path");
 
 const repoRoot = process.cwd();
 const sourcePath = path.join(repoRoot, ".env");
+const backendEnvPath = path.join(repoRoot, "backend", ".env");
 const prismaEnvPath = path.join(repoRoot, "backend", "prisma", ".env");
 
 const syncBackendEnv = async () => {
@@ -17,9 +18,11 @@ const syncBackendEnv = async () => {
   }
 
   const envContents = await fs.readFile(sourcePath);
+  await fs.writeFile(backendEnvPath, envContents);
   await fs.writeFile(prismaEnvPath, envContents);
-  console.log(`Copied ${sourcePath} to ${prismaEnvPath}.`);
-  await fs.rm(path.join(repoRoot, "backend", ".env"), { force: true });
+  console.log(
+    `Copied ${sourcePath} to ${backendEnvPath} and ${prismaEnvPath}.`
+  );
 };
 
 syncBackendEnv().catch((error) => {
