@@ -25,7 +25,7 @@ const Dashboard = () => {
   const degradedCount = devices.filter((device) => device.status === 'DEGRADED').length
   const deniedCount = events.filter((event) => event.result === 'DENIED').length
   const denialRate = Math.round((deniedCount / events.length) * 100)
-  const lastEvent = events[0]
+  const lastEvent = events[events.length - 1]
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8" data-role="dashboard">
