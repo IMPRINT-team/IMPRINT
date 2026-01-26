@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import CyberCorners from './CyberCorners'
 import SectionHeader from './SectionHeader'
 import { panelBase, panelVariants } from './panelVariants'
+import HeaderButton from './headerButton'
 
 type PanelVariant = keyof typeof panelVariants
 
@@ -42,6 +43,8 @@ const Panel = ({
         </div>
       ) : null}
       {children}
+      <br />
+      <HeaderButton onClick={() => alert('Exporting Data...')}>Export Data to .csv</HeaderButton>
     </section>
   )
 }

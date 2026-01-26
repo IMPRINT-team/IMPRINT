@@ -1,0 +1,10 @@
+{
+  "name": "@vitejs/plugin-react",
+  "version": "4.2.1-local",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  }
+}
