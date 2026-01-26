@@ -1,6 +1,8 @@
 FROM node:18-alpine
 
-WORKDIR /app
+COPY package.json package-lock.json ./
+COPY backend/package.json backend/package.json
+COPY web-dashboard/package.json web-dashboard/package.json
 
 COPY package.json package-lock.json* ./
 RUN npm install
