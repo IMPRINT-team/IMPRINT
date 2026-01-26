@@ -15,6 +15,8 @@ const StatusPill = ({ status }: StatusPillProps) => {
   return (
     <span
       className={`rounded-full border px-2 py-0.5 text-[9px] font-semibold tracking-[0.2em] ${statusPillVariants[variant]}`}
+      role="status"
+      aria-label={`Status: ${status}`}
     >
       {status}
     </span>

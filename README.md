@@ -28,6 +28,24 @@ Each scanner provides immediate user feedback via LED indicators (green/red) and
 - `firmware/`: Hardware and firmware reference materials.
 - `scripts/`: Repository-level automation scripts.
 
+## Repository File Structure
+```
+.
+├── backend/            # Node.js API service (Prisma, routes, services)
+├── web-dashboard/      # React SPA (Vite, Tailwind, UI components)
+│   ├── src/
+│   │   ├── features/   # Feature-level screens and domain modules
+│   │   └── ui/         # Reusable UI primitives and layout pieces
+│   └── public/         # Static assets
+├── packages/           # Shared packages and build tooling
+├── infra/              # Docker orchestration and network notes
+├── setup/              # Bootstrap scripts and connectivity checks
+├── docs/               # Architecture and onboarding documentation
+├── firmware/           # Hardware/firmware references
+├── scripts/            # Repository-level automation
+└── .devcontainer/      # VS Code dev container configuration
+```
+
 ## Common Commands
 - `npm run dev`: Run backend + web dashboard concurrently.
 - `npm run verify`: Validate database connectivity from inside the dev container.
