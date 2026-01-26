@@ -1,11 +1,14 @@
-const http = require("http");
-const path = require("path");
+import express from "express";
+import { PrismaClient } from "@prisma/client";
+import dotenv from "dotenv";
 
-require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
+dotenv.config({ path: "../.env" });
 
-const { prisma } = require("./db/prisma");
-
+const app = express();
+const prisma = new PrismaClient();
 const port = process.env.PORT || 8080;
+
+app.use(express.json());
 
 async function connectToDatabase() {
   try {
@@ -16,12 +19,17 @@ async function connectToDatabase() {
   }
 }
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ status: "ok", service: "imprint-backend" }));
+app.listen(port, () => {
+  console.log(`Backend listening on port ${port}!`);
+  connectToDatabase();
 });
 
-server.listen(port, () => {
-  console.log(`Backend listening on port ${port}`);
-  void connectToDatabase();
-});
+
+app.get("/", async (req, res) => {
+    try {
+        const scanners = await prisma.scanner.findMany();
+        res.status(200).json(scanners);
+    } catch (err) {
+        res.status(500).json({success: false, error: err})
+    }
+})
