@@ -7,7 +7,7 @@
     "dev": "node index.js",
     "lint": "eslint .",
     "test": "node --test",
-    "build": "node --check index.js",
+    "build": "npm install && node --check index.js",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --name init",
     "db:verify": "node ../scripts/verify.js",
