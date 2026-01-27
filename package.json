@@ -6,8 +6,13 @@
     "web-dashboard",
     "packages/*"
   ],
+  "workspaces": [
+    "backend",
+    "web-dashboard",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "npm install && npm run db:init -w backend && concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
+    "dev": "npm install && node scripts/sync-backend-env.cjs && npm run db:init -w backend && concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
     "verify": "node scripts/verify.js",
     "db:generate": "npm run db:generate -w backend",
     "db:migrate": "npm run db:migrate -w backend",
@@ -15,12 +20,8 @@
     "prisma:studio": "npm run prisma:studio -w backend"
   },
   "dependencies": {
-    "@workos-inc/authkit-react": "^0.16.0",
-    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
-    "dotenv": "^16.4.5",
-    "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3"
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

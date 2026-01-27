@@ -11,9 +11,10 @@ model Scanner {
   id          String   @id @default(uuid()) @db.Uuid
   deviceName  String   @unique
   location    String
-  status      Boolean  @default(false)
-  createdAt   DateTime @default(now())
+  status      String   @default("ONLINE")
+  createdAt   DateTime @default(now())    @db.Timestamptz(3)
   updatedAt   DateTime @updatedAt
+  authorization String @default("BASIC")
 
   events Event[]
 }
