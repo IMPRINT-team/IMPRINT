@@ -1,4 +1,5 @@
 import Dashboard from './features/dashboard/Dashboard'
+import cors from "cors";
 
 const App = () => {
   const isPlaygroundRoute = window.location.pathname.startsWith('/playground')
