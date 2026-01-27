@@ -7,6 +7,7 @@ import Panel from '../../ui/Panel'
 import SectionHeader from '../../ui/SectionHeader'
 import StatusPill from '../../ui/StatusPill'
 import { useState, useEffect } from 'react'
+import { useAuth } from '@workos-inc/authkit-react';
 
 const BASE_URL="http://localhost:8080/"
 
@@ -29,6 +30,14 @@ const resultTextStyles: Record<string, string> = {
   DENIED: 'text-magenta',
   FLAGGED: 'text-amber',
 }
+interface Device {
+  id: string;
+  deviceName: string;
+  location: string;
+  status: string;
+  createdAt: string;
+  authorization?: string;
+}
 
 const getDevices = async () => {
   const devices = await fetch(`${BASE_URL}`);
@@ -37,6 +46,8 @@ const getDevices = async () => {
 }
 
 const Dashboard = () => {
+
+  const { user } = useAuth();
 
   const [devices, setDevices] = useState<Device[]>([]);
   useEffect(() => {
@@ -197,9 +208,14 @@ const Dashboard = () => {
           <Panel title="Authorization Manifest" index="06" dataRole="authorization">
             <section className="flex flex-col gap-4" aria-label="Authorization">
               <dl>
-                <dt className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Scrum Master</dt>
-                <dd className="text-slate-100">{auth.scrumMaster}</dd>
+                <dt className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Current Session</dt>
+                <dd className="text-slate-100">
+                  {/* Show email or fallback to 'Unknown' */}
+                  {user?.email ?? 'Unknown User'}
+                </dd>
               </dl>
+
+              {/* Optional: You can keep the team list or make it dynamic later */}
               <div>
                 <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Team</p>
                 <ul className="mt-2 grid gap-2" role="list">

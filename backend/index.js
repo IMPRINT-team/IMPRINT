@@ -2,9 +2,13 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import cors from "cors";
-import homeRouter from "./routes/homeRoutes.js";
 
-dotenv.config({ path: "../.env" });
+// Ensure we load .env from the parent directory
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, "..", ".env") });
 
 const app = express();
 const prisma = new PrismaClient();
@@ -22,9 +26,37 @@ async function connectToDatabase() {
   }
 }
 
+// Routes
+app.get("/devices", async (req, res) => {
+  try {
+    const devices = await prisma.device.findMany();
+    res.json(devices);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch devices" });
+  }
+});
+
+app.get("/events", async (req, res) => {
+  try {
+    const events = await prisma.event.findMany({
+      orderBy: { occurredAt: 'desc' },
+      take: 20
+    });
+    // Map database 'occurredAt' to 'timestamp' string for UI
+    const mappedEvents = events.map(e => ({
+      ...e,
+      timestamp: new Date(e.occurredAt).toLocaleTimeString(),
+      latencyMs: 45 // Dummy value if not in DB
+    }));
+    res.json(mappedEvents);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch events" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Backend listening on port ${port}!`);
   connectToDatabase();
 });
-
-app.use("/", homeRouter);

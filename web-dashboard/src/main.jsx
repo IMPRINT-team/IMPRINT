@@ -1,11 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { AuthKitProvider } from '@workos-inc/authkit-react'
 import App from './App.tsx'
 import './index.css'
 
+const clientId = import.meta.env.VITE_WORKOS_CLIENT_ID;
+
 ReactDOM.createRoot(document.getElementById('root')).render(
-  /* StrictMode is a helper tool that highlights potential problems in your code during development */
   <React.StrictMode>
-    <App />
+    <AuthKitProvider 
+      clientId={clientId}
+      apiHostname="api.workos.com"
+      redirectUri="http://localhost:5173"
+    >
+      <App />
+    </AuthKitProvider>
   </React.StrictMode>,
 )

@@ -1,10 +1,20 @@
-import Dashboard from './features/dashboard/Dashboard'
-import cors from "cors";
+import { useAuth } from '@workos-inc/authkit-react';
+import Dashboard from './features/dashboard/Dashboard';
+import SignIn from './features/dashboard/signIn';
 
 const App = () => {
-  const isPlaygroundRoute = window.location.pathname.startsWith('/playground')
+  const { user, isLoading } = useAuth();
 
-  if (isPlaygroundRoute) {
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-void text-[10px] uppercase tracking-[0.2em] text-slate-500">
+        Verifying Session...
+      </div>
+    );
+  }
+
+  // If we have a user, show the Dashboard
+  if (user) {
     return (
       <div className="min-h-screen bg-void text-slate-300">
         <Dashboard />
@@ -23,4 +33,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App;

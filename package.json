@@ -1,7 +1,11 @@
 {
   "name": "imprint",
   "private": true,
-  "workspaces": ["backend", "web-dashboard", "packages/*"],
+  "workspaces": [
+    "backend",
+    "web-dashboard",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "npm install && npm run db:init -w backend && concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
     "verify": "node scripts/verify.js",
@@ -11,6 +15,7 @@
     "prisma:studio": "npm run prisma:studio -w backend"
   },
   "dependencies": {
+    "@workos-inc/authkit-react": "^0.16.0",
     "cors": "^2.8.6",
     "dotenv": "^16.4.5",
     "express": "^5.2.1"
