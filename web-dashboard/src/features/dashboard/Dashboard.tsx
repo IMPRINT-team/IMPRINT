@@ -1,17 +1,36 @@
-import devices from './fixtures/devices.json'
-import events from './fixtures/events.json'
-import constraints from './fixtures/constraints.json'
-import auth from './fixtures/auth.json'
 import Badge from '../../ui/Badge'
 import Panel from '../../ui/Panel'
 import SectionHeader from '../../ui/SectionHeader'
 import StatusPill from '../../ui/StatusPill'
+import { useEffect, useState } from 'react'
+import constraints from './fixtures/constraints.json'
+import auth from './fixtures/auth.json'
 
+
+interface Device {
+  id: string;        
+  deviceId: string;  
+  name: string;
+  location: string;
+  status: string;
+  lastSeen: string;
+  scanRatePerMin: number;
+}
+
+interface Event {
+  id: string;
+  timestamp: string;
+  deviceId: string;
+  tagUid: string;
+  result: string;
+  latencyMs: number;
+}
 const resultStyles: Record<string, string> = {
   ACCEPTED: 'bg-cyan-500',
   DENIED: 'bg-magenta',
   FLAGGED: 'bg-amber',
 }
+
 
 const resultTextStyles: Record<string, string> = {
   ACCEPTED: 'text-cyan-400',
@@ -20,14 +39,45 @@ const resultTextStyles: Record<string, string> = {
 }
 
 const Dashboard = () => {
-  const deviceMap = new Map(devices.map((device) => [device.id, device]))
+  // [CHANGED] Replaced static data with state
+  const [devices, setDevices] = useState<Device[]>([])
+  const [events, setEvents] = useState<Event[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // [NEW] Fetch data from your backend API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [deviceRes, eventRes] = await Promise.all([
+          fetch('http://localhost:8080/devices'),
+          fetch('http://localhost:8080/events')
+        ])
+        setDevices(await deviceRes.json())
+        setEvents(await eventRes.json())
+      } catch (err) {
+        console.error("Failed to fetch dashboard data:", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
+
+  // CHANGED Map uses 'deviceId' (e.g., 'dv-102') instead of 'id' (UUID)
+  const deviceMap = new Map(devices.map((device) => [device.deviceId, device]))
+  
+  // UNCHANGED LOGIC, BUT USES STATE DATA
   const onlineCount = devices.filter((device) => device.status === 'ONLINE').length
   const degradedCount = devices.filter((device) => device.status === 'DEGRADED').length
   const deniedCount = events.filter((event) => event.result === 'DENIED').length
-  const denialRate = Math.round((deniedCount / events.length) * 100)
-  const lastEvent = events[events.length - 1]
+  const denialRate = events.length > 0 ? Math.round((deniedCount / events.length) * 100) : 0
+  const lastEvent = events[0] // API returns sorted events
 
-  return (
+  // NEW Loading state UI
+  if (loading) return <div className="p-8 text-slate-400">CONNECTING TO IMPRINT NODE...</div>
+
+  return
+  (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8" data-role="dashboard">
       <header className="flex flex-col gap-4 border-b border-cyan-500/30 pb-4 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-col gap-2">
