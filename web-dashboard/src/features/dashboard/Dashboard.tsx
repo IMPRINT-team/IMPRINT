@@ -24,7 +24,6 @@ const resultStyles: Record<string, string> = {
   FLAGGED: 'bg-amber',
 }
 
-
 const resultTextStyles: Record<string, string> = {
   ACCEPTED: 'text-cyan-400',
   DENIED: 'text-magenta',
@@ -61,8 +60,7 @@ const Dashboard = () => {
   const denialRate = events.length > 0 ? Math.round((deniedCount / events.length) * 100) : 0
   const lastEvent = events[0] // API returns sorted events
 
-  return
-  (
+  return (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8" data-role="dashboard">
       <header className="flex flex-col gap-4 border-b border-cyan-500/30 pb-4 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-col gap-2">
