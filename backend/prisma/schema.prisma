@@ -11,8 +11,9 @@ model Scanner {
   id          String   @id @default(uuid()) @db.Uuid
   deviceName  String   @unique
   location    String
-  status      String   @default("ONLINE")
-  createdAt   DateTime @default(now())    @db.Timestamptz(3)
+  accessLevel String   @default("basic")
+  status      Boolean  @default(false)
+  createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   authorization String @default("BASIC")
 
@@ -34,12 +35,11 @@ model Event {
 }
 
 model User {
-  id           String   @id @default(uuid()) @db.Uuid
-  email        String   @unique
-  passwordHash String
-  rfidUid      String   @unique
-  accessLevel  String
-  isRegistered Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id           String    @id @default(uuid())
+  rfidUid      String    @unique
+  email        String?   @unique
+  passwordHash String?
+  accessLevel  String    @default("basic")
+  createdAt    DateTime  @default(now())
+  isRegistered Boolean   @default(false)
 }
