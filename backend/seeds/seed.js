@@ -7,11 +7,13 @@ async function seedDB () {
         data: [
             {
                 deviceName: "North Gate",
-                location: "Building A"
+                location: "Building A",
+                status: "OFFLINE"
             },
             {
                 deviceName: "Lab Door",
-                location: "Room 302"
+                location: "Room 302",
+                status: "DEGRADED"
             },
             {
                 deviceName: "Agile Lab",
@@ -22,4 +24,19 @@ async function seedDB () {
     console.log("Database seeded successfully!")
 }
 
+// TO SEED SCANNER DATABASE WITH NEW INFO WHILE RUNNING
+
+// async function whileActiveSeed() {
+//     await prisma.scanner.create({
+//         data: {
+//                 deviceName: "Bruner Lecture Hall",
+//                 location: "Bruner 119",
+//                 authorization: "ADVANCED"
+//         }
+//     })
+// }
+
+// whileActiveSeed();
+
+// commment out if running whileActiveSeed()
 seedDB();
