@@ -1,4 +1,3 @@
-
 import devices from './fixtures/devices.json'
 import events from './fixtures/events.json'
 import constraints from './fixtures/constraints.json'
@@ -11,11 +10,20 @@ import { useState, useEffect } from 'react'
 
 const BASE_URL="http://localhost:8080/"
 
+interface Event {
+  id: string;
+  timestamp: string;
+  deviceId: string;
+  tagUid: string;
+  result: string;
+  latencyMs: number;
+}
 const resultStyles: Record<string, string> = {
   ACCEPTED: 'bg-cyan-500',
   DENIED: 'bg-magenta',
   FLAGGED: 'bg-amber',
 }
+
 
 const resultTextStyles: Record<string, string> = {
   ACCEPTED: 'text-cyan-400',
@@ -50,10 +58,11 @@ const Dashboard = () => {
   const onlineCount = devices.filter((device) => device.status === 'ONLINE').length
   const degradedCount = devices.filter((device) => device.status === 'DEGRADED').length
   const deniedCount = events.filter((event) => event.result === 'DENIED').length
-  const denialRate = Math.round((deniedCount / events.length) * 100)
-  const lastEvent = events[events.length - 1]
+  const denialRate = events.length > 0 ? Math.round((deniedCount / events.length) * 100) : 0
+  const lastEvent = events[0] // API returns sorted events
 
-  return (
+  return
+  (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8" data-role="dashboard">
       <header className="flex flex-col gap-4 border-b border-cyan-500/30 pb-4 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-col gap-2">
