@@ -32,3 +32,13 @@ model Event {
   @@index([deviceName])
   @@index([uid])
 }
+
+model User {
+  id           String    @id @default(uuid())
+  rfidUid      String    @unique
+  email        String?   @unique
+  passwordHash String?
+  accessLevel  String    @default("basic")
+  createdAt    DateTime  @default(now())
+  isRegistered Boolean   @default(false)
+}
