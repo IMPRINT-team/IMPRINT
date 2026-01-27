@@ -6,6 +6,9 @@ import Badge from '../../ui/Badge'
 import Panel from '../../ui/Panel'
 import SectionHeader from '../../ui/SectionHeader'
 import StatusPill from '../../ui/StatusPill'
+import { useState, useEffect } from 'react'
+
+const BASE_URL="http://localhost:8080/"
 
 const resultStyles: Record<string, string> = {
   ACCEPTED: 'bg-cyan-500',
@@ -19,7 +22,29 @@ const resultTextStyles: Record<string, string> = {
   FLAGGED: 'text-amber',
 }
 
+const getDevices = async () => {
+  const devices = await fetch(`${BASE_URL}`);
+  console.log(devices);
+  return devices;
+}
+
 const Dashboard = () => {
+
+  const [devices, setDevices] = useState<Device[]>([]);
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+          const devicesData = await getDevices();
+          const data = await devicesData.json()
+          setDevices(data);
+      } catch (err) {
+          console.log(err)
+      }
+    };
+  
+    loadData();
+  }, []);
+
   const deviceMap = new Map(devices.map((device) => [device.id, device]))
   const onlineCount = devices.filter((device) => device.status === 'ONLINE').length
   const degradedCount = devices.filter((device) => device.status === 'DEGRADED').length
@@ -76,7 +101,7 @@ const Dashboard = () => {
             </ul>
           </Panel>
 
-          <Panel title="Device Activity" index="02" dataRole="device-table">
+          <Panel title="Devices" index="02" dataRole="device-table">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-[10px] uppercase tracking-[0.2em] text-slate-400">
                 <thead>
@@ -85,19 +110,19 @@ const Dashboard = () => {
                     <th className="py-2 text-slate-500">Location</th>
                     <th className="py-2 text-slate-500">Status</th>
                     <th className="py-2 text-slate-500">Last Seen</th>
-                    <th className="py-2 text-slate-500">Scan Rate</th>
+                    <th className="py-2 text-slate-500">Authorization</th>
                   </tr>
                 </thead>
                 <tbody className="text-slate-200">
                   {devices.map((device) => (
                     <tr key={device.id} className="border-b border-slate-800/70">
-                      <td className="py-2 text-slate-100">{device.name}</td>
+                      <td className="py-2 text-slate-100">{device.deviceName}</td>
                       <td className="py-2">{device.location}</td>
                       <td className="py-2">
                         <StatusPill status={device.status} />
                       </td>
-                      <td className="py-2">{device.lastSeen}</td>
-                      <td className="py-2">{device.scanRatePerMin}/min</td>
+                      <td className="py-2">{device.createdAt}</td>
+                      <td className='py-2'>{device.authorization}</td>
                     </tr>
                   ))}
                 </tbody>

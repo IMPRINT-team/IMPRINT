@@ -1,7 +1,11 @@
 {
   "name": "imprint",
   "private": true,
-  "workspaces": ["backend", "web-dashboard", "packages/*"],
+  "workspaces": [
+    "backend",
+    "web-dashboard",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "npm install && node scripts/sync-backend-env.cjs && npm run db:init -w backend && concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
     "verify": "node scripts/verify.js",
@@ -11,6 +15,7 @@
     "prisma:studio": "npm run prisma:studio -w backend"
   },
   "dependencies": {
+    "cors": "^2.8.6",
     "dotenv": "^16.4.5"
   },
   "devDependencies": {
