@@ -2,6 +2,8 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import cors from "cors";
+import bcrypt from "bcrypt";           //For login
+import jwt from "jsonwebtoken";        // For login
 
 // Ensure we load .env from the parent directory
 import path from "path";
@@ -27,6 +29,34 @@ async function connectToDatabase() {
 }
 
 // Routes
+
+// New Login Route
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // 1. Find user
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return res.status(401).json({ error: "Invalid credentials" });
+
+    // 2. Verify password
+    const valid = await bcrypt.compare(password, user.passwordHash);
+    if (!valid) return res.status(401).json({ error: "Invalid credentials" });
+
+    // 3. Generate Token
+    const token = jwt.sign(
+      { userId: user.id, email: user.email, role: user.accessLevel },
+      JWT_SECRET,
+      { expiresIn: "8h" }
+    );
+
+    res.json({ token, user: { email: user.email, role: user.accessLevel } });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.get("/devices", async (req, res) => {
   try {
     const devices = await prisma.device.findMany();
