@@ -3,7 +3,7 @@ import auth from './fixtures/auth.json'
 import Badge from '../../ui/Badge'
 import Panel from '../../ui/Panel'
 import SectionHeader from '../../ui/SectionHeader'
-import StatusPill from '../../ui/StatusPill'
+import { StatusPill, ResultPill } from '../../ui/StatusPill'
 import { useState, useEffect } from 'react'
 
 const BASE_URL="http://localhost:8080"
@@ -65,7 +65,7 @@ const Dashboard = () => {
   const deviceMap = new Map(devices.map((device) => [device.deviceId, device]))
   const onlineCount = devices.filter((device) => device.status === 'ONLINE').length
   const degradedCount = devices.filter((device) => device.status === 'DEGRADED').length
-  const deniedCount = 3  //events.filter((event) => event.result === 'DENIED').length
+  const deniedCount = events.filter((event) => event.result === 'DENIED').length
   
   const denialRate = Math.round((deniedCount / events.length) * 100)
   
@@ -100,17 +100,21 @@ const Dashboard = () => {
                 const device = deviceMap.get(event.deviceId)
                 return (
                   <li key={event.id}>
-                    <article className="flex flex-col gap-2 border-l border-slate-700 bg-slate-800/20 px-3 py-2 md:flex-row md:items-center md:justify-between">
-                      <header className="flex items-center gap-5">
-                        {/* <span className={`h-2 w-2 rounded-full ${resultStyles[event.result]}`} /> */}
-                        <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400">
-                          {event.occurredAt}
-                        </span>
+                    <article className="flex-row gap-2 border border-slate-700 bg-slate-800/20 px-3 py-2 items-center justify-between">
+                      <header className="sm:flex gap-3 text-[10px] uppercase tracking-[0.2em] items-center justify-between">
+                        <div className="flex items-center justify-left">
+                          <span className={`h-2 w-2 rounded-full ${resultStyles[event.result]}`} />
+                          <span className="text-[10px] ml-2 uppercase tracking-[0.2em] text-slate-400">
+                            {event.occurredAt}
+                          </span>
+                        </div>
                         <span className="text-slate-100">{device?.location ?? "Unknown device"}</span>
-                        <span className="text-slate-100">{device?.specificLocation ?? "Unspecified location"}</span>
+                        <span>
+                          <ResultPill result={event.result} />
+                        </span>
+                        <span className="text-slate-300">UID {event.uid}</span>
                       </header>
                       <footer className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.2em] text-slate-400">
-                        <span className="text-slate-300">UID {event.uid}</span>
                         {/* <span className={resultTextStyles[event.result]}>{event.result}</span> */}
                         {/* <span>{event.latencyMs}ms</span> */}
                       </footer>
