@@ -15,6 +15,7 @@ dotenv.config({ path: path.resolve(__dirname, "..", ".env") });
 const app = express();
 const prisma = new PrismaClient();
 const port = process.env.PORT || 8080;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 app.use(express.json());
 app.use(cors());
@@ -35,6 +36,11 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    if (!JWT_SECRET) {
+      console.error("JWT_SECRET is not configured for login.");
+      return res.status(500).json({ error: "JWT secret is not configured" });
+    }
+
     // 1. Find user
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) return res.status(401).json({ error: "Invalid credentials" });
