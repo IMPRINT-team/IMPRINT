@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
+const BASE_URL = "http://localhost:8080"
 
 async function hashPassword(password) {
     return bcrypt.hash(password, 10);
@@ -64,25 +65,22 @@ export const getScannersByLocation = async (req, res) => {
     }
 }
 
-export const firstTimeScan = async (req, res) => {
-    const { rfidUid } = req.body;
+export const scan = async (req, res) => {
+    const { rfidUid, scannerId } = req.body;
 
-    if(!rfidUid) {
-        return res.status(400).json({success:false, error: "rfidUid is required!"})
+    if(!rfidUid || !scannerId) {
+        return res.status(400).json({success:false, error: "rfidUid and scannerId is required!"})
     }
     
     try {
-        let user = await prisma.user.findUnique({
-            where: { rfidUid},
-        });
+        let event = await prisma.event.create({
+            data: {
+                uid: rfidUid,
+                deviceId: scannerId
+            }
+        })
 
-        if (!user) {
-            user = await prisma.user.create({
-                data: {rfidUid},
-            });
-        }
-
-        res.status(200).json(user)
+        res.status(200).json(event)
     } catch (err) {
         res.status(500).json({success: false, error: err})
     }
@@ -111,6 +109,15 @@ export const setUpUser = async (req, res) => {
             data: {email, passwordHash, isRegistered: true}
         });
         res.status(200).json(user)
+    } catch (err) {
+        res.status(500).json({success: false, error: err})
+    }
+}
+
+export const getEvents = async (req, res) => {
+    try {
+        const events = await prisma.event.findMany();
+        res.status(200).json(events);
     } catch (err) {
         res.status(500).json({success: false, error: err})
     }
