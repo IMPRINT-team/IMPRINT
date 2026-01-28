@@ -39,7 +39,7 @@ model User {
   rfidUid      String    @unique
   email        String?   @unique
   passwordHash String?
-  accessLevel  String    @default("basic")
+  accessLevel  String    @default("BASIC")
   createdAt    DateTime  @default(now())
   isRegistered Boolean   @default(false)
 }
