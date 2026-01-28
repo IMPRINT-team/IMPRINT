@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm install && vite build",
+    "rebuild:reload": "node scripts/rebuild-frontend.js",
     "preview": "vite preview",
     "lint": "eslint .",
     "test": "node --test"
