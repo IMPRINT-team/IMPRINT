@@ -1,3 +1,5 @@
+// run with node backend/seeds/seed.js
+
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -25,13 +27,14 @@ async function seedDB () {
 }
 
 // TO SEED SCANNER DATABASE WITH NEW INFO WHILE RUNNING
+// Also always change this! Scanner names must be unique
 
 // async function whileActiveSeed() {
 //     await prisma.scanner.create({
 //         data: {
-//                 deviceName: "Bruner Lecture Hall",
-//                 location: "Bruner 119",
-//                 authorization: "ADVANCED"
+//                 deviceName: "Foundation Hall",
+//                 location: "Room 237",
+//                 authorization: "ELITE"
 //         }
 //     })
 // }
