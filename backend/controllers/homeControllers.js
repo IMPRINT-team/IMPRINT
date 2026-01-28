@@ -86,15 +86,17 @@ export const scan = async (req, res) => {
     }
 }
 
-export const setUpUser = async (req, res) => {
-    const {rfidUid, email, password} = req.body;
+export const addUser = async (req, res) => {
+    const {email, password} = req.body;
 
-    if(!rfidUid || !email || !password) {
+    if(!email || !password) {
         return res.status(400).json({error: "Missing fields!"});
     }
 
     const existing = await prisma.user.findUnique({
-        where: rfidUid
+        where: {
+            email: email
+        }
     });
 
     if (existing?.isRegistered) {
@@ -104,8 +106,7 @@ export const setUpUser = async (req, res) => {
     const passwordHash = await hashPassword(password);
 
     try {
-        const user = await prisma.user.update({
-            where: {rfidUid},
+        const user = await prisma.user.create({
             data: {email, passwordHash, isRegistered: true}
         });
         res.status(200).json(user)
@@ -120,6 +121,30 @@ export const getEvents = async (req, res) => {
             orderBy: [{occurredAt: 'desc'}, {id: 'asc'}]
         });
         res.status(200).json(events);
+    } catch (err) {
+        res.status(500).json({success: false, error: err})
+    }
+}
+
+export const getUsers = async (req, res) => {
+    try {
+        const users = await prisma.user.findMany();
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json({success: false, error: err})
+    }
+}
+
+
+export const getUserByEmail = async (req, res) => {
+    try {
+        const email = req.params.email;
+        const user = await prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        })
+        res.status(200).json(user)
     } catch (err) {
         res.status(500).json({success: false, error: err})
     }
