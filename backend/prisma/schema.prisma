@@ -8,8 +8,8 @@ datasource db {
 }
 
 model Scanner {
-  id          String   @id @default(uuid()) @db.Uuid
-  deviceName  String   @unique
+  deviceId    String   @id @default(uuid()) @db.Uuid
+  specificLocation  String   @unique
   location    String
   authorization String   @default("BASIC")
   status      String  @default("ONLINE")
@@ -22,15 +22,14 @@ model Scanner {
 
 model Event {
   id          String   @id @default(uuid()) @db.Uuid
-  deviceName  String
+  deviceId    String   @db.Uuid
   uid         String
   eventType   String   @default("scan")
   occurredAt  DateTime @default(now())
 
-  scanner Scanner @relation(fields: [deviceName], references: [deviceName])
+  scanner Scanner @relation(fields: [deviceId], references: [deviceId])
 
   @@index([occurredAt])
-  @@index([deviceName])
   @@index([uid])
 }
 

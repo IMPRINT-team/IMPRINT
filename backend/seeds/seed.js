@@ -8,18 +8,18 @@ async function seedDB () {
     await prisma.scanner.createMany({
         data: [
             {
-                deviceName: "North Gate",
-                location: "Building A",
+                location: "North Gate",
+                specificLocation: "Building A",
                 status: "OFFLINE"
             },
             {
-                deviceName: "Lab Door",
-                location: "Room 302",
+                location: "Lab Door",
+                specificLocation: "Room 302",
                 status: "DEGRADED"
             },
             {
-                deviceName: "Agile Lab",
-                location: "Room 255"
+                location: "Agile Lab",
+                specificLocation: "Room 255"
             }
         ]
     })

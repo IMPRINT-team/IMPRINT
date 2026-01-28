@@ -1,5 +1,3 @@
-import devices from './fixtures/devices.json'
-import events from './fixtures/events.json'
 import constraints from './fixtures/constraints.json'
 import auth from './fixtures/auth.json'
 import Badge from '../../ui/Badge'
@@ -9,16 +7,9 @@ import StatusPill from '../../ui/StatusPill'
 import { useState, useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext.tsx';
 
-const BASE_URL="http://localhost:8080/"
+const BASE_URL="http://localhost:8080"
 
-interface Event {
-  id: string;
-  timestamp: string;
-  deviceId: string;
-  tagUid: string;
-  result: string;
-  latencyMs: number;
-}
+
 const resultStyles: Record<string, string> = {
   ACCEPTED: 'bg-cyan-500',
   DENIED: 'bg-magenta',
@@ -41,14 +32,15 @@ interface Device {
 
 const getDevices = async () => {
   const devices = await fetch(`${BASE_URL}`);
-  console.log(devices);
   return devices;
 }
 
+const getEvents = async () => {
+  const events = await fetch(`${BASE_URL}/event`);
+  return events;
+}
+
 const Dashboard = () => {
-
-  const { user } = useAuth();
-
   const [devices, setDevices] = useState<Device[]>([]);
   useEffect(() => {
     const loadData = async () => {
@@ -59,17 +51,32 @@ const Dashboard = () => {
       } catch (err) {
           console.log(err)
       }
-    };
-  
+    };  
     loadData();
   }, []);
 
-  const deviceMap = new Map(devices.map((device) => [device.id, device]))
+  const [events, setEvents] = useState<Event[]>([]);
+    useEffect(() => {
+      
+      const loadEvents = async () => {
+        
+        try {
+          const eventData = await fetch(`${BASE_URL}/event`);
+          const allEvents = await eventData.json();
+          setEvents(allEvents.events);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      loadEvents();
+    }, []);
+    
+  const deviceMap = new Map(devices.map((device) => [device.deviceId, device]))
   const onlineCount = devices.filter((device) => device.status === 'ONLINE').length
   const degradedCount = devices.filter((device) => device.status === 'DEGRADED').length
-  const deniedCount = events.filter((event) => event.result === 'DENIED').length
-  const denialRate = events.length > 0 ? Math.round((deniedCount / events.length) * 100) : 0
-  const lastEvent = events[0] // API returns sorted events
+  const deniedCount = 3  //events.filter((event) => event.result === 'DENIED').length
+  const denialRate = Math.round((deniedCount / events.length) * 100)
+  const lastEvent = events.length > 0 ? events[events.length - 1] : null;
 
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8" data-role="dashboard">
@@ -101,17 +108,18 @@ const Dashboard = () => {
                 return (
                   <li key={event.id}>
                     <article className="flex flex-col gap-2 border-l border-slate-700 bg-slate-800/20 px-3 py-2 md:flex-row md:items-center md:justify-between">
-                      <header className="flex items-center gap-3">
-                        <span className={`h-2 w-2 rounded-full ${resultStyles[event.result]}`} />
+                      <header className="flex items-center gap-5">
+                        {/* <span className={`h-2 w-2 rounded-full ${resultStyles[event.result]}`} /> */}
                         <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400">
-                          {event.timestamp}
+                          {event.occurredAt}
                         </span>
-                        <span className="text-slate-100">{device?.name ?? 'Unknown Device'}</span>
+                        <span className="text-slate-100">{device?.location ?? "Unknown device"}</span>
+                        <span className="text-slate-100">{device?.specificLocation ?? "Unspecified location"}</span>
                       </header>
                       <footer className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.2em] text-slate-400">
-                        <span className="text-slate-300">UID {event.tagUid}</span>
-                        <span className={resultTextStyles[event.result]}>{event.result}</span>
-                        <span>{event.latencyMs}ms</span>
+                        <span className="text-slate-300">UID {event.uid}</span>
+                        {/* <span className={resultTextStyles[event.result]}>{event.result}</span> */}
+                        {/* <span>{event.latencyMs}ms</span> */}
                       </footer>
                     </article>
                   </li>
@@ -134,9 +142,9 @@ const Dashboard = () => {
                 </thead>
                 <tbody className="text-slate-200">
                   {devices.map((device) => (
-                    <tr key={device.id} className="border-b border-slate-800/70">
-                      <td className="py-2 text-slate-100">{device.deviceName}</td>
-                      <td className="py-2">{device.location}</td>
+                    <tr key={device.deviceId} className="border-b border-slate-800/70">
+                      <td className="py-2 text-slate-100">{device.location}</td>
+                      <td className="py-2">{device.specificLocation}</td>
                       <td className="py-2">
                         <StatusPill status={device.status} />
                       </td>
@@ -190,7 +198,7 @@ const Dashboard = () => {
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Last Event</dt>
-                <dd className="text-slate-200">{lastEvent.timestamp}</dd>
+                <dd className="text-slate-200">{lastEvent?.occurredAt ?? "--"}</dd>
               </div>
             </dl>
           </Panel>
