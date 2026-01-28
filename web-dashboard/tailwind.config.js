@@ -19,6 +19,8 @@ export default {
       },
       boxShadow: {
         glowCyan: "0 0 12px rgba(6,182,212,0.55)",
+        glowAmber: "0 0 12px rgba(245, 158, 11, 0.55)",
+        glowMagenta: "0 0 12px rgba(236, 72, 153, 0.55)"
       },
     },
   },

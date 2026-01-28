@@ -26,6 +26,7 @@ model Event {
   uid         String
   eventType   String   @default("scan")
   occurredAt  DateTime @default(now())
+  result      String   @default("ACCEPTED")
 
   scanner Scanner @relation(fields: [deviceId], references: [deviceId])
 

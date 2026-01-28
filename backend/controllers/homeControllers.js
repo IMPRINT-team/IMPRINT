@@ -66,9 +66,9 @@ export const getScannersByLocation = async (req, res) => {
 }
 
 export const scan = async (req, res) => {
-    const { rfidUid, scannerId } = req.body;
+    const { rfidUid, scannerId, result } = req.body;
 
-    if(!rfidUid || !scannerId) {
+    if(!rfidUid || !scannerId || !result) {
         return res.status(400).json({success:false, error: "rfidUid and scannerId is required!"})
     }
     
@@ -76,10 +76,10 @@ export const scan = async (req, res) => {
         let event = await prisma.event.create({
             data: {
                 uid: rfidUid,
-                deviceId: scannerId
+                deviceId: scannerId,
+                result: result,
             }
         })
-
         res.status(200).json(event)
     } catch (err) {
         res.status(500).json({success: false, error: err})
@@ -116,7 +116,9 @@ export const setUpUser = async (req, res) => {
 
 export const getEvents = async (req, res) => {
     try {
-        const events = await prisma.event.findMany();
+        const events = await prisma.event.findMany({
+            orderBy: [{occurredAt: 'desc'}, {id: 'asc'}]
+        });
         res.status(200).json(events);
     } catch (err) {
         res.status(500).json({success: false, error: err})
