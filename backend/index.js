@@ -74,8 +74,18 @@ app.post("/login", async (req, res) => {
 
 app.get("/devices", async (req, res) => {
   try {
-    const devices = await prisma.device.findMany();
-    res.json(devices);
+    const devices = await prisma.scanner.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    const mappedDevices = devices.map((device) => ({
+      id: device.id,
+      deviceName: device.deviceName,
+      location: device.location,
+      status: device.status ? "ONLINE" : "OFFLINE",
+      createdAt: device.createdAt.toISOString(),
+      authorization: null,
+    }));
+    res.json(mappedDevices);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to fetch devices" });
