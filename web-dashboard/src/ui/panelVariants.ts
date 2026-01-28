@@ -9,9 +9,9 @@ export const panelVariants = {
 }
 
 export const statusPillVariants = {
-  info: 'border-cyan-500/40 text-cyan-400 shadow-glowCyan',
-  warning: 'border-amber/40 text-amber',
-  error: 'border-magenta/40 text-magenta',
+  info: 'border-cyan-500/40 text-cyan-400',
+  warning: 'border-amber/40 text-amber shadow-glowAmber',
+  error: 'border-magenta/40 text-magenta shadow-glowMagenta',
 }
 
 export const sectionHeaderClasses =

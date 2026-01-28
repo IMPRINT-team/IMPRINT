@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import bcrypt from "bcrypt";           //For login
 import jwt from "jsonwebtoken";        // For login
+import homeRouter from "./routes/homeRoutes.js";
 
 // Ensure we load .env from the parent directory
 import path from "path";
@@ -25,6 +26,9 @@ if (!jwtSecret && !isProduction) {
     "JWT_SECRET is not configured; using a development-only fallback."
   );
 }
+
+app.use(express.json());
+app.use(cors());
 
 app.use(express.json());
 app.use(cors());

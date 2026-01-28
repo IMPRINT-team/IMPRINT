@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Event" ADD COLUMN     "result" TEXT NOT NULL DEFAULT 'SUCCESS';

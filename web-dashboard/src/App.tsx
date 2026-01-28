@@ -1,6 +1,7 @@
 import { useAuth } from './context/AuthContext';
 import Dashboard from './features/dashboard/Dashboard';
 import SignIn from './features/dashboard/signIn';
+import cors from "cors";
 
 const App = () => {
   const { user, isLoading } = useAuth();

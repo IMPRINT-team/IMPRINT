@@ -4,7 +4,7 @@
     "name": "North Gate Array",
     "location": "Perimeter A",
     "status": "ONLINE",
-    "lastSeen": "00:00:12",
+    "createdAt": "00:00:12",
     "scanRatePerMin": 38
   },
   {
@@ -12,7 +12,7 @@
     "name": "Research Lab Portal",
     "location": "Lab Sector 3",
     "status": "DEGRADED",
-    "lastSeen": "00:01:42",
+    "createdAt": "00:01:42",
     "scanRatePerMin": 21
   },
   {
@@ -20,7 +20,7 @@
     "name": "Ops Elevator",
     "location": "Core Tower",
     "status": "ONLINE",
-    "lastSeen": "00:00:31",
+    "createdAt": "00:00:31",
     "scanRatePerMin": 12
   },
   {
@@ -28,7 +28,7 @@
     "name": "Cold Storage",
     "location": "Sublevel C",
     "status": "OFFLINE",
-    "lastSeen": "00:12:04",
+    "createdAt": "00:12:04",
     "scanRatePerMin": 0
   },
   {
@@ -36,7 +36,7 @@
     "name": "Dock Intake",
     "location": "Logistics Bay",
     "status": "ONLINE",
-    "lastSeen": "00:00:44",
+    "createdAt": "00:00:44",
     "scanRatePerMin": 54
   },
   {
@@ -44,7 +44,7 @@
     "name": "Atrium West",
     "location": "Visitor Wing",
     "status": "ONLINE",
-    "lastSeen": "00:00:19",
+    "createdAt": "00:00:19",
     "scanRatePerMin": 29
   },
   {
@@ -52,7 +52,7 @@
     "name": "Archive Corridor",
     "location": "Records",
     "status": "DEGRADED",
-    "lastSeen": "00:03:02",
+    "createdAt": "00:03:02",
     "scanRatePerMin": 7
   },
   {
@@ -60,7 +60,7 @@
     "name": "Power Annex",
     "location": "Utility Node",
     "status": "ONLINE",
-    "lastSeen": "00:01:05",
+    "createdAt": "00:01:05",
     "scanRatePerMin": 16
   }
 ]

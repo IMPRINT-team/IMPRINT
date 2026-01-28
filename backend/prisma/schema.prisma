@@ -8,37 +8,37 @@ datasource db {
 }
 
 model Scanner {
-  id          String   @id @default(uuid()) @db.Uuid
-  deviceName  String   @unique
+  deviceId    String   @id @default(uuid()) @db.Uuid
+  specificLocation  String   @unique
   location    String
-  status      Boolean  @default(false)
-  createdAt   DateTime @default(now())
+  status      String   @default("ONLINE")
+  createdAt   DateTime @default(now())    @db.Timestamptz(3)
   updatedAt   DateTime @updatedAt
+  authorization String @default("BASIC")
 
   events Event[]
 }
 
 model Event {
   id          String   @id @default(uuid()) @db.Uuid
-  deviceName  String
+  deviceId    String   @db.Uuid
   uid         String
   eventType   String   @default("scan")
   occurredAt  DateTime @default(now())
+  result      String   @default("ACCEPTED")
 
-  scanner Scanner @relation(fields: [deviceName], references: [deviceName])
+  scanner Scanner @relation(fields: [deviceId], references: [deviceId])
 
   @@index([occurredAt])
-  @@index([deviceName])
   @@index([uid])
 }
 
 model User {
-  id           String   @id @default(uuid()) @db.Uuid
-  email        String   @unique
-  passwordHash String
-  rfidUid      String   @unique
-  accessLevel  String
-  isRegistered Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id           String    @id @default(uuid())
+  rfidUid      String    @unique
+  email        String?   @unique
+  passwordHash String?
+  accessLevel  String    @default("BASIC")
+  createdAt    DateTime  @default(now())
+  isRegistered Boolean   @default(false)
 }
