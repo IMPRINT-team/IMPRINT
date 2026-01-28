@@ -63,7 +63,7 @@ const Dashboard = () => {
         try {
           const eventData = await fetch(`${BASE_URL}/event`);
           const allEvents = await eventData.json();
-          setEvents(allEvents.events);
+          setEvents(allEvents);
         } catch (err) {
           console.log(err);
         }
@@ -75,7 +75,9 @@ const Dashboard = () => {
   const onlineCount = devices.filter((device) => device.status === 'ONLINE').length
   const degradedCount = devices.filter((device) => device.status === 'DEGRADED').length
   const deniedCount = 3  //events.filter((event) => event.result === 'DENIED').length
+  
   const denialRate = Math.round((deniedCount / events.length) * 100)
+  
   const lastEvent = events.length > 0 ? events[events.length - 1] : null;
 
   return (
