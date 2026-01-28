@@ -7,7 +7,7 @@ import Panel from '../../ui/Panel'
 import SectionHeader from '../../ui/SectionHeader'
 import StatusPill from '../../ui/StatusPill'
 import { useState, useEffect } from 'react'
-import { useAuth } from '@workos-inc/authkit-react';
+import { useAuth } from '../../context/AuthContext.tsx';
 
 const BASE_URL="http://localhost:8080/"
 
