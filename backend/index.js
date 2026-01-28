@@ -15,7 +15,16 @@ dotenv.config({ path: path.resolve(__dirname, "..", ".env") });
 const app = express();
 const prisma = new PrismaClient();
 const port = process.env.PORT || 8080;
-const JWT_SECRET = process.env.JWT_SECRET;
+const isProduction =
+  process.env.IMPRINT_ENV === "production" ||
+  process.env.NODE_ENV === "production";
+let jwtSecret = process.env.JWT_SECRET;
+if (!jwtSecret && !isProduction) {
+  jwtSecret = "dev-insecure-secret";
+  console.warn(
+    "JWT_SECRET is not configured; using a development-only fallback."
+  );
+}
 
 app.use(express.json());
 app.use(cors());
@@ -36,7 +45,7 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    if (!JWT_SECRET) {
+    if (!jwtSecret) {
       console.error("JWT_SECRET is not configured for login.");
       return res.status(500).json({ error: "JWT secret is not configured" });
     }
@@ -52,7 +61,7 @@ app.post("/login", async (req, res) => {
     // 3. Generate Token
     const token = jwt.sign(
       { userId: user.id, email: user.email, role: user.accessLevel },
-      JWT_SECRET,
+      jwtSecret,
       { expiresIn: "8h" }
     );
 
