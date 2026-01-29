@@ -104,7 +104,7 @@ const Dashboard = () => {
                       <header className="sm:flex gap-3 text-[10px] uppercase tracking-[0.2em] items-center justify-between">
                         <div className="flex items-center justify-left">
                           <span className={`h-2 w-2 rounded-full ${resultStyles[event.result]}`} />
-                          <span className="text-[10px] ml-2 uppercase tracking-[0.2em] text-slate-400">
+                          <span className="mt-0.5 text-[10px] ml-2 uppercase tracking-[0.2em] text-slate-400">
                             {event.occurredAt}
                           </span>
                         </div>
