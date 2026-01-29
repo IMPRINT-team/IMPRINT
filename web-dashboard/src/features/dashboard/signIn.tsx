@@ -14,7 +14,8 @@ const SignIn = () => {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:8080/login', {
+      // CHANGED: Using relative path for proxy
+      const res = await fetch('/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),

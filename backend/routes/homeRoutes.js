@@ -1,5 +1,17 @@
 import express from "express";
-import { getScannerById, getScannersByName, getScanners, getScannersByLocation, scan, addUser, getEvents, getUsers, getUserByEmail } from "../controllers/homeControllers.js";
+// 1. Add 'login' to the imports
+import { 
+    getScannerById, 
+    getScannersByName, 
+    getScanners, 
+    getScannersByLocation, 
+    scan, 
+    addUser, 
+    getEvents, 
+    getUsers, 
+    getUserByEmail,
+    login // New
+} from "../controllers/homeControllers.js";
 
 const homeRouter = express.Router();
 
@@ -9,7 +21,8 @@ homeRouter.get("/search/id/:id", getScannerById);
 homeRouter.get("/search/location/:location", getScannersByLocation);
 homeRouter.get("/event", getEvents)
 homeRouter.post("/event/scan", scan);
-homeRouter.post("/user/login", addUser);
+homeRouter.post("/login", login); //Updated
+homeRouter.post("/user/register", addUser);// New
 homeRouter.get("/user", getUsers)
 homeRouter.get("/user/:email", getUserByEmail)
 
