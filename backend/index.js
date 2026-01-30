@@ -8,8 +8,6 @@ dotenv.config({ path: "../.env" });
 
 const app = express();
 const prisma = new PrismaClient();
-const app = express();
-const prisma = new PrismaClient();
 const port = process.env.PORT || 8080;
 
 app.use(express.json());

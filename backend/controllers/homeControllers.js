@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
-const BASE_URL = "http://localhost:8080"
 
 async function hashPassword(password) {
     return bcrypt.hash(password, 10);
@@ -179,6 +178,7 @@ export const login = async (req, res) => {
 
         // 3. Return Success
         const { passwordHash, ...userData } = user;
+        void passwordHash;
         res.status(200).json({ 
             success: true, 
             user: userData,
