@@ -4,17 +4,6 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors: {
-        void: "#0F172A",
-        bureau: "#1E293B",
-        cyan: {
-          400: "#22D3EE",
-          500: "#06B6D4",
-          900: "#164E63",
-        },
-        amber: "#F59E0B",
-        magenta: "#EC4899",
-      },
       fontFamily: {
         mono: ["JetBrains Mono", "monospace"],
         serif: ["Merriweather", "serif"],
@@ -27,4 +16,23 @@ export default {
     },
   },
   plugins: [daisyui],
+  daisyui: {
+    themes: [
+      "pastel",
+      "retro",
+      "coffee",
+      "forest",
+      "cyberpunk",
+      "synthwave",
+      "luxury",
+      "autumn",
+      "valentine",
+      "aqua",
+      "business",
+      "night",
+      "dracula",
+      "light",
+      "dark"
+    ]
+  }
 }

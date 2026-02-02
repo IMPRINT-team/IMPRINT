@@ -5,7 +5,8 @@ import HeroPanel from "../components/dashboard/HeroPanel.jsx"
 import NavBar from "../components/dashboard/NavBar.jsx"
 
 const Dashboard = () => (
-  <div className="min-h-screen grid-rows-12 bg-void px-6 py-6 text-slate-300 lg:h-svh">
+  <>
+  <div className="min-h-screen bg-base-100 grid-rows-12 px-6 py-6 text-base-content ring-4 ring-primary lg:h-svh">
     <div className="flex h-full flex-col">
       <header className="lg:h-[12vh]">
         <NavBar />
@@ -24,6 +25,8 @@ const Dashboard = () => (
       </main>
     </div>
   </div>
+  </>
 )
 
 export default Dashboard
+

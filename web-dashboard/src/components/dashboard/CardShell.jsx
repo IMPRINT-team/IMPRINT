@@ -2,7 +2,7 @@ import React from "react"
 
 const CardShell = ({ title, actions, className = "", children }) => (
   <div
-    className={`card border border-base-300/50 rounded-3xl bg-base-100/80 shadow-sm ${className}`}
+    className={`card border border-primary rounded-3xl bg-base-100 shadow-sm ${className}`}
   >
     <div className="card-body gap-4">
       {(title || actions) && (
