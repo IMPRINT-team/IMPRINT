@@ -1,4 +1,4 @@
-
+const BASE_URL = "http://localhost:5173/"
 
 const NavBar = () => {
   return (
@@ -8,7 +8,7 @@ const NavBar = () => {
         <a href="">Scanners</a>
         <a href="">Events</a>
         <a href="">Users</a>
-        <a href="">Login</a>
+        <a href={BASE_URL + "login"}>Login</a>
       </div>
     </div>
   );

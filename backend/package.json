@@ -16,7 +16,10 @@
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
+<<<<<<< HEAD
     "bcrypt": "^6.0.0",
+=======
+>>>>>>> 06f171f (Run npm install before dev)
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
