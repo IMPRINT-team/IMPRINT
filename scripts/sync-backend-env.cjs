@@ -3,7 +3,6 @@ const path = require("path");
 
 const repoRoot = process.cwd();
 const sourcePath = path.join(repoRoot, ".env");
-const backendEnvPath = path.join(repoRoot, "backend", ".env");
 const prismaEnvPath = path.join(repoRoot, "backend", "prisma", ".env");
 
 const syncBackendEnv = async () => {

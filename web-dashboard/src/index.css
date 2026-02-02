@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply bg-void text-slate-300 font-mono antialiased text-[11px] leading-[1.35];
+    @apply bg-void text-slate-300 font-mono antialiased;
   }
 }
