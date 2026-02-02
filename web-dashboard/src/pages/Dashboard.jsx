@@ -5,8 +5,8 @@ import HeroPanel from "../components/dashboard/HeroPanel.jsx"
 import NavBar from "../components/dashboard/NavBar.jsx"
 
 const Dashboard = () => (
-  <div className="min-h-screen bg-void px-6 py-6 text-slate-300 lg:h-svh">
-    <div className="flex h-full flex-col gap-6">
+  <div className="min-h-screen grid-rows-12 bg-void px-6 pt-6 text-slate-300 lg:h-svh">
+    <div className="flex h-full flex-col">
       <header className="lg:h-[12vh]">
         <NavBar />
       </header>
