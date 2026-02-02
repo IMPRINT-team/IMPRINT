@@ -6,7 +6,11 @@
     "web-dashboard"
   ],
   "scripts": {
+<<<<<<< HEAD
     "dev": "npm install && node scripts/sync-backend-env.cjs && npm run db:init -w backend && concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
+=======
+    "dev": "npm install && concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
+>>>>>>> 06f171f (Run npm install before dev)
     "verify": "node scripts/verify.js",
     "db:generate": "npm run db:generate -w backend",
     "db:migrate": "npm run db:migrate -w backend",
