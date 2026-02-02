@@ -8,10 +8,6 @@ async function hashPassword(password) {
     return bcrypt.hash(password, 10);
 }
 
-async function hashPassword(password) {
-    return bcrypt.hash(password, 10);
-}
-
 export const getScanners = async (req, res) => {
     try {
         const scanners = await prisma.scanner.findMany();
@@ -90,28 +86,17 @@ export const scan = async (req, res) => {
     }
 }
 
-<<<<<<< HEAD
-export const setUpUser = async (req, res) => {
-    const {rfidUid, email, password} = req.body;
-
-    if(!rfidUid || !email || !password) {
-=======
 export const addUser = async (req, res) => {
     const {email, password} = req.body;
 
     if(!email || !password) {
->>>>>>> b76e79db546e653973b22d520a6e828a7f2e05a0
         return res.status(400).json({error: "Missing fields!"});
     }
 
     const existing = await prisma.user.findUnique({
-<<<<<<< HEAD
-        where: rfidUid
-=======
         where: {
             email: email
         }
->>>>>>> b76e79db546e653973b22d520a6e828a7f2e05a0
     });
 
     if (existing?.isRegistered) {
@@ -121,12 +106,7 @@ export const addUser = async (req, res) => {
     const passwordHash = await hashPassword(password);
 
     try {
-<<<<<<< HEAD
-        const user = await prisma.user.update({
-            where: {rfidUid},
-=======
         const user = await prisma.user.create({
->>>>>>> b76e79db546e653973b22d520a6e828a7f2e05a0
             data: {email, passwordHash, isRegistered: true}
         });
         res.status(200).json(user)
@@ -144,10 +124,8 @@ export const getEvents = async (req, res) => {
     } catch (err) {
         res.status(500).json({success: false, error: err})
     }
-<<<<<<< HEAD
 }
-=======
-}
+
 
 export const getUsers = async (req, res) => {
     try {
@@ -214,4 +192,3 @@ export const login = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 }
->>>>>>> b76e79db546e653973b22d520a6e828a7f2e05a0

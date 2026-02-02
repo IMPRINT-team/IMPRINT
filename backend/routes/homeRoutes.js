@@ -1,5 +1,4 @@
 import express from "express";
-import { getScannerById, getScannersByName, getScanners, getScannersByLocation, scan, setUpUser, getEvents } from "../controllers/homeControllers.js";
 // 1. Add 'login' to the imports
 import { 
     getScannerById, 
