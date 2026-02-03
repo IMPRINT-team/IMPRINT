@@ -2,8 +2,6 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import cors from "cors";
-import bcrypt from "bcrypt";           //For login
-import jwt from "jsonwebtoken";        // For login
 import homeRouter from "./routes/homeRoutes.js";
 
 
