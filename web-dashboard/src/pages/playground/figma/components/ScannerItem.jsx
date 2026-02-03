@@ -1,6 +1,11 @@
-const ScannerItem = ({ scanner }) => {
+const ScannerItem = ({ scanner, index }) => {
+  const topOffset = 73 + index * 40;
+
   return (
-    <article className="absolute top-[73px] left-[19px] w-[412px] h-[30px]">
+    <article
+      className="absolute left-[19px] w-[412px] h-[30px]"
+      style={{ top: `${topOffset}px` }}
+    >
       <img
         className="absolute top-6 left-[121px] w-[285px] h-[3px]"
         alt=""

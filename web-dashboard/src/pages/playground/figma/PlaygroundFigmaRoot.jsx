@@ -57,8 +57,8 @@ const PlaygroundFigmaRoot = () => {
       >
         <div className="absolute top-px left-0 w-[427px] h-[292px] bg-slate-800 rounded-lg border-2 border-solid border-cyan-900" />
 
-        {events.map((event) => (
-          <EventItem key={event.id} event={event} />
+        {events.map((event, index) => (
+          <EventItem key={event.id} event={event} index={index} />
         ))}
 
         <img
@@ -94,8 +94,8 @@ const PlaygroundFigmaRoot = () => {
       >
         <div className="absolute top-0 left-0 w-[427px] h-[652px] rounded-lg border-2 border-solid border-cyan-900 [background:radial-gradient(50%_50%_at_50%_50%,rgba(30,41,59,1)_0%,rgba(15,23,42,1)_100%)]" />
 
-        {scanners.map((scanner) => (
-          <ScannerItem key={scanner.id} scanner={scanner} />
+        {scanners.map((scanner, index) => (
+          <ScannerItem key={scanner.id} scanner={scanner} index={index} />
         ))}
 
         <h2

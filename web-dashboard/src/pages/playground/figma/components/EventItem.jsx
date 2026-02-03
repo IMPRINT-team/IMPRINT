@@ -1,6 +1,11 @@
-const EventItem = ({ event }) => {
+const EventItem = ({ event, index }) => {
+  const topOffset = 67 + index * 24;
+
   return (
-    <div className="absolute top-[67px] left-4 w-[390px] h-4 flex">
+    <div
+      className="absolute left-4 w-[390px] h-4 flex"
+      style={{ top: `${topOffset}px` }}
+    >
       <div
         className="w-4 h-4 bg-cyan-500 rounded-[13px] border-2 border-solid"
         role="status"
