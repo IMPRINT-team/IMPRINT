@@ -10,6 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const prismaBinary = path.resolve(__dirname, "..", "node_modules", ".bin", "prisma");
 const migrationsDir = path.resolve(__dirname, "..", "prisma", "migrations");
+const databaseUrl = process.env.DATABASE_URL;
 
 async function fetchFailedMigrations() {
   try {
@@ -110,6 +111,11 @@ async function isMigrationApplied(migrationName) {
 }
 
 async function run() {
+  if (!databaseUrl) {
+    console.warn("DATABASE_URL is not set; skipping migration resolution.");
+    return;
+  }
+
   const failedMigrations = await fetchFailedMigrations();
 
   if (failedMigrations.length === 0) {
