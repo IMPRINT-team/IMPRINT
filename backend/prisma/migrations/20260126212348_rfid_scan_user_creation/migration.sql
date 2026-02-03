@@ -1,8 +1,8 @@
 -- AlterTable
-ALTER TABLE "Scanner" ADD COLUMN     "accessLevel" TEXT NOT NULL DEFAULT 'basic';
+ALTER TABLE "Scanner" ADD COLUMN IF NOT EXISTS     "accessLevel" TEXT NOT NULL DEFAULT 'basic';
 
 -- CreateTable
-CREATE TABLE "User" (
+CREATE TABLE IF NOT EXISTS "User" (
     "id" TEXT NOT NULL,
     "rfidUid" TEXT NOT NULL,
     "email" TEXT,
@@ -14,7 +14,7 @@ CREATE TABLE "User" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_rfidUid_key" ON "User"("rfidUid");
+CREATE UNIQUE INDEX IF NOT EXISTS "User_rfidUid_key" ON "User"("rfidUid");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX IF NOT EXISTS "User_email_key" ON "User"("email");
