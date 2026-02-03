@@ -61,7 +61,29 @@ function parseMigrationChecks(sql) {
 
   const addColumnMatches = sql.matchAll(/ALTER TABLE\s+"([^"]+)"\s+ADD COLUMN\s+"([^"]+)"/gi);
   for (const match of addColumnMatches) {
-    checks.push({ type: "column", table: match[1], column: match[2] });
+    checks.push({ type: "column", table: match[1], column: match[2], exists: true });
+  }
+
+  const alterColumnMatches = sql.matchAll(
+    /ALTER TABLE\s+"([^"]+)"\s+ALTER COLUMN\s+"([^"]+)"/gi
+  );
+  for (const match of alterColumnMatches) {
+    checks.push({ type: "column", table: match[1], column: match[2], exists: true });
+  }
+
+  const dropColumnMatches = sql.matchAll(/ALTER TABLE\s+"([^"]+)"\s+DROP COLUMN\s+"([^"]+)"/gi);
+  for (const match of dropColumnMatches) {
+    checks.push({ type: "column", table: match[1], column: match[2], exists: false });
+  }
+
+  const createIndexMatches = sql.matchAll(/CREATE INDEX\s+"([^"]+)"/gi);
+  for (const match of createIndexMatches) {
+    checks.push({ type: "index", index: match[1], exists: true });
+  }
+
+  const dropIndexMatches = sql.matchAll(/DROP INDEX\s+"([^"]+)"/gi);
+  for (const match of dropIndexMatches) {
+    checks.push({ type: "index", index: match[1], exists: false });
   }
 
   return checks;
@@ -77,7 +99,7 @@ async function isMigrationApplied(migrationName) {
   const checks = parseMigrationChecks(sql);
 
   if (checks.length === 0) {
-    return false;
+    return null;
   }
 
   for (const check of checks) {
@@ -101,7 +123,26 @@ async function isMigrationApplied(migrationName) {
       `;
       const columnName = Array.isArray(result) ? result[0]?.column_name : null;
 
-      if (!columnName) {
+      if (check.exists && !columnName) {
+        return false;
+      }
+      if (!check.exists && columnName) {
+        return false;
+      }
+    }
+
+    if (check.type === "index") {
+      const result = await prisma.$queryRaw`
+        SELECT indexname
+        FROM pg_indexes
+        WHERE indexname = ${check.index}
+      `;
+      const indexName = Array.isArray(result) ? result[0]?.indexname : null;
+
+      if (check.exists && !indexName) {
+        return false;
+      }
+      if (!check.exists && indexName) {
         return false;
       }
     }
@@ -124,6 +165,12 @@ async function run() {
 
   for (const migrationName of failedMigrations) {
     const shouldApply = await isMigrationApplied(migrationName);
+    if (shouldApply === null) {
+      console.warn(
+        `Skipping migration ${migrationName}; unable to infer applied state from migration.sql.`
+      );
+      continue;
+    }
     const resolveMode = shouldApply ? "--applied" : "--rolled-back";
 
     console.warn(`Resolving failed migration ${migrationName} with ${resolveMode}.`);
