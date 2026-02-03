@@ -35,6 +35,10 @@ async function run() {
     return;
   }
 
+  console.warn(
+    `User table already exists; resolving ${migrationName} as applied to clean up migration state.`
+  );
+
   const result = spawnSync(prismaBinary, ["migrate", "resolve", "--applied", migrationName], {
     stdio: "inherit",
   });

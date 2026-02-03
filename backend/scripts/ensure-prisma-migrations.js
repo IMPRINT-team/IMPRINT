@@ -54,12 +54,14 @@ async function fetchMigrationSql(migrationName) {
 function parseMigrationChecks(sql) {
   const checks = [];
 
-  const createTableMatches = sql.matchAll(/CREATE TABLE\s+"([^"]+)"/gi);
+  const createTableMatches = sql.matchAll(/CREATE TABLE\s+(?:IF NOT EXISTS\s+)?"([^"]+)"/gi);
   for (const match of createTableMatches) {
     checks.push({ type: "table", table: match[1] });
   }
 
-  const addColumnMatches = sql.matchAll(/ALTER TABLE\s+"([^"]+)"\s+ADD COLUMN\s+"([^"]+)"/gi);
+  const addColumnMatches = sql.matchAll(
+    /ALTER TABLE\s+"([^"]+)"\s+ADD COLUMN\s+(?:IF NOT EXISTS\s+)?"([^"]+)"/gi
+  );
   for (const match of addColumnMatches) {
     checks.push({ type: "column", table: match[1], column: match[2], exists: true });
   }
@@ -76,7 +78,7 @@ function parseMigrationChecks(sql) {
     checks.push({ type: "column", table: match[1], column: match[2], exists: false });
   }
 
-  const createIndexMatches = sql.matchAll(/CREATE INDEX\s+"([^"]+)"/gi);
+  const createIndexMatches = sql.matchAll(/CREATE INDEX\s+(?:IF NOT EXISTS\s+)?"([^"]+)"/gi);
   for (const match of createIndexMatches) {
     checks.push({ type: "index", index: match[1], exists: true });
   }
@@ -173,7 +175,13 @@ async function run() {
     }
     const resolveMode = shouldApply ? "--applied" : "--rolled-back";
 
-    console.warn(`Resolving failed migration ${migrationName} with ${resolveMode}.`);
+    if (shouldApply) {
+      console.warn(
+        `Migration ${migrationName} changes already exist. Resolving with ${resolveMode}.`
+      );
+    } else {
+      console.warn(`Resolving failed migration ${migrationName} with ${resolveMode}.`);
+    }
 
     const result = spawnSync(
       prismaBinary,
