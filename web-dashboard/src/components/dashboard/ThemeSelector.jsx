@@ -6,7 +6,7 @@ function ThemeSelector () {
     const {theme, setTheme} = useThemeStore();
     return (
         <div className="dropdown dropdown-end z-50">
-            <button className="btn btn-ghost">
+            <button className="btn btn-circle btn-ghost border border-primary">
                 <PaletteIcon className="size-5" />
             </button>
             <div tabIndex={0} className="dropdown-content mt-2 p-1 shadow-2xl bg-base-200 backdrop-blur-lg">

@@ -1,6 +1,6 @@
 import React from "react"
 
-const ImprintLogo = ({ width = 84, height = 84, className = "", ...props }) => (
+const ImprintLogo = ({ width, height, className = "", ...props }) => (
   <svg
     width={width}
     height={height}
