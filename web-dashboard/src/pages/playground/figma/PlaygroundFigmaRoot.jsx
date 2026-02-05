@@ -27,12 +27,12 @@ const PlaygroundFigmaRoot = () => {
   return (
     <div className="bg-slate-900 overflow-hidden w-full min-w-[1440px] min-h-[1024px] relative">
       <section
-        className="absolute top-[752px] left-[5px] w-[997px] h-[266px] rounded-lg border-2 border-solid border-cyan-900 [background:radial-gradient(50%_50%_at_50%_50%,rgba(30,41,59,1)_0%,rgba(15,23,42,1)_100%)]"
+        className="absolute top-[752px] left-[5px] w-[997px] h-[266px] rounded-lg border-2 border-solid border-cyan-900 bg-gradient-to-br from-slate-800 to-slate-900"
         aria-label="Bottom panel"
       />
 
       <header className="absolute top-0 left-0 w-[1440px] h-[88px]">
-        <div className="absolute -top-0.5 -left-0.5 w-[1444px] h-[92px] rounded-sm border-2 border-solid border-cyan-900 bg-[linear-gradient(360deg,rgba(30,41,59,1)_0%,rgba(82,112,161,1)_100%)]" />
+        <div className="absolute -top-0.5 -left-0.5 w-[1444px] h-[92px] rounded-sm border-2 border-solid border-cyan-900 bg-gradient-to-b from-slate-800 to-slate-500" />
 
         <div
           className="absolute top-[11px] left-3.5 w-[66px] h-[66px] bg-cyan-900 rounded-[33px]"
@@ -42,7 +42,7 @@ const PlaygroundFigmaRoot = () => {
       </header>
 
       <main
-        className="absolute top-[94px] left-[5px] w-[997px] h-[652px] flex items-center justify-center rounded-lg border-2 border-solid border-cyan-900 [background:radial-gradient(50%_50%_at_50%_50%,rgba(30,41,59,1)_0%,rgba(15,23,42,1)_100%)]"
+        className="absolute top-[94px] left-[5px] w-[997px] h-[652px] flex items-center justify-center rounded-lg border-2 border-solid border-cyan-900 bg-gradient-to-br from-slate-800 to-slate-900"
         aria-label="Main display area"
       >
         <div
@@ -69,7 +69,7 @@ const PlaygroundFigmaRoot = () => {
         />
 
         <div
-          className="absolute top-[93px] left-[3px] w-[422px] h-[179px] bg-[linear-gradient(180deg,rgba(30,41,59,0)_0%,rgba(15,23,42,1)_100%)]"
+          className="absolute top-[93px] left-[3px] w-[422px] h-[179px] bg-gradient-to-b from-slate-800/0 to-slate-900"
           role="presentation"
         />
 
@@ -92,7 +92,7 @@ const PlaygroundFigmaRoot = () => {
         className="absolute top-[94px] left-[1008px] w-[429px] h-[652px]"
         aria-labelledby="scanners-heading"
       >
-        <div className="absolute top-0 left-0 w-[427px] h-[652px] rounded-lg border-2 border-solid border-cyan-900 [background:radial-gradient(50%_50%_at_50%_50%,rgba(30,41,59,1)_0%,rgba(15,23,42,1)_100%)]" />
+        <div className="absolute top-0 left-0 w-[427px] h-[652px] rounded-lg border-2 border-solid border-cyan-900 bg-gradient-to-br from-slate-800 to-slate-900" />
 
         {scanners.map((scanner, index) => (
           <ScannerItem key={scanner.id} scanner={scanner} index={index} />

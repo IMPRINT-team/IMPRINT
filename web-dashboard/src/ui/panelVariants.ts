@@ -2,16 +2,15 @@ export const panelBase =
   'border bg-secondary border-primary px-4 py-3 text-[11px] leading-[1.35]'
 
 export const panelVariants = {
-  neutral: 'border-slate-600/30 bg-slate-800/20 text-slate-300',
-  info: 'border-success bg-success text-primary',
-  warning: 'border-neutral bg-neutral text-primary',
-  error: 'border-error bg-error text-primary',
+  info: 'border-success bg-success/15 text-primary',
+  warning: 'border-warning bg-warning/10 text-warning shadow-glowWarning',
+  error: 'border-error bg-error/10 text-error shadow-glowError',
 }
 
 export const statusPillVariants = {
-  info: 'border-success text-primary',
-  warning: 'border-neutral text-amber shadow-glowAmber',
-  error: 'border-error text-primary shadow-glowMagenta',
+  info: 'border-success bg-success/15 text-success',
+  warning: 'border-warning bg-warning/10 text-warning shadow-glowWarning',
+  error: 'border-error bg-error/10 text-error shadow-glowError',
 }
 
 export const sectionHeaderClasses =

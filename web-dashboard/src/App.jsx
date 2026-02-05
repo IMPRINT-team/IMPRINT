@@ -1,6 +1,9 @@
 import Dashboard from "./pages/Dashboard.jsx"
 import Login from "./pages/Login.jsx"
 import PlaygroundPage from "./pages/playground/PlaygroundPage.jsx"
+import AdminEvents from "./pages/adminEvents.jsx"
+import AdminScanners from "./pages/adminScanners.jsx"
+import AdminUsers from "./pages/adminUsers.jsx"
 import { Routes, Route } from "react-router-dom"
 import { useThemeStore } from "./components/stores/useThemeStore.js"
 import { useState, useEffect } from "react"
@@ -15,8 +18,10 @@ const App = () => {
             <Route path="/playground" element={<Dashboard />}/>
             <Route path="/playground/figma" element={<PlaygroundPage />}/>
             <Route path="/login" element={<Login />} />
+            <Route path="/admin/events" element={<AdminEvents />}/>
+            <Route path="/admin/scanners" element={<AdminScanners />}/>
+            <Route path="/admin/users" element={<AdminUsers />}/>
         </Routes>
     )
 }
-
 export default App
