@@ -67,7 +67,7 @@ const Dashboard = () => {
             <section className="order-2 flex flex-col gap-2 lg:col-span-5 lg:grid lg:grid-rows-[2fr_1fr] min-h-0">
                   <div className="border border-primary rounded-xl overflow-y-auto">
                     <div className="flex-1 overflow-y-auto min-h-0 min-w-0">
-                      <table className="border mb-2 border-primary border-collapse bg-base-100 shadow-sm overflow-hidden h-full min-w-0">
+                      <table className="border mb-2 border-primary rounded-xl border-collapse bg-base-100 shadow-sm overflow-hidden h-full min-w-0">
                         <thead className="sticky top-0 bg-base-300 z-10">
                           <tr className=" border-b border-secondary uppercase">
                             <th className="py-2 text-primary text-center align-middle text-sm">General Area</th>
