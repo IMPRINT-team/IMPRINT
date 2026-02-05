@@ -21,6 +21,6 @@ createRoot(rootElement).render(
       <BrowserRouter>
         <App />
       </BrowserRouter>
-  </ClerkProvider>
+    </ClerkProvider>
   </React.StrictMode>
 )
