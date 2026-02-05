@@ -59,7 +59,7 @@ const Login = () => {
                   socialButtonsBlockButton:
                     "btn btn-outline w-full",
                   formFieldInput:
-                    "input w-full border-2 border-neutral-content bg-base-100",
+                    "input w-full border-2 border-neutral-content bg-base-100 text-base-content placeholder:text-base-content/60 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/40 focus:border-primary autofill:[-webkit-text-fill-color:currentColor] autofill:[box-shadow:0_0_0px_1000px_hsl(var(--b1))_inset]",
                   formFieldLabel:
                     "label text-sm font-medium text-base-content",
                   footerActionLink:
