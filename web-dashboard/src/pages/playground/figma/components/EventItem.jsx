@@ -7,16 +7,16 @@ const EventItem = ({ event, index }) => {
       style={{ top: `${topOffset}px` }}
     >
       <div
-        className="w-4 h-4 bg-cyan-500 rounded-[13px] border-2 border-solid"
+        className="w-4 h-4 bg-[oklch(var(--s))] rounded-[13px] border-2 border-solid border-[oklch(var(--s-content)/0.35)]"
         role="status"
         aria-label="Active indicator"
       />
 
-      <div className="flex items-center justify-center w-32 h-[15px] [font-family:'JetBrains_Mono-Bold',Helvetica] font-bold text-white text-lg text-center tracking-[0] leading-[normal] whitespace-nowrap">
+      <div className="flex items-center justify-center w-32 h-[15px] [font-family:'JetBrains_Mono-Bold',Helvetica] font-bold text-[oklch(var(--bc))] text-lg text-center tracking-[0] leading-[normal] whitespace-nowrap">
         {event.name}
       </div>
 
-      <div className="flex items-center justify-center w-[242px] h-[15px] [font-family:'JetBrains_Mono-Bold',Helvetica] font-bold text-[#06b6d48c] text-lg text-center tracking-[0] leading-[normal] whitespace-nowrap">
+      <div className="flex items-center justify-center w-[242px] h-[15px] [font-family:'JetBrains_Mono-Bold',Helvetica] font-bold text-[oklch(var(--bc)/0.55)] text-lg text-center tracking-[0] leading-[normal] whitespace-nowrap">
         {event.uuid}
       </div>
     </div>
