@@ -14,17 +14,17 @@ const ScannerItem = ({ scanner, index }) => {
       />
 
       <div
-        className="absolute top-0.5 left-0 w-[113px] h-7 bg-[hsl(var(--s))] rounded-[13px] border-2 border-solid border-[hsl(var(--s-content)/0.35)]"
+        className="absolute top-0.5 left-0 w-[113px] h-7 bg-[oklch(var(--s))] rounded-[13px] border-2 border-solid border-[oklch(var(--s-content)/0.35)]"
         role="status"
         aria-label={`Scanner ${scanner.name} active`}
       />
 
-      <div className="absolute top-0 left-[104px] w-[188px] h-[26px] flex items-center justify-center [font-family:'JetBrains_Mono-Bold',Helvetica] font-bold text-[hsl(var(--bc))] text-[26px] text-center tracking-[0] leading-[normal] whitespace-nowrap">
+      <div className="absolute top-0 left-[104px] w-[188px] h-[26px] flex items-center justify-center [font-family:'JetBrains_Mono-Bold',Helvetica] font-bold text-[oklch(var(--bc))] text-[26px] text-center tracking-[0] leading-[normal] whitespace-nowrap">
         {scanner.name}
       </div>
 
       <time
-        className="absolute top-0.5 left-[287px] w-[121px] h-7 flex items-center justify-center [font-family:'JetBrains_Mono-Bold',Helvetica] font-bold text-[hsl(var(--bc)/0.55)] text-xl text-center tracking-[0] leading-[normal]"
+        className="absolute top-0.5 left-[287px] w-[121px] h-7 flex items-center justify-center [font-family:'JetBrains_Mono-Bold',Helvetica] font-bold text-[oklch(var(--bc)/0.55)] text-xl text-center tracking-[0] leading-[normal]"
         dateTime={scanner.time}
       >
         {scanner.time}
