@@ -46,7 +46,7 @@ const Dashboard = () => {
 
   return(
     <>
-    <div className="flex bg-base-100 grid-rows-12 px-6 pt-6 text-base-content min-h-screen">
+    <div className="flex bg-base-100 dashboard-page-gradient grid-rows-12 px-6 pt-6 text-base-content min-h-screen">
       <div className="flex h-full flex-col">
         <header className="flex items-center justify-center">
           <div >
@@ -104,4 +104,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard
-
