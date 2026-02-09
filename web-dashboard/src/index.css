@@ -8,16 +8,16 @@
   .dashboard-page-gradient {
     background-image: linear-gradient(
       to bottom,
-      oklch(var(--border-primary) / 0.95),
-      oklch(var(--color-base-100) / 0.95)
+      oklch(var(--p) / 0.95),
+      oklch(var(--b1) / 0.95)
     );
   }
 
   .dashboard-panel-gradient {
     background-image: linear-gradient(
       to bottom right,
-      oklch(var(--border-primary) / 0.9),
-      oklch(var(--color-base-300) / 0.9)
+      oklch(var(--p) / 0.9),
+      oklch(var(--b3) / 0.9)
     );
   }
 }
