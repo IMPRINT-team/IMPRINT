@@ -7,7 +7,7 @@ import NavBar from "../components/dashboard/NavBar.jsx"
 import ImprintLogo from "../components/branding/ImprintLogo.jsx"
 import ThemeSelector from "../components/dashboard/ThemeSelector.jsx"
 import { useState, useEffect } from 'react'
-import { StatusPill, ResultPill } from '../ui/StatusPill.tsx'
+import { StatusPill, ResultPill } from '../components/ui/StatusPill.jsx'
 
 const BASE_URL = "http://localhost:8080/"
 

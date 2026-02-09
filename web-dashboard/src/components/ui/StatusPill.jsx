@@ -1,26 +1,18 @@
 import { statusPillVariants } from './panelVariants'
 
-type StatusPillProps = {
-  status: 'ONLINE' | 'OFFLINE' | 'DEGRADED'
-}
-
-type ResultPillProps = {
-  result: 'ACCEPTED' | 'DENIED' | 'FLAGGED'
-}
-
-const statusVariantMap: Record<StatusPillProps['status'], keyof typeof statusPillVariants> = {
+const statusVariantMap = {
   ONLINE: 'info',
   DEGRADED: 'warning',
   OFFLINE: 'error',
 }
 
-const ResultVariantMap: Record<ResultPillProps['result'], keyof typeof statusPillVariants> = {
+const resultVariantMap = {
   ACCEPTED: 'info',
   DENIED: 'error',
   FLAGGED: 'warning',
 }
 
-export const StatusPill = ({ status }: StatusPillProps) => {
+export const StatusPill = ({ status }) => {
   const variant = statusVariantMap[status]
   return (
     <span
@@ -33,8 +25,8 @@ export const StatusPill = ({ status }: StatusPillProps) => {
   )
 }
 
-export const ResultPill = ({result}: ResultPillProps) => {
-  const variant = ResultVariantMap[result]
+export const ResultPill = ({ result }) => {
+  const variant = resultVariantMap[result]
   return (
     <span
       className={`rounded-full border px-2 py-0.5 text-[9px] font-semibold tracking-[0.2em] ${statusPillVariants[variant]}`}
