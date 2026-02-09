@@ -47,30 +47,25 @@ const Login = () => {
 
             {/* Clerk Sign In */}
             <SignIn
-              routing="path"
-              path="/login"
-              redirectUrl="/playground"
               appearance={{
                 elements: {
-                  formButtonPrimary:
-                    "btn btn-primary w-full mt-4",
+                  formButtonPrimary: "btn btn-primary w-full mt-4",
                   card: "shadow-none bg-transparent p-0",
                   headerTitle: "hidden",
                   headerSubtitle: "hidden",
-                  socialButtonsBlockButton:
-                    "btn btn-outline w-full",
+                  socialButtonsBlockButton: "btn btn-outline w-full",
                   formFieldInput:
                     "input w-full border-2 border-neutral-content bg-base-100",
                   formFieldLabel:
                     "label text-sm font-medium text-base-content",
-                  footerActionLink:
-                    "link link-primary",
+                  footerActionLink: "link link-primary",
                 },
               }}
             />
           </div>
         </CardShell>
       </SignedOut>
+
     </div>
   );
 };
