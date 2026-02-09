@@ -1,5 +1,5 @@
-import CardShell from "../dashboard/CardShell";
-import ImprintLogo from "../branding/ImprintLogo";
+import CardShell from "../components/dashboard/CardShell";
+import ImprintLogo from "../components/branding/ImprintLogo";
 import { SignIn, SignedIn, SignedOut } from "@clerk/clerk-react";
 import { Navigate } from "react-router-dom";
 

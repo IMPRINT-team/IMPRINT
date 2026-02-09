@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { StatusPill } from '../ui/StatusPill.tsx'
+import { StatusPill } from '../components/ui/StatusPill.tsx'
 
 const BASE_URL = "http://localhost:8080/"
 

@@ -1,13 +1,13 @@
 import React from "react"
-import chartBox from "../dashboard/chartBox.jsx"
-import BoxB from "../dashboard/BoxB.jsx"
-import BoxC from "../dashboard/BoxC.jsx"
-import HeroPanel from "../dashboard/HeroPanel.jsx"
-import NavBar from "../dashboard/NavBar.jsx"
-import ImprintLogo from "../branding/ImprintLogo.jsx"
-import ThemeSelector from "../dashboard/ThemeSelector.jsx"
+import chartBox from "../components/dashboard/chartBox.jsx"
+import BoxB from "../components/dashboard/BoxB.jsx"
+import BoxC from "../components/dashboard/BoxC.jsx"
+import HeroPanel from "../components/dashboard/HeroPanel.jsx"
+import NavBar from "../components/dashboard/NavBar.jsx"
+import ImprintLogo from "../components/branding/ImprintLogo.jsx"
+import ThemeSelector from "../components/dashboard/ThemeSelector.jsx"
 import { useState, useEffect } from 'react'
-import { StatusPill, ResultPill } from '../ui/StatusPill.tsx'
+import { StatusPill, ResultPill } from '../components/ui/StatusPill.tsx'
 
 const BASE_URL = "http://localhost:8080/"
 
