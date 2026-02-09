@@ -21,13 +21,14 @@ const Dashboard = () => (
         </header>
         <div className="divider divider-primary"></div>
         <main className="hidden lg:flex flex-1 mb-2 min-h-0">
-          <div className="grid h-full grid-cols-1 gap-2 lg:grid-cols-12">
-            <section className="order-1 flex flex-col gap-2 lg:col-span-7 lg:grid lg:grid-rows-[3fr_1fr] min-h-0">
+          <div className="grid h-full grid-cols-1 gap-2 lg:grid-cols-3 lg:grid-rows-3">
+            <section className="order-1 flex min-h-0 flex-col lg:col-span-2 lg:row-span-2">
               <HeroPanel />
-              <chartBox />
             </section>
-            <section className="order-2 flex flex-col gap-2 lg:col-span-5 lg:grid lg:grid-rows-[2fr_1fr] min-h-0">
+            <section className="order-2 flex min-h-0 flex-col lg:col-span-1 lg:row-span-2">
               <ScannerTable />
+            </section>
+            <section className="order-3 flex min-h-0 flex-col lg:col-span-3 lg:row-span-1">
               <LatestEvents />
             </section>
           </div>
