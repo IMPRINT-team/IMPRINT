@@ -1,3 +1,4 @@
+import React from "react"
 const AdminEvents = () => {
     return(
         <div className="flex h-dvh w-dvw items-center justify-center">

@@ -1,3 +1,6 @@
+import React from "react"
+import PropTypes from "prop-types"
+
 const ScannerItem = ({ scanner, index }) => {
   const topOffset = 73 + index * 40;
 
@@ -39,6 +42,15 @@ const ScannerItem = ({ scanner, index }) => {
       </time>
     </article>
   );
+};
+
+ScannerItem.propTypes = {
+  scanner: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default ScannerItem;

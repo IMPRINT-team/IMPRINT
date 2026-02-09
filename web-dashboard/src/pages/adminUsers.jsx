@@ -1,3 +1,4 @@
+import React from "react"
 const AdminUsers = () => {
     return(
         <div className="flex h-dvh w-dvw items-center justify-center">

@@ -1,4 +1,6 @@
 import React from "react"
+import PropTypes from "prop-types"
+
 
 const ImprintLogo = ({ width, height, className = "", ...props }) => (
   <svg
@@ -55,5 +57,11 @@ const ImprintLogo = ({ width, height, className = "", ...props }) => (
     />
   </svg>
 )
+
+ImprintLogo.propTypes = {
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  className: PropTypes.string,
+}
 
 export default ImprintLogo

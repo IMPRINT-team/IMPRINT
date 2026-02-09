@@ -1,3 +1,4 @@
+import React from "react"
 import ImprintLogo from "./ImprintLogo.jsx"
 
 const ImprintLogoWatermark = () => (

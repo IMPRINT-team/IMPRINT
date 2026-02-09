@@ -1,7 +1,10 @@
+import React from "react"
+import PropTypes from "prop-types"
+
 const EventItem = ({ event, index }) => {
   const topOffset = 67 + index * 24;
 
-  return (
+  return (  
     <div
       className="absolute left-4 w-[390px] h-4 flex"
       style={{ top: `${topOffset}px` }}
@@ -31,6 +34,14 @@ const EventItem = ({ event, index }) => {
       </div>
     </div>
   );
+};
+
+EventItem.propTypes = {
+  event: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    uuid: PropTypes.string.isRequired,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default EventItem;

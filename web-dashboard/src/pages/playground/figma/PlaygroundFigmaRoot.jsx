@@ -4,6 +4,7 @@ import vector1 from "../../../assets/playground/vector-1.svg";
 import vector3 from "../../../assets/playground/vector-3.svg";
 import EventItem from "./components/EventItem";
 import ScannerItem from "./components/ScannerItem";
+import React from "react"
 
 const PlaygroundFigmaRoot = () => {
   const scanners = [
