@@ -5,6 +5,7 @@ import HeroPanel from "../components/dashboard/HeroPanel.jsx"
 import NavBar from "../components/dashboard/NavBar.jsx"
 import ImprintLogo from "../components/branding/ImprintLogo.jsx"
 import ThemeSelector from "../components/dashboard/ThemeSelector.jsx"
+import StatsPannel from "../components/dashboard/StatsPannel.jsx"
 
 const Dashboard = () => (
   <>
@@ -28,7 +29,10 @@ const Dashboard = () => (
             <section className="order-2 flex min-h-0 flex-col lg:col-span-1 lg:row-span-2">
               <ScannerTable />
             </section>
-            <section className="order-3 flex min-h-0 flex-col lg:col-span-3 lg:row-span-1">
+            <section className="order-3 flex min-h-0 flex-col lg:col-span-2 lg:row-span-1">
+              <StatsPannel/>
+            </section>
+            <section className="order-4 flex min-h-0 flex-col lg:col-span-1 lg:row-span-1">
               <LatestEvents />
             </section>
           </div>
