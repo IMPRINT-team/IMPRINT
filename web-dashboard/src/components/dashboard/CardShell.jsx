@@ -3,8 +3,7 @@ import PropTypes from "prop-types"
 
 const CardShell = ({ title, actions, className = "", children, ...props }) => (
   <div
-    className={`card border border-primary rounded-xl bg-base-100 dashboard-panel-gradient shadow-sm ${className}`}
-    data-debug-label="CardShell"
+    className={`card border border-primary rounded-xl shadow-sm dashboard-panel-gradient ${className}`}
     {...props}
   >
     <div className="card-body gap-4">
