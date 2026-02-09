@@ -19,6 +19,7 @@ export const StatusPill = ({ status }) => {
       className={`rounded-full border px-2.5 py-1 text-[9px] font-semibold tracking-[0.2em] ${statusPillVariants[variant]}`}
       role="status"
       aria-label={`Status: ${status}`}
+      data-debug-label="StatusPill"
     >
       {status}
     </span>
@@ -32,6 +33,7 @@ export const ResultPill = ({ result }) => {
       className={`rounded-full border px-2 py-0.5 text-[9px] font-semibold tracking-[0.2em] ${statusPillVariants[variant]}`}
       role="status"
       aria-label={`Result: ${result}`}
+      data-debug-label="ResultPill"
     >
       {result}
     </span>

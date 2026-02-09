@@ -10,6 +10,7 @@ const ImprintLogo = ({ width, height, className = "", ...props }) => (
     fill="none"
     className={className}
     aria-hidden="true"
+    data-debug-label="ImprintLogo"
     {...props}
   >
     <path

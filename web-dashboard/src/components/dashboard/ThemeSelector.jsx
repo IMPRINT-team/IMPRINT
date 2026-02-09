@@ -6,7 +6,7 @@ import { useThemeStore } from "../stores/useThemeStore.js"
 function ThemeSelector () {
     const {theme, setTheme} = useThemeStore();
     return (
-        <div className="dropdown dropdown-end z-50">
+        <div className="dropdown dropdown-end z-50" data-debug-label="ThemeSelector">
             <button className="btn btn-circle btn-ghost border border-primary">
                 <PaletteIcon className="size-5" />
             </button>

@@ -1,9 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const CardShell = ({ title, actions, className = "", children }) => (
+const CardShell = ({ title, actions, className = "", children, ...props }) => (
   <div
     className={`card border border-primary rounded-xl bg-base-100 dashboard-panel-gradient shadow-sm ${className}`}
+    data-debug-label="CardShell"
+    {...props}
   >
     <div className="card-body gap-4">
       {(title || actions) && (
