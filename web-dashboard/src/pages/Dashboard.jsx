@@ -1,7 +1,6 @@
 import React from "react"
-import chartBox from "../components/dashboard/chartBox.jsx"
-import BoxB from "../components/dashboard/BoxB.jsx"
-import BoxC from "../components/dashboard/BoxC.jsx"
+import ScannerTable from "../components/dashboard/ScannerTable.jsx"
+import LatestEvents from "../components/dashboard/LatestEvents.jsx"
 import HeroPanel from "../components/dashboard/HeroPanel.jsx"
 import NavBar from "../components/dashboard/NavBar.jsx"
 import ImprintLogo from "../components/branding/ImprintLogo.jsx"
@@ -64,6 +63,7 @@ const Dashboard = () => {
             <section className="order-1 flex flex-col gap-2 lg:col-span-7 lg:grid lg:grid-rows-[3fr_1fr] min-h-0">
               <HeroPanel />
               <chartBox />
+              <ScannerTable />
             </section>
             <section className="order-2 flex flex-col gap-2 lg:col-span-5 lg:grid lg:grid-rows-[2fr_1fr] min-h-0">
                   <div className="border border-primary rounded-xl overflow-y-auto">
@@ -94,7 +94,7 @@ const Dashboard = () => {
                       </table>
                     </div>
                   </div>
-                <BoxB  />
+                <LatestEvents  />
             </section>
           </div>
         </main>

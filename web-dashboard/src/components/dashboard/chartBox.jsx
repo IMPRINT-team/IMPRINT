@@ -1,11 +1,9 @@
 import React from "react"
-import CardShell from "./CardShell.jsx"
 
-const chartBox = () => (
-  <CardShell
-    className="min-h-full dashboard-page-gradient"
-    data-debug-label="ChartBox"
-  />
+const ChartBox = () => (
+<div className="chart-box">
+  <h2>Chart Box</h2>
+</div>
 )
 
-export default chartBox
+export default ChartBox

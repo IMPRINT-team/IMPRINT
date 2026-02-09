@@ -1,8 +1,8 @@
 import React from "react"
 import CardShell from "./CardShell.jsx"
 
-const BoxB = () => (
+const LatestEvents = () => (
   <CardShell className="min-h-full" data-debug-label="BoxB" />
 )
 
-export default BoxB
+export default LatestEvents
