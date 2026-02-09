@@ -1,4 +1,5 @@
-import BoxA from "../components/dashboard/BoxA.jsx"
+import React from "react"
+import chartBox from "../components/dashboard/chartBox.jsx"
 import BoxB from "../components/dashboard/BoxB.jsx"
 import BoxC from "../components/dashboard/BoxC.jsx"
 import HeroPanel from "../components/dashboard/HeroPanel.jsx"
@@ -46,7 +47,7 @@ const Dashboard = () => {
 
   return(
     <>
-    <div className="flex bg-base-100 dashboard-page-gradient grid-rows-12 px-6 pt-6 text-base-content min-h-screen">
+    <div className="flex bg-base-100 grid-rows-12 px-6 pt-6 text-base-content min-h-screen">
       <div className="flex h-full flex-col">
         <header className="flex items-center justify-center">
           <div >
@@ -62,7 +63,7 @@ const Dashboard = () => {
           <div className="grid h-full grid-cols-1 gap-2 lg:grid-cols-12">
             <section className="order-1 flex flex-col gap-2 lg:col-span-7 lg:grid lg:grid-rows-[3fr_1fr] min-h-0">
               <HeroPanel />
-              <BoxA />
+              <chartBox />
             </section>
             <section className="order-2 flex flex-col gap-2 lg:col-span-5 lg:grid lg:grid-rows-[2fr_1fr] min-h-0">
                   <div className="border border-primary rounded-xl overflow-y-auto">

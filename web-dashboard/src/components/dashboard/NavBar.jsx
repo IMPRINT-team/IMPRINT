@@ -1,7 +1,7 @@
-import {useThemeStore} from "../stores/useThemeStore.js"
+import React from "react"
 import { NavLink } from "react-router-dom";
 
-const BASE_URL = "http://localhost:5173/"
+
 
 const NavBar = () => {
   return (

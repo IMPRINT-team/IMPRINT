@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 const CardShell = ({ title, actions, className = "", children }) => (
   <div
@@ -19,5 +20,12 @@ const CardShell = ({ title, actions, className = "", children }) => (
     </div>
   </div>
 )
+
+CardShell.propTypes = {
+  title: PropTypes.string,
+  actions: PropTypes.node,
+  className: PropTypes.string,
+  children: PropTypes.node,
+}
 
 export default CardShell
