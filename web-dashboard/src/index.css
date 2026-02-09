@@ -5,20 +5,11 @@
 @plugin "daisyui";
 
 @layer components {
-  .dashboard-page-gradient {
-    background-image: radial-gradient(
-      ellipse 120% 80% at center,
-      oklch(var(--p) / 0.95) 0%,
-      oklch(var(--b1) / 0.95) 100%
-    );
-  }
-
   .dashboard-panel-gradient {
     background-image: radial-gradient(
-      ellipse 90% 50% at center,
-      oklch(var(--p) / 0.3) 0%,
-      oklch(var(--p) / 0.3) 20%,
-      oklch(var(--b1) / 0.9) 100%
+      ellipse 150% 150% at center,
+      oklch(var(--p) / 0.1) 0%,
+      oklch(var(--b1) / 1) 100%
     );
   }
 }
