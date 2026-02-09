@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import CardShell from "./CardShell.jsx"
 import { StatusPill } from "../ui/StatusPill.jsx"
 
 const BASE_URL = "http://localhost:8080/"
@@ -38,7 +39,7 @@ const ScannerTable = () => {
   }, [])
 
   return (
-    <div className="border border-primary rounded-xl overflow-y-auto">
+    <CardShell className="min-h-full overflow-y-auto" data-debug-label="ScannerTable">
       <div className="flex-1 overflow-y-auto min-h-0 min-w-0">
         <table className="border mb-2 border-primary rounded-xl border-collapse bg-base-100 shadow-sm overflow-hidden h-full min-w-0">
           <thead className="sticky top-0 bg-base-300 z-10">
@@ -65,7 +66,7 @@ const ScannerTable = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </CardShell>
   )
 }
 
