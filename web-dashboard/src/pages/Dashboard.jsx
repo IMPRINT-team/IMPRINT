@@ -63,7 +63,6 @@ const Dashboard = () => {
             <section className="order-1 flex flex-col gap-2 lg:col-span-7 lg:grid lg:grid-rows-[3fr_1fr] min-h-0">
               <HeroPanel />
               <chartBox />
-              <ScannerTable />
             </section>
             <section className="order-2 flex flex-col gap-2 lg:col-span-5 lg:grid lg:grid-rows-[2fr_1fr] min-h-0">
                   <div className="border border-primary rounded-xl overflow-y-auto">
