@@ -18,6 +18,8 @@
     "clerk": "^0.8.3",
     "cors": "^2.8.6",
     "daisyui": "^4.12.24",
+    "datatables.net-dt": "^2.3.7",
+    "datatables.net-react": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
