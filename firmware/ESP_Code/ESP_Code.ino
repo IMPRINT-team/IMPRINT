@@ -343,7 +343,7 @@ void loop() {
   if (!getTimeNow(epoch)) epoch = 0;
   addScanToHistory(uid, epoch);
 
-  // Beep once (non-blocking)
+  // Beepand flash red 
   if(uid == "06B479A1"){
     digitalWrite(redLED_PIN, HIGH);
     startBeep(BUZZ_MS);
@@ -355,6 +355,7 @@ void loop() {
     startBeep(BUZZ_MS);
     delay(2000);
   }
+  //beep once long and turn on green light
   else if (uid == "72F540CB"){
     digitalWrite(greenLED_PIN, HIGH);
     startBeep(BUZZ_MS);
