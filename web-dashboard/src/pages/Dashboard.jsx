@@ -6,6 +6,7 @@ import NavBar from "../components/dashboard/NavBar.jsx"
 import ImprintLogo from "../components/branding/ImprintLogo.jsx"
 import ThemeSelector from "../components/dashboard/ThemeSelector.jsx"
 import StatsPannel from "../components/dashboard/StatsPannel.jsx"
+import Logout from "../components/dashboard/Logout.jsx"
 
 const Dashboard = () => (
   <>
@@ -34,6 +35,9 @@ const Dashboard = () => (
             </section>
             <section className="order-4 flex min-h-0 flex-col lg:col-span-1 lg:row-span-1">
               <LatestEvents />
+            </section>
+            <section className="order-5 flex min-h-0 flex-col lg:col-span-1 lg:row-span-1">
+              <Logout />
             </section>
           </div>
         </main>

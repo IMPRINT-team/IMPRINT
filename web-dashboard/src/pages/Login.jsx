@@ -2,9 +2,12 @@ import React from "react"
 import CardShell from "../components/dashboard/CardShell";
 import ImprintLogo from "../components/branding/ImprintLogo";
 import { SignIn, SignedIn, SignedOut } from "@clerk/clerk-react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 
 const Login = () => {
+  const [searchParams] = useSearchParams();
+  const returnTo = searchParams.get("returnTo") || "/playground";
+
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-base-100 px-6 text-base-content">
 
@@ -15,57 +18,65 @@ const Login = () => {
 
       {/* If already signed in, go straight to playground */}
       <SignedIn>
-        <Navigate to="/playground" replace />
+        <Navigate to={returnTo} replace />
       </SignedIn>
 
       {/* Login Card */}
       <SignedOut>
-        <CardShell className="relative z-10 overflow-hidden w-full max-w-md">
-          <div className="w-full flex flex-col gap-4">
+        <div className="w-full max-w-md">
+          <SignIn
+            signInFields={[
+              { identifier: "email_address" },
+              { password: true },
+            ]}
+            appearance={{
+              elements: {
+                /* Main card */
+                card:
+                  "bg-white border border-neutral-300 rounded-xl shadow-lg px-8 py-10 w-full",
 
-            {/* Header */}
-            <div className="text-center">
-              <h1 className="text-3xl font-bold">IMPRINT</h1>
-              <p className="text-lg">Login</p>
-            </div>
+                /* Header */
+                headerTitle:
+                  "text-3xl font-bold text-neutral-900 text-center",
+                headerSubtitle:
+                  "text-sm text-neutral-500 text-center mt-1",
 
-            {/* Divider */}
-            <svg
-              viewBox="0 0 400 10"
-              preserveAspectRatio="none"
-              className="w-full h-3 opacity-40"
-            >
-              <line
-                x1="0"
-                y1="5"
-                x2="400"
-                y2="5"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-            </svg>
+                /* Form layout */
+                form:
+                  "mt-6 flex flex-col gap-5",
 
-            {/* Clerk Sign In */}
-            <SignIn
-              appearance={{
-                elements: {
-                  formButtonPrimary: "btn btn-primary w-full mt-4",
-                  card: "shadow-none bg-transparent p-0",
-                  headerTitle: "hidden",
-                  headerSubtitle: "hidden",
-                  socialButtonsBlockButton: "btn btn-outline w-full",
-                  formFieldInput:
-                    "input w-full border-2 border-neutral-content bg-base-100",
-                  formFieldLabel:
-                    "label text-sm font-medium text-base-content",
-                  footerActionLink: "link link-primary",
-                },
-              }}
-            />
-          </div>
-        </CardShell>
+                formFieldRow:
+                  "flex flex-col gap-1",
+
+                formFieldLabel:
+                  "text-sm font-medium text-neutral-700",
+
+                /* Inputs */
+                formFieldInput:
+                  "w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary",
+
+                /* Primary button */
+                formButtonPrimary:
+                  "mt-2 w-full rounded-md bg-primary text-white font-semibold py-2 hover:bg-primary/90 transition",
+
+                /* Footer */
+                footer:
+                  "mt-6 text-center",
+
+                footerActionText:
+                  "text-sm text-neutral-600",
+
+                footerActionLink:
+                  "text-sm font-medium text-primary hover:underline",
+
+                /* Hide Clerk branding if you want */
+                identityPreview:
+                  "hidden",
+              },
+            }}
+          />
+        </div>
       </SignedOut>
-
     </div>
   );
 };
