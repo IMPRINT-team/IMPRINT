@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { ResultPill } from '../ui/StatusPill.tsx'
+import { ResultPill } from '../components/ui/StatusPill.jsx'
 import { ArrowLeft } from 'lucide-react'
+import React from "react"
 
 const BASE_URL = "http://localhost:8080/"
 

@@ -1,3 +1,4 @@
+import React from "react"
 import PlaygroundFigmaRoot from "./figma/PlaygroundFigmaRoot";
 
 const PlaygroundPage = () => {
