@@ -1,21 +1,23 @@
-import { SignedIn, SignOutButton } from "@clerk/clerk-react";
 import React from "react";
+import { useClerk } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
-const Logout = ()=>{
-    return(
+const Logout = () => {
+  const { signOut } = useClerk();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/login"); // or "/" if that’s your entry point
+  };
+
+  return (
         <div>
-            <SignedIn>
-            <SignOutButton redirectUrl="/login">
-                <button
-                className="px-4 py-2 rounded-md border border-neutral-300
-                            text-neutral-700 hover:bg-neutral-100
-                            transition font-medium">
+            <button onClick={handleLogout} className="logout-button">
                 Log out
-                </button>
-            </SignOutButton>
-            </SignedIn>
+            </button>
         </div>
-    );
-}
+  );
+};
 
-export default Logout
+export default Logout;
