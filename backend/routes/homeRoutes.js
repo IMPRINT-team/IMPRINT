@@ -23,6 +23,7 @@ homeRouter.get("/event", getEvents)
 homeRouter.post("/event/scan", scan);
 homeRouter.post("/login", login); //Updated
 homeRouter.post("/user/register", addUser);// New
+homeRouter.post("/user/login", addUser);
 homeRouter.get("/user", getUsers)
 homeRouter.get("/user/:email", getUserByEmail)
 
