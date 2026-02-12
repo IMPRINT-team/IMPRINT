@@ -34,7 +34,7 @@ const Dashboard = () => (
             grid h-full w-full gap-3
             grid-cols-1 grid-rows-4
             lg:grid-cols-[2fr_1fr]
-            lg:grid-rows-[minmax(0,2fr)_minmax(0,1fr)]
+            lg:grid-rows-[minmax(0,1.7fr)_minmax(0,1fr)]
           "
         >
           <section className="min-h-0 min-w-0">
