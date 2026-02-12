@@ -11,9 +11,6 @@ const ChartBox = () => (
     <h2 id="hero-panel-title" className="text-xl font-semibold mb-2">
       Facility activity snapshot
     </h2>
-    <p className="text-sm opacity-80 mb-4">
-      Placeholder data to demonstrate proportions and visual hierarchy.
-    </p>
 
     <div className="grid flex-1 min-h-0 gap-3 sm:grid-cols-3">
       {metrics.map((metric) => (
