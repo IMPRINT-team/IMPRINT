@@ -1,11 +1,11 @@
-import React from "react";
-import ScannerTable from "../components/dashboard/ScannerTable.jsx";
-import LatestEvents from "../components/dashboard/LatestEvents.jsx";
-import HeroPanel from "../components/dashboard/HeroPanel.jsx";
-import NavBar from "../components/dashboard/NavBar.jsx";
-import ImprintLogo from "../components/branding/ImprintLogo.jsx";
-import ThemeSelector from "../components/dashboard/ThemeSelector.jsx";
-import StatsPannel from "../components/dashboard/StatsPannel.jsx";
+import React from "react"
+import ScannerTable from "../components/dashboard/ScannerTable.jsx"
+import LatestEvents from "../components/dashboard/LatestEvents.jsx"
+import HeroPanel from "../components/dashboard/HeroPanel.jsx"
+import NavBar from "../components/dashboard/NavBar.jsx"
+import ImprintLogo from "../components/branding/ImprintLogo.jsx"
+import ThemeSelector from "../components/dashboard/ThemeSelector.jsx"
+import StatsPannel from "../components/dashboard/StatsPannel.jsx"
 
 const Dashboard = () => (
   <>
@@ -18,7 +18,7 @@ const Dashboard = () => (
     </a>
 
     <div className="min-h-screen bg-base-100 text-base-content border">
-      <div className="mx-auto flex h-full max-w-screen-2xl flex-col px-6 pt-6">
+      <div className="mx-auto flex min-h-screen max-w-screen-2xl flex-col px-6 pt-6 pb-6">
         {/* Header / Branding / Navigation */}
         <header className="flex items-center gap-4">
           <ImprintLogo
@@ -33,7 +33,7 @@ const Dashboard = () => (
           <ThemeSelector />
         </header>
 
-        <div className="divider divider-primary" role="separator" />
+        <div className="divider divider-primary my-3" role="separator" />
 
         {/* Main dashboard content */}
         <main
@@ -41,42 +41,39 @@ const Dashboard = () => (
           className="flex flex-1 min-h-0"
           tabIndex={-1}
         >
-          {/* Hide layout visually on small screens, not from screen readers */}
-          <div className="sr-only lg:not-sr-only lg:flex w-full">
-            <div className="grid h-full w-full grid-cols-1 gap-2 lg:grid-cols-3 lg:grid-rows-3">
-              <section
-                className="order-1 flex min-h-0 flex-col lg:col-span-2 lg:row-span-2"
-                aria-labelledby="hero-panel-title"
-              >
-                <HeroPanel />
-              </section>
+          <div className="grid h-full w-full min-h-0 grid-cols-1 gap-3 lg:grid-cols-3 lg:grid-rows-[2fr_1fr]">
+            <section
+              className="order-1 flex min-h-[280px] flex-col lg:col-span-2 lg:row-span-1"
+              aria-labelledby="hero-panel-title"
+            >
+              <HeroPanel />
+            </section>
 
-              <section
-                className="order-2 flex min-h-0 flex-col lg:col-span-1 lg:row-span-2"
-                aria-labelledby="scanner-table-title"
-              >
-                <ScannerTable />
-              </section>
+            <section
+              className="order-2 flex min-h-[280px] flex-col lg:col-span-1 lg:row-span-2"
+              aria-labelledby="scanner-table-title"
+            >
+              <ScannerTable />
+            </section>
 
-              <section
-                className="order-3 flex min-h-0 flex-col lg:col-span-2 lg:row-span-1"
-                aria-labelledby="stats-panel-title"
-              >
-                <StatsPannel />
-              </section>
+            <section
+              className="order-3 flex min-h-[220px] flex-col lg:col-span-1 lg:row-span-1"
+              aria-labelledby="stats-panel-title"
+            >
+              <StatsPannel />
+            </section>
 
-              <section
-                className="order-4 flex min-h-0 flex-col lg:col-span-1 lg:row-span-1"
-                aria-labelledby="latest-events-title"
-              >
-                <LatestEvents />
-              </section>
-            </div>
+            <section
+              className="order-4 flex min-h-[220px] flex-col lg:col-span-1 lg:row-span-1"
+              aria-labelledby="latest-events-title"
+            >
+              <LatestEvents />
+            </section>
           </div>
         </main>
       </div>
     </div>
   </>
-);
+)
 
-export default Dashboard;
+export default Dashboard

@@ -2,11 +2,11 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const CardShell = ({ title, actions, className = "", children, ...props }) => (
-  <div
-    className={`card border border-primary rounded-xl shadow-sm dashboard-panel-gradient ${className}`}
+  <article
+    className={`card h-full border border-primary rounded-xl shadow-sm dashboard-panel-gradient ${className}`}
     {...props}
   >
-    <div className="card gap-4">
+    <div className="card-body h-full gap-4 p-4 lg:p-5">
       {(title || actions) && (
         <div className="flex items-center justify-between gap-4">
           {title && (
@@ -19,7 +19,7 @@ const CardShell = ({ title, actions, className = "", children, ...props }) => (
       )}
       {children}
     </div>
-  </div>
+  </article>
 )
 
 CardShell.propTypes = {

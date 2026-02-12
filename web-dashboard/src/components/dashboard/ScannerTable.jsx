@@ -39,7 +39,8 @@ const ScannerTable = () => {
   }, [])
 
   return (
-    <CardShell className="min-h-full overflow-y-auto" data-debug-label="ScannerTable">
+    <CardShell className="h-full overflow-hidden" data-debug-label="ScannerTable">
+      <h2 id="scanner-table-title" className="text-lg font-semibold">Scanner status</h2>
       <div className="flex-1 overflow-y-auto min-h-0 min-w-0">
         <table className="border mb-2 border-primary rounded-xl border-collapse bg-base-100 shadow-sm overflow-hidden h-full min-w-0">
           <thead className="sticky top-0 bg-base-300 z-10">
@@ -52,7 +53,11 @@ const ScannerTable = () => {
             </tr>
           </thead>
           <tbody className="bg-primary">
-            {scanners.map((scanner) => (
+            {scanners.length === 0 ? (
+              <tr className="bg-base-300">
+                <td className="py-6 text-center" colSpan={5}>No scanner data yet.</td>
+              </tr>
+            ) : scanners.map((scanner) => (
               <tr key={scanner.deviceId} className="bg-base-300">
                 <td className="text-center py-3">{scanner.location}</td>
                 <td className="text-center py-3">{scanner.specificLocation}</td>
