@@ -17,7 +17,7 @@ const NavBar = () => {
         aria-label="Primary"
         className="
           mx-auto max-w-screen-xl
-          flex flex-wrap items-center justify-center gap-2
+          flex flex-wrap items-center justify-center md:justify-between md:flex-nowrap gap-2
           rounded-full border border-primary bg-base-100 shadow-sm
           px-4 py-2
         "
