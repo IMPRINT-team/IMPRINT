@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "test": "node --test",
     "build": "npm install && node --check index.js",
-    "db:init": "prisma migrate deploy && prisma generate",
+    "db:init": "prisma generate && node scripts/ensure-prisma-migrations.js && prisma migrate deploy",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --name init",
     "db:verify": "node ../scripts/verify.js",
@@ -16,10 +16,12 @@
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
+    "destroy": "^1.2.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "bcrypt": "^6.0.0"
+    "mime": "^1.6.0"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

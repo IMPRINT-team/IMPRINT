@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import homeRouter from "./routes/homeRoutes.js";
 
+
 dotenv.config({ path: "../.env" });
 
 const app = express();
@@ -26,5 +27,14 @@ app.listen(port, () => {
   console.log(`Backend listening on port ${port}!`);
   connectToDatabase();
 });
+
+app.get("/", async (req, res) => {
+    try {
+        const scanners = await prisma.scanner.findMany();
+        res.status(200).json(scanners);
+    } catch (err) {
+        res.status(500).json({success: false, error: err})
+    }
+})
 
 app.use("/", homeRouter);

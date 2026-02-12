@@ -1,9 +1,0 @@
-[
-  "RFID zones limited to authorized tags only",
-  "Latency budget capped at 120ms per scan",
-  "Offline scanners must auto-quarantine",
-  "Manual overrides require dual approval",
-  "All denied scans are logged for 90 days",
-  "Facility access windows locked after 21:00",
-  "Network link health checked every 30s"
-]

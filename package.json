@@ -3,8 +3,7 @@
   "private": true,
   "workspaces": [
     "backend",
-    "web-dashboard",
-    "packages/*"
+    "web-dashboard"
   ],
   "scripts": {
     "dev": "npm install && node scripts/sync-backend-env.cjs && npm run db:init -w backend && concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
@@ -15,11 +14,27 @@
     "prisma:studio": "npm run prisma:studio -w backend"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.60.0",
+    "clerk": "^0.8.3",
     "cors": "^2.8.6",
+    "daisyui": "^4.12.24",
+    "datatables.net-dt": "^2.3.7",
+    "datatables.net-react": "^1.0.1",
     "dotenv": "^16.4.5",
-    "react-router-dom": "^6.30.3"
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^0.563.0",
+    "react-router-dom": "^6.30.3",
+    "vite": "6.4.1",
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
-  }
+    "autoprefixer": "^10.4.24",
+    "concurrently": "^8.2.2",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "postcss": "^8.5.6"
+  },
+  "type": "module"
 }
