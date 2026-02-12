@@ -6,8 +6,8 @@ import React from "react"
 const BASE_URL = "http://localhost:8080/"
 
 const getEvents = async () => {
-    const scannerData = await fetch(`${BASE_URL}event`)
-    return scannerData
+    const eventData = await fetch(`${BASE_URL}event`)
+    return eventData
 }
 
 const formatTime = (value) => {

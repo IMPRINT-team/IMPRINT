@@ -16,12 +16,12 @@ export const getScanners = async (req, res) => {
     }
 }
 
-export const getScannersByName = async (req, res) => {
+export const getScannersByLocation = async (req, res) => {
     try {
-        const name = req.params.name;
+        const name = req.params.location;
         const scanners = await prisma.scanner.findMany({
             where: {
-                deviceName: {
+                location: {
                     contains: name,
                     mode: "insensitive"
                 }
@@ -33,12 +33,15 @@ export const getScannersByName = async (req, res) => {
     }
 }
 
-export const getScannerById = async (req, res) => {
+export const getScannersByAuthLevel = async (req, res) => {
     try {
-        const deviceId = req.params.id;
-        const scanners = await prisma.scanner.findUnique({
+        const authLevel = req.params.authorization;
+        const scanners = await prisma.scanner.findMany({
             where: {
-                id: deviceId
+                authorization: {
+                    contains: authLevel,
+                    mode: "insensitive"
+                }
             }
         });
         res.status(200).json(scanners);
@@ -47,12 +50,29 @@ export const getScannerById = async (req, res) => {
     }
 }
 
-export const getScannersByLocation = async (req, res) => {
+export const getScannerByStatus = async (req, res) => {
     try {
-        const scannerLocation = req.params.location;
+        const deviceStatus = req.params.status;
         const scanners = await prisma.scanner.findMany({
             where: {
-                location: {
+                status: {
+                    contains: deviceStatus,
+                    mode: "insensitive"
+                }
+            }
+        });
+        res.status(200).json(scanners);
+    } catch (err) {
+        res.status(500).json({success: false, error: err});
+    }
+}
+
+export const getScannersBySpecLocation = async (req, res) => {
+    try {
+        const scannerLocation = req.params.specificLocation;
+        const scanners = await prisma.scanner.findMany({
+            where: {
+                specificLocation: {
                     contains: scannerLocation,
                     mode: "insensitive"
                 }
@@ -61,6 +81,25 @@ export const getScannersByLocation = async (req, res) => {
         res.status(200).json(scanners);
     } catch (err) {
         res.status(500).json({success: false, error: err});
+    }
+}
+
+export const deleteScanner = async (req, res) => {
+    try {
+        const scannerId = req.params.id;
+        await prisma.event.deleteMany({
+            where: {
+                deviceId: scannerId
+            }
+        })
+        await prisma.scanner.deleteMany({
+            where: {
+                deviceId: scannerId
+            }
+        })
+        res.status(200).json({success: true})
+    } catch (err) {
+        res.status(500).json({error: err})
     }
 }
 

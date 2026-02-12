@@ -1,29 +1,33 @@
 import express from "express";
 // 1. Add 'login' to the imports
 import { 
-    getScannerById, 
-    getScannersByName, 
-    getScanners, 
+    getScannerByStatus, 
     getScannersByLocation, 
+    getScanners, 
+    getScannersBySpecLocation, 
+    getScannersByAuthLevel,
     scan, 
     addUser, 
     getEvents, 
     getUsers, 
     getUserByEmail,
+    deleteScanner,
     login // New
 } from "../controllers/homeControllers.js";
 
 const homeRouter = express.Router();
 
 homeRouter.get("/", getScanners);
-homeRouter.get("/search/name/:name", getScannersByName);
-homeRouter.get("/search/id/:id", getScannerById);
 homeRouter.get("/search/location/:location", getScannersByLocation);
-homeRouter.get("/event", getEvents)
+homeRouter.get("/search/status/:status", getScannerByStatus);
+homeRouter.get("/search/specificLocation/:specificLocation", getScannersBySpecLocation);
+homeRouter.get("/search/authorization/:authorization", getScannersByAuthLevel);
+homeRouter.delete("/admin/scanners/:id", deleteScanner);
+homeRouter.get("/event", getEvents);
 homeRouter.post("/event/scan", scan);
 homeRouter.post("/login", login); //Updated
 homeRouter.post("/user/register", addUser);// New
-homeRouter.get("/user", getUsers)
-homeRouter.get("/user/:email", getUserByEmail)
+homeRouter.get("/user", getUsers);
+homeRouter.get("/user/:email", getUserByEmail);
 
 export default homeRouter;

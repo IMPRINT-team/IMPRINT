@@ -1,4 +1,5 @@
 import React from "react"
+import AddScannerModal from "./addScannerModal.jsx"
 import { useState, useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react'
 import { StatusPill } from '../components/ui/StatusPill.jsx'
@@ -23,7 +24,11 @@ const formatTime = (value) => {
 }
 
 const AdminScanners = () => {
+    const [showAddModal, setShowAddModal] = useState(false)
+    const [showUpdateModal, setShowUpdateModal] = useState(false)
     const [scanners, setScanners] = useState([])
+    const [searchType, setSearchType] = useState("")
+    const [searchValue, setSearchValue] = useState("")
     useEffect(() => {
         const loadScanners = async () => {
             try {
@@ -37,34 +42,49 @@ const AdminScanners = () => {
         loadScanners()
     }, [])
 
+    async function getBy() {
+        let scannerData
+        if (searchType == "backToScanners") {
+            scannerData = await getScanners()
+        } else {
+            scannerData = await fetch(`${BASE_URL}search/${searchType}/${searchValue}`)
+        }        
+        const scanners = await scannerData.json()
+        return setScanners(scanners)
+    }
+
+    async function deleteScanner(id) {
+        await fetch(`${BASE_URL}admin/scanners/${id}`, {method: "DELETE"})
+        window.location.replace(`http://localhost:5173/admin/scanners`)     // TODO: CHANGE LATER
+    }
+
     const scannerMap = new Map(scanners.map((scanner) => [scanner.deviceId, scanner]))
 
     return(
-        
-        <div className="h-svh">
+        <>
+        <div className="h-dvh">
             <div className="flex align-middle justify-around my-3 mt-4">
                 <div className="flex align-middle">
                     <a type="button" className="btn btn-primary" href="/playground"><ArrowLeft /></a>
                 </div>
                 <div className="flex justify-center align-middle">
-                    <select name="SearchFor" id="txtParam" className="select border border-primary rounded-lg">
-                        <option value="" select disabled>--- Choose your search type ---</option>
-                        <option value="area">General Area</option>
-                        <option value="specLocation">Specific Location</option>
+                    <select name="SearchFor" id="txtParam" className="select border border-primary rounded-lg" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                        <option value="backToScanners">Show All Scanners</option>
+                        <option value="location">General Area</option>
+                        <option value="specificLocation">Specific Location</option>
                         <option value="status">Status</option>
-                        <option value="lastSeen">Last Seen</option>
-                        <option value="authLevel">Authorization Level</option>
+                        <option value="authorization">Authorization Level</option>
                     </select>
-                    <label for="txtReq" className="label mx-3">Specific Search:</label>
-                    <input type="text" className="input border border-primary" id="txtReq" placeholder="Type the scanner information"/>
-                    <button type="button" id="btnSearch" className="btn btn-primary mx-3">Search</button>
+                    <label htmlFor="txtReq" className="label mx-3">Specific Search:</label>
+                    <input type="text" className="input form-control border border-primary" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} id="txtReq" placeholder="Type the scanner information"/>
+                    <button type="button" id="btnSearch" className="btn btn-primary mx-3" onClick={getBy}>Search</button>
                 </div>
                 <div>
-                    <button type="button" id="btnAddScanner" className="btn btn-primary">Add Scanner</button>
+                    <button type="button" id="btnAddScanner" className="btn btn-primary" onClick={() => setShowAddModal(true)}>Add Scanner</button>
                 </div>
-            </div>
+            </div>    
             <div className="divider divider-primary mx-3 mb-3"></div>
-            <div className="flex justify-center h-full">
+            <div className="flex justify-center">
                 <div className="border-2 border-primary w-fit h-fit rounded-xl min-h-0">
                     <table className="border border-primary border-collapse rounded-xl bg-base-100 shadow-sm overflow-hidden min-w-0">
                       <thead className="sticky top-0 bg-base-300 z-10">
@@ -87,7 +107,7 @@ const AdminScanners = () => {
                             </td>
                             <td className="text-center py-3">{formatTime(scanner.createdAt)}</td>
                             <td className="text-center py-3">{scanner.authorization}</td>
-                            <td className="text-center py-3"><button type="button" id="btnUpdateScanner" className="btn btn-primary mb-3 lg:mb-0 lg:me-3">Update Scanner</button><button type="button" id="btnDeleteScanner" className="btn btn-error">Delete Scanner</button></td>
+                            <td className="text-center py-3"><button type="button" id="btnUpdateScanner" className="btn btn-primary mb-3 lg:mb-0 lg:me-3" onClick={() => setShowUpdateModal(true)}>Update Scanner</button><button type="button" id="btnDeleteScanner" className="btn btn-error" onClick={() => {console.log(scanner.deviceId);deleteScanner(scanner.deviceId)}}>Delete Scanner</button></td>
                           </tr>
                         ))}
                       </tbody>
@@ -95,6 +115,9 @@ const AdminScanners = () => {
                 </div>
             </div>
         </div>
+        {showAddModal && (<AddScannerModal onClose={() => setShowAddModal(false)} />)}
+        {showAddModal && (<AddScannerModal onClose={() => setShowAddModal(false)} />)}
+        </>
     )
 }
 

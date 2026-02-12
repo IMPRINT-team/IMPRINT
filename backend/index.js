@@ -23,7 +23,7 @@ async function connectToDatabase() {
   }
 }
 
-app.listen(port, () => {
+app.listen(8080, () => {
   console.log(`Backend listening on port ${port}!`);
   connectToDatabase();
 });
