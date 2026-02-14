@@ -2,6 +2,8 @@ import { MapPin, CuboidIcon, PlusCircleIcon } from "lucide-react"
 import React from 'react'
 import { useState } from 'react'
 
+const BASE_URL = "http://localhost:8080/"
+
 function AddScannerModal({ onClose }) {
   const [scannerData, setScannerData] = useState({
     location: "",
@@ -11,7 +13,9 @@ function AddScannerModal({ onClose }) {
   })
 
   async function addScanner () {
-    console.log("Created")
+    const res = await fetch(`${BASE_URL}`, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(scannerData)})
+    const data = await res.json()
+    return window.location.reload()
   }
 
   return (
@@ -22,7 +26,7 @@ function AddScannerModal({ onClose }) {
             </form>
             <h3 className="font-bold text-xl mb-8">Add New Scanner</h3>
 
-            <form onSubmit={addScanner} className="space-y-6">
+          <form onSubmit={addScanner} className="space-y-6">
               <div className="grid gap-6">
                 <div className="form-control">
                     <span className="label-text text-base font-medium mb-2">Scanner General Location</span>
@@ -52,20 +56,23 @@ function AddScannerModal({ onClose }) {
               <div className="form-control">
                 <span className="label-text text-base font-medium mb-2">Scanner Status</span>
               <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Enter your scanner status"
-                  className="input input-bordered py-3 focus:input-primary transition-colors duration-200"
+                <select
+                  className="input input-bordered py-3 text-base-content/50 focus:text-base-content focus:input-primary transition-colors duration-200"
                   value={scannerData.status}
                   onChange={(e) => setScannerData({ ...scannerData, status: e.target.value })}
-                />
+                >
+                  <option value="" className="text-base-content/50" disabled>-- Choose your status --</option>
+                  <option value="ONLINE" className="text-base-content">Online</option>
+                  <option value="OFFLINE" className="text-base-content">Offline</option>
+                </select>
               </div>
             </div>
 
             <div className="form-control">
                 <span className="label-text text-base font-medium mb-2">Scanner Authorization Level</span>
               <div className="relative">
-                  <select name="AuthLevel" id="AuthLevel" className="input input-bordered py-3 me-2 w-full focus:input-primary duration-200 transition-colors text-base-content/50">
+                  <select name="AuthLevel" id="AuthLevel" className="input input-bordered py-3 me-2 w-full text-base-content/50 focus:text-base-content focus:input-primary duration-200 transition-colors" value={scannerData.authorization} onChange={(e) => setScannerData({ ...scannerData, authorization: e.target.value })}>
+                    <option value="" className="text-base-content/50" disabled>-- Auth Level --</option>
                     <option value="BASIC" className="text-base-content">Basic</option>
                     <option value="ADMIN" className="text-base-content">Admin</option>
                   </select>
@@ -77,7 +84,7 @@ function AddScannerModal({ onClose }) {
           {/* MODAL ACTIONS */}
           <div className="modal-action">
             <button className="btn btn-ghost" type="button" onClick={onClose}>Cancel</button>
-            <button type="submit" className="btn btn-primary min-w-[120px]" disabled={!scannerData.location || !scannerData.specificLocation || !scannerData.status}>
+            <button type="submit" className="btn btn-primary min-w-[120px]" disabled={!scannerData.location || !scannerData.specificLocation || !scannerData.status || !scannerData.authorization}>
                   <PlusCircleIcon className="size-5 mr-2" />
                   Add Scanner
             </button>

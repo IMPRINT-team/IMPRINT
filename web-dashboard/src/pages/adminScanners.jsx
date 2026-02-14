@@ -55,7 +55,7 @@ const AdminScanners = () => {
 
     async function deleteScanner(id) {
         await fetch(`${BASE_URL}admin/scanners/${id}`, {method: "DELETE"})
-        window.location.replace(`http://localhost:5173/admin/scanners`)     // TODO: CHANGE LATER
+        window.location.reload()     // TODONE: CHANGE LATER
     }
 
     const scannerMap = new Map(scanners.map((scanner) => [scanner.deviceId, scanner]))
@@ -85,7 +85,7 @@ const AdminScanners = () => {
             </div>    
             <div className="divider divider-primary mx-3 mb-3"></div>
             <div className="flex justify-center">
-                <div className="border-2 border-primary w-fit h-fit rounded-xl min-h-0">
+                <div className="border-2 border-primary h-fit rounded-xl min-h-0">
                     <table className="border border-primary border-collapse rounded-xl bg-base-100 shadow-sm overflow-hidden min-w-0">
                       <thead className="sticky top-0 bg-base-300 z-10">
                         <tr className=" border-b border-secondary uppercase">

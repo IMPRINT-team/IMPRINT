@@ -9,12 +9,13 @@ import StatsPannel from "../components/dashboard/StatsPannel.jsx";
 
 const Dashboard = () => (
   <div className="min-h-screen bg-base-100 text-base-content">
-    <div className="mx-auto max-w-screen-2xl min-h-screen flex flex-col px-12 pt-12">
+    <div className="mx-auto max-w-screen-2xl min-h-screen flex flex-col px-12">
       
-      {/* Header */}
+      <div className="sticky pt-6 top-0 bg-base-100 z-[9999]">
+        {/* Header */}
       <header className="flex items-center gap-4 shrink-0">
         <ImprintLogo
-          className="text-primary size-20 shrink-0"
+          className="text-primary size-14 shrink-0"
           aria-hidden="true"
         />
 
@@ -26,6 +27,7 @@ const Dashboard = () => (
       </header>
 
       <div className="divider divider-primary shrink-0" />
+      </div>
 
       {/* Main */}
       <main className="flex-1 min-h-0 overflow-hidden">

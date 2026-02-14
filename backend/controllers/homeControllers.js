@@ -84,6 +84,18 @@ export const getScannersBySpecLocation = async (req, res) => {
     }
 }
 
+export const createScanner = async (req, res) => {
+    try {
+        const { location, specificLocation, status, authorization } = req.body
+        await prisma.scanner.create({
+            data: {location, specificLocation, status, authorization}
+        })
+        res.status(200)
+    } catch (err) {
+        res.status(500).json({success: false, error: err})
+    }
+}
+
 export const deleteScanner = async (req, res) => {
     try {
         const scannerId = req.params.id;
