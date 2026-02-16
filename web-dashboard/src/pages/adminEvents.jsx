@@ -46,13 +46,13 @@ const AdminEvents = () => {
                 </div>
                 <div className="flex justify-left align-middle">
                     <select name="SearchFor" id="txtParam" className="select border border-primary rounded-lg">
-                        <option value="" select disabled>--- Choose your search type ---</option>
+                        <option value="" disabled>--- Choose your search type ---</option>
                         <option value="userId">Event ID</option>
                         <option value="email">Event Type</option>
                         <option value="name">Occured At</option>
                         <option value="accessLevel">Result</option>
                     </select>
-                    <label for="txtReq" className="label mx-3 text-nowrap">Specific Search:</label>
+                    <label htmlFor="txtReq" className="label mx-3 text-nowrap">Specific Search:</label>
                     <input type="text" className="input border border-primary" id="txtReq" placeholder="Type the user information"/>
                     <button type="button" id="btnSearch" className="btn btn-primary mx-3">Search</button>
                 </div>
@@ -60,7 +60,7 @@ const AdminEvents = () => {
             <div className="divider divider-primary mx-3 mb-3"></div>
             <div className="flex justify-center h-full">
                 <div className="border-2 border-primary w-fit h-fit rounded-xl min-h-0">
-                    <table className="border border-primary border-collapse rounded-xl bg-base-100 shadow-sm overflow-hidden min-w-0" options={{dom: 'ftip', pagingType: 'simple',}}>
+                    <table className="border border-primary border-collapse rounded-xl bg-base-100 shadow-sm overflow-hidden min-w-0">
                       <thead className="sticky top-0 bg-base-300 z-10">
                         <tr className=" border-b border-secondary uppercase">
                           <th className="py-2 text-primary text-center align-middle text-sm">Event ID</th>
