@@ -4,6 +4,7 @@ import vector1 from "../../../assets/playground/vector-1.svg";
 import vector3 from "../../../assets/playground/vector-3.svg";
 import EventItem from "./components/EventItem";
 import ScannerItem from "./components/ScannerItem";
+import HeroEventsCalendar from "./components/HeroEventsCalendar";
 import React from "react"
 
 const PlaygroundFigmaRoot = () => {
@@ -62,7 +63,7 @@ const PlaygroundFigmaRoot = () => {
       </header>
 
       <main
-        className="absolute top-[94px] left-[5px] w-[997px] h-[652px] flex items-center justify-center rounded-lg border-2 border-solid"
+        className="absolute top-[94px] left-[5px] w-[997px] h-[652px] rounded-lg border-2 border-solid"
         style={{
           borderColor: "oklch(var(--p) / 0.45)",
           backgroundImage:
@@ -70,11 +71,7 @@ const PlaygroundFigmaRoot = () => {
         }}
         aria-label="Main display area"
       >
-        <div
-          className="mt-2 h-[461px] ml-px w-[461px] rounded-[230.5px] border-[15px] border-solid opacity-60"
-          style={{ borderColor: "oklch(var(--b3))" }}
-          role="presentation"
-        />
+        <HeroEventsCalendar />
       </main>
 
       <section
