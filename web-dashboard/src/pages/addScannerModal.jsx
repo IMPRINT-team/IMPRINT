@@ -5,7 +5,7 @@ const BASE_URL = 'http://localhost:8080/'
 
 function AddScannerModal({ onClose }) {
   async function addScanner(scannerData) {
-    await fetch(`${BASE_URL}admin/scanners`, {
+    await fetch(`${BASE_URL}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
