@@ -1,0 +1,238 @@
+{
+  "name": "IMPRINT User Stories",
+  "lists": [
+    {
+      "name": "Product Backlog",
+      "cards": [
+        {
+          "name": "Event Audit Trail: Log scan times by Card UID",
+          "desc": "## Summary\nAs an Admin, I want each RFID scan to be stored with a timestamp and card identifier so I can measure arrivals/departures and produce an audit trail.\n\n## Value\nCreates verifiable logs and high-fidelity occupancy data for analytics, compliance, and resource planning.\n\n## Notes\n- Canonical event fields should include: event_id (or idempotency key), card_uid, scanner_id, timestamp, decision (allow/deny), optional reason.\n\n## Story Points\n5\n\nSource URL: https://trello.com/c/TL82LVPy/10-logging-scan-times-with-id-5",
+          "labels": ["analytics", "backend", "data"],
+          "checklists": [
+            {
+              "name": "Acceptance Criteria",
+              "items": [
+                "On scan, backend persists an event with card_uid and timestamp",
+                "Timestamp is stored in a consistent timezone strategy (UTC recommended) and displayed correctly in UI",
+                "Events include scanner_id and allow/deny decision (and reason if denied)",
+                "Duplicates are prevented or safely handled (idempotency or de-dupe rules documented)",
+                "Basic query support exists for date range and card_uid (even if UI comes later)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Admin Console: Manage cards and scanners (CRUD)",
+          "desc": "## Summary\nAs an Admin, I want a single admin console to create, update, and remove scanners and RFID cards so the system’s \"source of truth\" stays accurate.\n\n## Value\nCentralized lifecycle management reduces configuration drift and operational friction.\n\n## Story Points\n3\n\nSource URL: https://trello.com/c/FLIbg91Y/18-admin-page-3",
+          "labels": ["frontend"],
+          "checklists": [
+            {
+              "name": "Admin Console Checklist",
+              "items": [
+                "View list of scanners and cards",
+                "Create new scanner / card",
+                "Edit scanner / card fields",
+                "Deactivate or delete scanner / card (policy-defined)",
+                "Form validation + clear success/error feedback"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Secure Admin Login (baseline)",
+          "desc": "## Summary\nAs an Admin, I want secure login so that only authorized users can access dashboards and privileged actions.\n\n## Value\nProtects sensitive logs/configuration from unauthorized access and reduces risk of malicious changes.\n\n## Story Points\n2\n\nSource URL: https://trello.com/c/zYWQBmjb/16-secure-login-2",
+          "labels": ["auth"],
+          "checklists": [
+            {
+              "name": "Acceptance Criteria",
+              "items": [
+                "Unauthenticated users are redirected to login",
+                "Authenticated sessions are required for admin routes",
+                "Logout invalidates session on client and server (or token expiration enforced)",
+                "Basic audit visibility: last login recorded (can be stubbed if tracked elsewhere)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Login UX: Validation + error states",
+          "desc": "## Summary\nAs a user, I want clear login validation and error messaging so I can fix issues quickly without guessing.\n\n## Value\nReduces failed-login friction and support burden; improves perceived reliability.\n\nSource URLs:\n- https://trello.com/c/5JozErKB/33-wrong-username-message\n- https://trello.com/c/9uVZ9Gwa/35-wrong-password-message\n- https://trello.com/c/YuiqkFkx/36-missing-username-message\n- https://trello.com/c/gTaOWpPg/37-missing-password-message",
+          "labels": ["auth", "frontend"],
+          "checklists": [
+            {
+              "name": "UI States",
+              "items": [
+                "Missing username -> inline message + focus username field",
+                "Missing password -> inline message + focus password field",
+                "Wrong username -> generic auth error (avoid user enumeration where possible)",
+                "Wrong password -> generic auth error (avoid user enumeration where possible)",
+                "Error messages are accessible (ARIA) and consistent styling"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Account Recovery: Username + password recovery flows",
+          "desc": "## Summary\nAs an Admin, I want recovery options so locked-out users can regain access safely.\n\n## Value\nReduces downtime and avoids manual intervention.\n\nSource URLs:\n- https://trello.com/c/grYR4KWc/39-password-recovery\n- https://trello.com/c/tIgaEsJY/40-username-recovery",
+          "labels": ["auth", "frontend"],
+          "checklists": [
+            {
+              "name": "Acceptance Criteria",
+              "items": [
+                "Password reset flow exists (email or admin-mediated, depending on policy)",
+                "Username recovery flow exists (if usernames are user-facing; otherwise omit)",
+                "Recovery attempts are rate limited and logged",
+                "Links/tokens expire and are single-use"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Account Creation: Secure onboarding w/ DB connection",
+          "desc": "## Summary\nAs a Platform Owner, I want a secure account creation flow that correctly links to the database so new admins can onboard without compromising security.\n\n## Value\nEnables controlled onboarding and prevents misconfiguration that could expose data.\n\nSource URL: https://trello.com/c/aZPEwNdV/43-feature-secure-account-creation-w-database-connection-link",
+          "labels": ["auth", "backend", "database"],
+          "checklists": [
+            {
+              "name": "Acceptance Criteria",
+              "items": [
+                "Account creation requires an invite or policy-approved constraint",
+                "Created accounts are stored in DB with required fields",
+                "Default role is least-privileged; elevation requires explicit action",
+                "Creation flow validates DB connectivity and surfaces actionable errors"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Account Lifecycle UI: Create + delete account",
+          "desc": "## Summary\nAs an Admin, I want UI flows to create and delete accounts so I can manage access without touching the database.\n\n## Value\nImproves day-to-day administration and access hygiene.\n\nSource URLs:\n- https://trello.com/c/WR6ygtHU/48-feature-create-account\n- https://trello.com/c/nUbTXayg/46-feature-delete-account\n- https://trello.com/c/Rm8chckZ/54-account-creation-ui\n- https://trello.com/c/rUQmzAdT/55-account-deletion-ui",
+          "labels": ["auth", "frontend"],
+          "checklists": [
+            {
+              "name": "UI Acceptance Criteria",
+              "items": [
+                "Create account form with validation + success state",
+                "Delete account flow requires confirmation + warns about impact",
+                "Errors are specific and actionable (permission denied, network, validation)",
+                "UX aligns with role permissions (only authorized admins see these screens)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reporting: Export event data to CSV (UI + API)",
+          "desc": "## Summary\nAs an Admin/Analyst, I want to export event data to CSV so I can analyze scans externally.\n\n## Value\nEnables quick offline analysis, sharing, and auditing.\n\nSource URLs:\n- https://trello.com/c/DKR4SFOS/53-export-data-as-a-csv\n- https://trello.com/c/kxBBFDb9/56-data-export-button",
+          "labels": ["data", "frontend"],
+          "checklists": [
+            {
+              "name": "Acceptance Criteria",
+              "items": [
+                "Export action produces a CSV with stable column headers",
+                "CSV includes: timestamp, card_uid, scanner_id, decision, reason (if any)",
+                "Export respects filters (date range, scanner, card) when present",
+                "Large exports handle pagination/streaming or show progress/error"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Device Authentication: Shared device_secret for scanners",
+          "desc": "## Summary\nAs the backend, I want scanners to authenticate with a shared device_secret so only approved hardware can post events.\n\n## Value\nPrevents unauthorized devices from injecting data and improves system integrity.\n\n## Story Points\n2\n\nSource URL: https://trello.com/c/VrhUpqgo/27-device-authentication-2",
+          "labels": ["auth", "backend", "hardware"],
+          "checklists": [
+            {
+              "name": "Acceptance Criteria",
+              "items": [
+                "Device requests include device_secret (or derived token) on event POST",
+                "Backend rejects missing/invalid secrets with clear error codes",
+                "Rotation strategy exists (even if manual) and is documented",
+                "Secrets are never returned in API responses or logs"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Branding: IMPRINT logo asset + usage rules",
+          "desc": "## Summary\nAs a user, I want consistent branding so the dashboard looks polished and trustworthy.\n\n## Value\nImproves perceived quality and UI cohesion.\n\nSource URL: https://trello.com/c/1zqS36sG/57-logo",
+          "labels": ["frontend", "ux"],
+          "checklists": [
+            {
+              "name": "Checklist",
+              "items": [
+                "Logo exists in appropriate formats (SVG preferred, PNG fallback)",
+                "Consistent placement (login + dashboard header/nav)",
+                "Light/dark theme compatibility",
+                "Basic spacing/size guidelines documented"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "RFID Card Data Model: Store multiple fields per card",
+          "desc": "## Summary\nAs the system, I want RFID cards to store multiple fields (e.g., UID, access level, metadata) so authorization and reporting are accurate.\n\n## Value\nEnables richer policies and better analytics without schema hacks later.\n\nSource URL: https://trello.com/c/ESQEkfVi/59-store-multiple-fields-of-data-on-a-card",
+          "labels": ["backend", "data", "database"],
+          "checklists": [
+            {
+              "name": "Acceptance Criteria",
+              "items": [
+                "DB schema supports card UID + additional fields (access level, notes, status, etc.)",
+                "Backend endpoints can read/update these fields (permissions enforced)",
+                "Fields are validated and typed (no unbounded junk fields)",
+                "Migration path is documented (seed + local dev setup)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Scanner Setup: Wi-Fi selector in frontend (commissioning)",
+          "desc": "## Summary\nAs a Technician, I want a UI to help configure scanner Wi-Fi so devices can be provisioned quickly and consistently.\n\n## Value\nReduces setup time and field errors.\n\nSource URL: https://trello.com/c/d2CnD3P6/63-feature-front-end-wifi-selector-for-card-scenner",
+          "labels": ["frontend", "hardware"],
+          "checklists": [
+            {
+              "name": "Acceptance Criteria",
+              "items": [
+                "UI provides a Wi-Fi selection/config flow compatible with device provisioning approach",
+                "Clear success/failure messaging (including common causes)",
+                "No secrets are exposed in logs/UI beyond what policy allows",
+                "Provisioning steps are documented for technicians"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Scanner UX: Error messages + recovery guidance",
+          "desc": "## Summary\nAs a user/tech, I want scanner error messages that explain what went wrong and what to do next.\n\n## Value\nReduces troubleshooting time and support escalations.\n\nSource URL: https://trello.com/c/7k77YnYB/73-feature-scanner-error-messages",
+          "labels": ["frontend", "hardware"],
+          "checklists": [
+            {
+              "name": "Error Coverage",
+              "items": [
+                "Offline / cannot reach backend",
+                "Invalid device auth / blocked scanner",
+                "Card denied (with reason when available)",
+                "Hardware fault (RFID read failure) with suggested steps",
+                "Messages are consistent across UI and device feedback (LED/buzzer)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Authorization Data: Embed access level on card record",
+          "desc": "## Summary\nAs the backend, I want each card to have an access level/preset so authorization decisions can be enforced consistently.\n\n## Value\nEnables scalable access policies without custom logic per site.\n\nSource URL: https://trello.com/c/cZY4RV4X/77-feature-card-access-on-card",
+          "labels": ["backend", "data"],
+          "checklists": [
+            {
+              "name": "Acceptance Criteria",
+              "items": [
+                "Card record includes access level/preset reference",
+                "Authorization checks use this field when evaluating scans",
+                "Admin UI can view/edit access level (role protected)",
+                "Denial reasons include policy mismatch when relevant"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
