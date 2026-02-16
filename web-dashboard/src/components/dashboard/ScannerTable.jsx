@@ -6,7 +6,8 @@ const BASE_URL = "http://localhost:8080/"
 
 const getScanners = async () => {
   const scanners = await fetch(`${BASE_URL}`)
-  return scanners
+  const scannerData = await scanners.json()
+  return scannerData
 }
 
 const formatTime = (value) => {
