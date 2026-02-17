@@ -27,6 +27,12 @@ jobs:
       - name: Lint web dashboard
         run: npm run lint -w web-dashboard -- --max-warnings=0
 
+      - name: Test backend
+        run: npm test -w backend
+
+      - name: Test web dashboard
+        run: npm test -w web-dashboard
+
       - name: Build backend
         run: npm run build -w backend
 
