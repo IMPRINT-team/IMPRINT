@@ -5,10 +5,22 @@ import cors from "cors";
 import homeRouter from "./routes/homeRoutes.js";
 
 
-dotenv.config({ path: "../.env" });
+dotenv.config();
 
 const app = express();
-const prisma = new PrismaClient();
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error("DATABASE_URL must be set for backend runtime");
+}
+
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: databaseUrl,
+    },
+  },
+});
 const port = process.env.PORT || 8080;
 
 app.use(express.json());
