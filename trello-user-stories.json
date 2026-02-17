@@ -1,1086 +1,150 @@
 {
   "name": "IMPRINT User Stories",
+  "defaultLists": false,
+  "labels": [
+    { "name": "software", "color": "yellow", "id": "lab_software" },
+    { "name": "hardware", "color": "red", "id": "lab_hardware" },
+    { "name": "front end", "color": "sky", "id": "lab_frontend" },
+    { "name": "back end", "color": "green", "id": "lab_backend" },
+    { "name": "admin", "color": "purple", "id": "lab_admin" },
+    { "name": "devops", "color": "orange", "id": "lab_devops" }
+  ],
+  "customFields": [],
   "lists": [
     {
       "name": "Product Backlog",
       "cards": [
         {
-          "name": "Feature:",
-          "desc": "Value:\n\nSource URL: https://trello.com/c/LrDZKUvk/9-feature",
-          "labels": []
-        },
-        {
-          "name": "logging scan times with ID",
-          "desc": "Who: Admin\n\nWhat Feature: logging scan times with ID\n\nUse Case: Know when card holders show up and leave\n\nValue: Establishes a verifiable audit trail and generates high-fidelity occupancy data, enabling precise resource allocation and compliance reporting.\n\nStory Points: 5\nSource URL: https://trello.com/c/TL82LVPy/10-logging-scan-times-with-id-5",
-          "labels": [
-            "analytics",
-            "backend",
-            "data"
+          "name": "logging scan times with ID: 5",
+          "desc": "As a system auditor, I want to log the exact time of every card scan so that I can track peak usage periods.",
+          "idLabels": ["lab_backend"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "Database schema updated to include timestamp", "state": "incomplete" },
+                { "name": "API endpoint accepts scan events", "state": "incomplete" },
+                { "name": "Unit tests for time-zone consistency", "state": "incomplete" }
+              ]
+            }
           ]
         },
         {
-          "name": "Admin Page",
-          "desc": "Who: Admin\n\nWhat Feature: Admin Page\n\nUse Case: do CRUD for cards and scanners WOOO\n\nValue: Centralizes resource lifecycle management, providing a streamlined interface for maintaining the \"source of truth\" for all authorized devices and credentials.\n\nStory Points: 3\nSource URL: https://trello.com/c/FLIbg91Y/18-admin-page-3",
-          "labels": [
-            "frontend"
+          "name": "Admin Page: 3",
+          "desc": "As an administrator, I want a centralized dashboard so that I can manage users and view system health.",
+          "idLabels": ["lab_admin", "lab_frontend"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "Admin role-based access control (RBAC) enforced", "state": "incomplete" },
+                { "name": "UI components for scanner list implemented", "state": "incomplete" },
+                { "name": "Integration with backend management API", "state": "incomplete" }
+              ]
+            }
           ]
         },
         {
-          "name": "Secure Login",
-          "desc": "Who: Admin\n\nWhat Feature: Secure Login\n\nUse Case: Protect the data from bad actors\n\nValue: Safeguards system integrity and data privacy, mitigating the risk of unauthorized access to sensitive interaction logs and preventing malicious configuration.\n\nStory Points: 2\nSource URL: https://trello.com/c/zYWQBmjb/16-secure-login-2",
-          "labels": [
-            "auth"
+          "name": "Secure Login: 2",
+          "desc": "As a user, I want my credentials to be encrypted so that my account remains safe.",
+          "idLabels": ["lab_backend", "lab_software"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "JWT/Session token generation secure", "state": "incomplete" },
+                { "name": "Password hashing with salt verified", "state": "incomplete" },
+                { "name": "HTTPS enforcement for login endpoint", "state": "incomplete" }
+              ]
+            }
           ]
         },
         {
-          "name": "Wrong Username Message",
-          "desc": "Source URL: https://trello.com/c/5JozErKB/33-wrong-username-message",
-          "labels": [
-            "auth",
-            "frontend"
+          "name": "Wrong Username/Password Messages",
+          "desc": "As a user, I want clear feedback on failed logins.",
+          "idLabels": ["lab_frontend"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "Error messages display in UI toast or alert", "state": "incomplete" },
+                { "name": "Aria-live attributes added for screen readers", "state": "incomplete" },
+                { "name": "Input fields highlighted on error", "state": "incomplete" }
+              ]
+            }
           ]
         },
         {
-          "name": "Wrong Password Message",
-          "desc": "Source URL: https://trello.com/c/9uVZ9Gwa/35-wrong-password-message",
-          "labels": [
-            "auth",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Missing Username Message",
-          "desc": "Source URL: https://trello.com/c/YuiqkFkx/36-missing-username-message",
-          "labels": [
-            "auth",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Missing Password Message",
-          "desc": "Source URL: https://trello.com/c/gTaOWpPg/37-missing-password-message",
-          "labels": [
-            "auth",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Password Recovery",
-          "desc": "Source URL: https://trello.com/c/grYR4KWc/39-password-recovery",
-          "labels": [
-            "auth",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Username Recovery",
-          "desc": "Source URL: https://trello.com/c/tIgaEsJY/40-username-recovery",
-          "labels": [
-            "auth",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Feature: Secure Account Creation w/ Database Connection link",
-          "desc": "Source URL: https://trello.com/c/aZPEwNdV/43-feature-secure-account-creation-w-database-connection-link",
-          "labels": [
-            "auth",
-            "backend",
-            "database"
-          ]
-        },
-        {
-          "name": "Feature: Create Account",
-          "desc": "Source URL: https://trello.com/c/WR6ygtHU/48-feature-create-account",
-          "labels": [
-            "auth",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Feature: Delete Account",
-          "desc": "Source URL: https://trello.com/c/nUbTXayg/46-feature-delete-account",
-          "labels": [
-            "auth",
-            "frontend"
+          "name": "Device Authentication: 2",
+          "desc": "As a developer, I want scanners to authenticate via unique secrets.",
+          "idLabels": ["lab_hardware", "lab_backend"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "Unique device IDs stored in DB", "state": "incomplete" },
+                { "name": "Handshake protocol implemented in firmware", "state": "incomplete" },
+                { "name": "Unauthorized devices rejected with 401", "state": "incomplete" }
+              ]
+            }
           ]
         },
         {
           "name": "Export data as a csv",
-          "desc": "Source URL: https://trello.com/c/DKR4SFOS/53-export-data-as-a-csv",
-          "labels": [
-            "data",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Device Authentication",
-          "desc": "Authenticate devices using a shared device_secret.\n\nStory Points: 2\nSource URL: https://trello.com/c/VrhUpqgo/27-device-authentication-2",
-          "labels": [
-            "auth",
-            "backend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Account Creation UI",
-          "desc": "Source URL: https://trello.com/c/Rm8chckZ/54-account-creation-ui",
-          "labels": [
-            "auth",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Account Deletion UI",
-          "desc": "Source URL: https://trello.com/c/rUQmzAdT/55-account-deletion-ui",
-          "labels": [
-            "auth",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Data Export Button",
-          "desc": "Source URL: https://trello.com/c/kxBBFDb9/56-data-export-button",
-          "labels": [
-            "data",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Logo",
-          "desc": "Source URL: https://trello.com/c/1zqS36sG/57-logo",
-          "labels": [
-            "frontend",
-            "ux"
-          ]
-        },
-        {
-          "name": "Store Multiple Fields of Data on a Card",
-          "desc": "Source URL: https://trello.com/c/ESQEkfVi/59-store-multiple-fields-of-data-on-a-card",
-          "labels": [
-            "backend",
-            "data",
-            "database"
-          ]
-        },
-        {
-          "name": "Feature: Front end wifi selector for card scenner",
-          "desc": "Source URL: https://trello.com/c/d2CnD3P6/63-feature-front-end-wifi-selector-for-card-scenner",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Feature: Scanner Error Messages",
-          "desc": "Source URL: https://trello.com/c/7k77YnYB/73-feature-scanner-error-messages",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Feature: Card Access on Card",
-          "desc": "Source URL: https://trello.com/c/cZY4RV4X/77-feature-card-access-on-card",
-          "labels": [
-            "backend",
-            "data"
-          ]
-        },
-        {
-          "name": "Authentication - MFA enrollment prompt",
-          "desc": "Who: Admin\n\nWhat Feature: Authentication MFA enrollment prompt\n\nUse Case: reduce manual work during daily operations\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 1",
-          "labels": [
-            "auth",
-            "security"
-          ]
-        },
-        {
-          "name": "Authentication - Login rate limit",
-          "desc": "Who: Security Admin\n\nWhat Feature: Authentication Login rate limit\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 2",
-          "labels": [
-            "auth",
-            "security"
-          ]
-        },
-        {
-          "name": "Authentication - Session timeout warning",
-          "desc": "Who: Operations\n\nWhat Feature: Authentication Session timeout warning\n\nUse Case: prepare accurate audit evidence\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 3",
-          "labels": [
-            "auth",
-            "security"
-          ]
-        },
-        {
-          "name": "Authentication - Active sessions panel",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Authentication Active sessions panel\n\nUse Case: manage growth across locations\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 5",
-          "labels": [
-            "auth",
-            "security"
-          ]
-        },
-        {
-          "name": "Authentication - Invite-only admin onboarding",
-          "desc": "Who: Technician\n\nWhat Feature: Authentication Invite-only admin onboarding\n\nUse Case: debug production issues without database access\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 8",
-          "labels": [
-            "auth",
-            "security"
-          ]
-        },
-        {
-          "name": "Authentication - Password complexity policy",
-          "desc": "Who: Analyst\n\nWhat Feature: Authentication Password complexity policy\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 1",
-          "labels": [
-            "auth",
-            "security"
-          ]
-        },
-        {
-          "name": "Authentication - Privileged action re-auth",
-          "desc": "Who: Admin\n\nWhat Feature: Authentication Privileged action re-auth\n\nUse Case: reduce manual work during daily operations\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 2",
-          "labels": [
-            "auth",
-            "security"
-          ]
-        },
-        {
-          "name": "Authorization - Read-only auditor role",
-          "desc": "Who: Security Admin\n\nWhat Feature: Authorization Read-only auditor role\n\nUse Case: prepare accurate audit evidence\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 2",
-          "labels": [
-            "auth",
-            "backend"
-          ]
-        },
-        {
-          "name": "Authorization - Role-based widget visibility",
-          "desc": "Who: Operations\n\nWhat Feature: Authorization Role-based widget visibility\n\nUse Case: manage growth across locations\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 3",
-          "labels": [
-            "auth",
-            "backend"
-          ]
-        },
-        {
-          "name": "Authorization - Approval required for access override",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Authorization Approval required for access override\n\nUse Case: debug production issues without database access\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 5",
-          "labels": [
-            "auth",
-            "backend"
-          ]
-        },
-        {
-          "name": "Authorization - Role change history",
-          "desc": "Who: Technician\n\nWhat Feature: Authorization Role change history\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 8",
-          "labels": [
-            "auth",
-            "backend"
-          ]
-        },
-        {
-          "name": "Authorization - Scoped permissions by site",
-          "desc": "Who: Analyst\n\nWhat Feature: Authorization Scoped permissions by site\n\nUse Case: reduce manual work during daily operations\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 1",
-          "labels": [
-            "auth",
-            "backend"
-          ]
-        },
-        {
-          "name": "Authorization - Permission matrix editor",
-          "desc": "Who: Admin\n\nWhat Feature: Authorization Permission matrix editor\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 2",
-          "labels": [
-            "auth",
-            "backend"
-          ]
-        },
-        {
-          "name": "Authorization - Permission audit export",
-          "desc": "Who: Security Admin\n\nWhat Feature: Authorization Permission audit export\n\nUse Case: prepare accurate audit evidence\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 3",
-          "labels": [
-            "auth",
-            "backend"
-          ]
-        },
-        {
-          "name": "Admin Accounts - Bulk create admins",
-          "desc": "Who: Operations\n\nWhat Feature: Admin Accounts Bulk create admins\n\nUse Case: debug production issues without database access\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 3",
-          "labels": [
-            "frontend",
-            "backend"
-          ]
-        },
-        {
-          "name": "Admin Accounts - Deactivate admin account",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Admin Accounts Deactivate admin account\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 5",
-          "labels": [
-            "frontend",
-            "backend"
-          ]
-        },
-        {
-          "name": "Admin Accounts - Account restore flow",
-          "desc": "Who: Technician\n\nWhat Feature: Admin Accounts Account restore flow\n\nUse Case: reduce manual work during daily operations\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 8",
-          "labels": [
-            "frontend",
-            "backend"
-          ]
-        },
-        {
-          "name": "Admin Accounts - Resend invite",
-          "desc": "Who: Analyst\n\nWhat Feature: Admin Accounts Resend invite\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 1",
-          "labels": [
-            "frontend",
-            "backend"
-          ]
-        },
-        {
-          "name": "Admin Accounts - Last login timestamp",
-          "desc": "Who: Admin\n\nWhat Feature: Admin Accounts Last login timestamp\n\nUse Case: prepare accurate audit evidence\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 2",
-          "labels": [
-            "frontend",
-            "backend"
-          ]
-        },
-        {
-          "name": "Admin Accounts - Account status filters",
-          "desc": "Who: Security Admin\n\nWhat Feature: Admin Accounts Account status filters\n\nUse Case: manage growth across locations\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 3",
-          "labels": [
-            "frontend",
-            "backend"
-          ]
-        },
-        {
-          "name": "Admin Accounts - Account notes field",
-          "desc": "Who: Operations\n\nWhat Feature: Admin Accounts Account notes field\n\nUse Case: debug production issues without database access\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 5",
-          "labels": [
-            "frontend",
-            "backend"
-          ]
-        },
-        {
-          "name": "Scanners - Scanner heartbeat monitor",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Scanners Scanner heartbeat monitor\n\nUse Case: reduce manual work during daily operations\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 5",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Scanners - Scanner last-seen timestamp",
-          "desc": "Who: Technician\n\nWhat Feature: Scanners Scanner last-seen timestamp\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 8",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Scanners - Scanner firmware version display",
-          "desc": "Who: Analyst\n\nWhat Feature: Scanners Scanner firmware version display\n\nUse Case: prepare accurate audit evidence\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 1",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Scanners - Remote scanner restart",
-          "desc": "Who: Admin\n\nWhat Feature: Scanners Remote scanner restart\n\nUse Case: manage growth across locations\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 2",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Scanners - Scanner maintenance mode",
-          "desc": "Who: Security Admin\n\nWhat Feature: Scanners Scanner maintenance mode\n\nUse Case: debug production issues without database access\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 3",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Scanners - Scanner health badge",
-          "desc": "Who: Operations\n\nWhat Feature: Scanners Scanner health badge\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 5",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Scanners - Scanner commissioning checklist",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Scanners Scanner commissioning checklist\n\nUse Case: reduce manual work during daily operations\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 8",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "RFID Cards - Bulk card import CSV",
-          "desc": "Who: Technician\n\nWhat Feature: RFID Cards Bulk card import CSV\n\nUse Case: prepare accurate audit evidence\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 8",
-          "labels": [
-            "backend",
-            "data"
-          ]
-        },
-        {
-          "name": "RFID Cards - Card expiration date",
-          "desc": "Who: Analyst\n\nWhat Feature: RFID Cards Card expiration date\n\nUse Case: manage growth across locations\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 1",
-          "labels": [
-            "backend",
-            "data"
-          ]
-        },
-        {
-          "name": "RFID Cards - Temporary guest card",
-          "desc": "Who: Admin\n\nWhat Feature: RFID Cards Temporary guest card\n\nUse Case: debug production issues without database access\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 2",
-          "labels": [
-            "backend",
-            "data"
-          ]
-        },
-        {
-          "name": "RFID Cards - Lost card quick deactivation",
-          "desc": "Who: Security Admin\n\nWhat Feature: RFID Cards Lost card quick deactivation\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 3",
-          "labels": [
-            "backend",
-            "data"
-          ]
-        },
-        {
-          "name": "RFID Cards - Card access presets",
-          "desc": "Who: Operations\n\nWhat Feature: RFID Cards Card access presets\n\nUse Case: reduce manual work during daily operations\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 5",
-          "labels": [
-            "backend",
-            "data"
-          ]
-        },
-        {
-          "name": "RFID Cards - Card assignment history",
-          "desc": "Who: Platform Owner\n\nWhat Feature: RFID Cards Card assignment history\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 8",
-          "labels": [
-            "backend",
-            "data"
-          ]
-        },
-        {
-          "name": "RFID Cards - Card metadata notes",
-          "desc": "Who: Technician\n\nWhat Feature: RFID Cards Card metadata notes\n\nUse Case: prepare accurate audit evidence\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 1",
-          "labels": [
-            "backend",
-            "data"
-          ]
-        },
-        {
-          "name": "Events - Event detail drawer",
-          "desc": "Who: Analyst\n\nWhat Feature: Events Event detail drawer\n\nUse Case: debug production issues without database access\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 1",
-          "labels": [
-            "backend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Events - Filter by scanner",
-          "desc": "Who: Admin\n\nWhat Feature: Events Filter by scanner\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 2",
-          "labels": [
-            "backend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Events - Filter by card UID",
-          "desc": "Who: Security Admin\n\nWhat Feature: Events Filter by card UID\n\nUse Case: reduce manual work during daily operations\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 3",
-          "labels": [
-            "backend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Events - Filter by date range",
-          "desc": "Who: Operations\n\nWhat Feature: Events Filter by date range\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 5",
-          "labels": [
-            "backend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Events - Denial reason codes",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Events Denial reason codes\n\nUse Case: prepare accurate audit evidence\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 8",
-          "labels": [
-            "backend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Events - Duplicate event detection",
-          "desc": "Who: Technician\n\nWhat Feature: Events Duplicate event detection\n\nUse Case: manage growth across locations\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 1",
-          "labels": [
-            "backend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Events - Idempotent event ingestion",
-          "desc": "Who: Analyst\n\nWhat Feature: Events Idempotent event ingestion\n\nUse Case: debug production issues without database access\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 2",
-          "labels": [
-            "backend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Reporting - Filtered CSV export",
-          "desc": "Who: Admin\n\nWhat Feature: Reporting Filtered CSV export\n\nUse Case: reduce manual work during daily operations\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 2",
-          "labels": [
-            "analytics",
-            "data"
-          ]
-        },
-        {
-          "name": "Reporting - Weekly summary email",
-          "desc": "Who: Security Admin\n\nWhat Feature: Reporting Weekly summary email\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 3",
-          "labels": [
-            "analytics",
-            "data"
-          ]
-        },
-        {
-          "name": "Reporting - Downtime report",
-          "desc": "Who: Operations\n\nWhat Feature: Reporting Downtime report\n\nUse Case: prepare accurate audit evidence\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 5",
-          "labels": [
-            "analytics",
-            "data"
-          ]
-        },
-        {
-          "name": "Reporting - Denied cards report",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Reporting Denied cards report\n\nUse Case: manage growth across locations\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 8",
-          "labels": [
-            "analytics",
-            "data"
-          ]
-        },
-        {
-          "name": "Reporting - Site-specific report export",
-          "desc": "Who: Technician\n\nWhat Feature: Reporting Site-specific report export\n\nUse Case: debug production issues without database access\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 1",
-          "labels": [
-            "analytics",
-            "data"
-          ]
-        },
-        {
-          "name": "Reporting - Custom date presets",
-          "desc": "Who: Analyst\n\nWhat Feature: Reporting Custom date presets\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 2",
-          "labels": [
-            "analytics",
-            "data"
-          ]
-        },
-        {
-          "name": "Reporting - Period comparison report",
-          "desc": "Who: Admin\n\nWhat Feature: Reporting Period comparison report\n\nUse Case: reduce manual work during daily operations\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 3",
-          "labels": [
-            "analytics",
-            "data"
-          ]
-        },
-        {
-          "name": "Dashboard UX - Global search",
-          "desc": "Who: Security Admin\n\nWhat Feature: Dashboard UX Global search\n\nUse Case: prepare accurate audit evidence\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 3",
-          "labels": [
-            "frontend",
-            "ux"
-          ]
-        },
-        {
-          "name": "Dashboard UX - Saved searches",
-          "desc": "Who: Operations\n\nWhat Feature: Dashboard UX Saved searches\n\nUse Case: manage growth across locations\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 5",
-          "labels": [
-            "frontend",
-            "ux"
-          ]
-        },
-        {
-          "name": "Dashboard UX - Keyboard shortcuts",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Dashboard UX Keyboard shortcuts\n\nUse Case: debug production issues without database access\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 8",
-          "labels": [
-            "frontend",
-            "ux"
-          ]
-        },
-        {
-          "name": "Dashboard UX - Loading skeletons",
-          "desc": "Who: Technician\n\nWhat Feature: Dashboard UX Loading skeletons\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 1",
-          "labels": [
-            "frontend",
-            "ux"
-          ]
-        },
-        {
-          "name": "Dashboard UX - Optimistic updates",
-          "desc": "Who: Analyst\n\nWhat Feature: Dashboard UX Optimistic updates\n\nUse Case: reduce manual work during daily operations\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 2",
-          "labels": [
-            "frontend",
-            "ux"
-          ]
-        },
-        {
-          "name": "Dashboard UX - Context help panel",
-          "desc": "Who: Admin\n\nWhat Feature: Dashboard UX Context help panel\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 3",
-          "labels": [
-            "frontend",
-            "ux"
-          ]
-        },
-        {
-          "name": "Dashboard UX - Onboarding checklist",
-          "desc": "Who: Security Admin\n\nWhat Feature: Dashboard UX Onboarding checklist\n\nUse Case: prepare accurate audit evidence\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 5",
-          "labels": [
-            "frontend",
-            "ux"
-          ]
-        },
-        {
-          "name": "Notifications - Slack alert integration",
-          "desc": "Who: Operations\n\nWhat Feature: Notifications Slack alert integration\n\nUse Case: debug production issues without database access\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 5",
-          "labels": [
-            "backend",
-            "notifications"
-          ]
-        },
-        {
-          "name": "Notifications - Email routing rules",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Notifications Email routing rules\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 8",
-          "labels": [
-            "backend",
-            "notifications"
-          ]
-        },
-        {
-          "name": "Notifications - Quiet hours",
-          "desc": "Who: Technician\n\nWhat Feature: Notifications Quiet hours\n\nUse Case: reduce manual work during daily operations\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 1",
-          "labels": [
-            "backend",
-            "notifications"
-          ]
-        },
-        {
-          "name": "Notifications - Offline scanner alert",
-          "desc": "Who: Analyst\n\nWhat Feature: Notifications Offline scanner alert\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 2",
-          "labels": [
-            "backend",
-            "notifications"
-          ]
-        },
-        {
-          "name": "Notifications - High denial alert",
-          "desc": "Who: Admin\n\nWhat Feature: Notifications High denial alert\n\nUse Case: prepare accurate audit evidence\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 3",
-          "labels": [
-            "backend",
-            "notifications"
-          ]
-        },
-        {
-          "name": "Notifications - Issue acknowledgment",
-          "desc": "Who: Security Admin\n\nWhat Feature: Notifications Issue acknowledgment\n\nUse Case: manage growth across locations\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 5",
-          "labels": [
-            "backend",
-            "notifications"
-          ]
-        },
-        {
-          "name": "Notifications - Issue owner assignment",
-          "desc": "Who: Operations\n\nWhat Feature: Notifications Issue owner assignment\n\nUse Case: debug production issues without database access\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 8",
-          "labels": [
-            "backend",
-            "notifications"
-          ]
-        },
-        {
-          "name": "Multi-site - Organization site switcher",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Multi-site Organization site switcher\n\nUse Case: reduce manual work during daily operations\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 8",
-          "labels": [
-            "backend",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Multi-site - Per-site timezone",
-          "desc": "Who: Technician\n\nWhat Feature: Multi-site Per-site timezone\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 1",
-          "labels": [
-            "backend",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Multi-site - Per-site retention policy",
-          "desc": "Who: Analyst\n\nWhat Feature: Multi-site Per-site retention policy\n\nUse Case: prepare accurate audit evidence\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 2",
-          "labels": [
-            "backend",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Multi-site - Site-specific roles",
-          "desc": "Who: Admin\n\nWhat Feature: Multi-site Site-specific roles\n\nUse Case: manage growth across locations\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 3",
-          "labels": [
-            "backend",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Multi-site - Site health summary",
-          "desc": "Who: Security Admin\n\nWhat Feature: Multi-site Site health summary\n\nUse Case: debug production issues without database access\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 5",
-          "labels": [
-            "backend",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Multi-site - Site onboarding wizard",
-          "desc": "Who: Operations\n\nWhat Feature: Multi-site Site onboarding wizard\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 8",
-          "labels": [
-            "backend",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Multi-site - Site archive workflow",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Multi-site Site archive workflow\n\nUse Case: reduce manual work during daily operations\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 1",
-          "labels": [
-            "backend",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Compliance - Admin action audit log",
-          "desc": "Who: Technician\n\nWhat Feature: Compliance Admin action audit log\n\nUse Case: prepare accurate audit evidence\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 1",
-          "labels": [
-            "security",
-            "compliance"
-          ]
-        },
-        {
-          "name": "Compliance - Audit log export",
-          "desc": "Who: Analyst\n\nWhat Feature: Compliance Audit log export\n\nUse Case: manage growth across locations\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 2",
-          "labels": [
-            "security",
-            "compliance"
-          ]
-        },
-        {
-          "name": "Compliance - Retention controls",
-          "desc": "Who: Admin\n\nWhat Feature: Compliance Retention controls\n\nUse Case: debug production issues without database access\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 3",
-          "labels": [
-            "security",
-            "compliance"
-          ]
-        },
-        {
-          "name": "Compliance - PII minimization review",
-          "desc": "Who: Security Admin\n\nWhat Feature: Compliance PII minimization review\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 5",
-          "labels": [
-            "security",
-            "compliance"
-          ]
-        },
-        {
-          "name": "Compliance - Consent notice",
-          "desc": "Who: Operations\n\nWhat Feature: Compliance Consent notice\n\nUse Case: reduce manual work during daily operations\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 8",
-          "labels": [
-            "security",
-            "compliance"
-          ]
-        },
-        {
-          "name": "Compliance - Delete request workflow",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Compliance Delete request workflow\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 1",
-          "labels": [
-            "security",
-            "compliance"
-          ]
-        },
-        {
-          "name": "Compliance - Tamper detection alert",
-          "desc": "Who: Technician\n\nWhat Feature: Compliance Tamper detection alert\n\nUse Case: prepare accurate audit evidence\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 2",
-          "labels": [
-            "security",
-            "compliance"
-          ]
-        },
-        {
-          "name": "Firmware - Local event cache",
-          "desc": "Who: Analyst\n\nWhat Feature: Firmware Local event cache\n\nUse Case: debug production issues without database access\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 2",
-          "labels": [
-            "firmware",
-            "iot"
-          ]
-        },
-        {
-          "name": "Firmware - NTP retry strategy",
-          "desc": "Who: Admin\n\nWhat Feature: Firmware NTP retry strategy\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 3",
-          "labels": [
-            "firmware",
-            "iot"
-          ]
-        },
-        {
-          "name": "Firmware - Wi-Fi telemetry",
-          "desc": "Who: Security Admin\n\nWhat Feature: Firmware Wi-Fi telemetry\n\nUse Case: reduce manual work during daily operations\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 5",
-          "labels": [
-            "firmware",
-            "iot"
-          ]
-        },
-        {
-          "name": "Firmware - Battery telemetry",
-          "desc": "Who: Operations\n\nWhat Feature: Firmware Battery telemetry\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 8",
-          "labels": [
-            "firmware",
-            "iot"
-          ]
-        },
-        {
-          "name": "Firmware - Firmware update queue",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Firmware Firmware update queue\n\nUse Case: prepare accurate audit evidence\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 1",
-          "labels": [
-            "firmware",
-            "iot"
+          "desc": "As a manager, I want to export logs to CSV.",
+          "idLabels": ["lab_backend", "lab_admin"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "CSV generator handles special characters", "state": "incomplete" },
+                { "name": "Download trigger works across all browsers", "state": "incomplete" },
+                { "name": "Filtering by date range supported", "state": "incomplete" }
+              ]
+            }
           ]
         },
         {
           "name": "Firmware - Provisioning QR flow",
-          "desc": "Who: Technician\n\nWhat Feature: Firmware Provisioning QR flow\n\nUse Case: manage growth across locations\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 2",
-          "labels": [
-            "firmware",
-            "iot"
+          "desc": "As a technician, I want to scan a QR code to provision devices.",
+          "idLabels": ["lab_hardware", "lab_frontend"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "QR generation library integrated", "state": "incomplete" },
+                { "name": "Firmware parses provisioning payload", "state": "incomplete" },
+                { "name": "Success buzzer feedback on device", "state": "incomplete" }
+              ]
+            }
           ]
         },
         {
-          "name": "Firmware - Token rotation support",
-          "desc": "Who: Analyst\n\nWhat Feature: Firmware Token rotation support\n\nUse Case: debug production issues without database access\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 3",
-          "labels": [
-            "firmware",
-            "iot"
+          "name": "Auth Logging Policy: redact secrets",
+          "desc": "As a security engineer, I want logs to be free of PII.",
+          "idLabels": ["lab_backend", "lab_devops"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "Middleware scrubs 'password' fields from logs", "state": "incomplete" },
+                { "name": "Log storage encrypted at rest", "state": "incomplete" }
+              ]
+            }
           ]
         },
         {
-          "name": "Reliability - Retry queue for failed posts",
-          "desc": "Who: Admin\n\nWhat Feature: Reliability Retry queue for failed posts\n\nUse Case: reduce manual work during daily operations\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 3",
-          "labels": [
-            "backend",
-            "ops"
-          ]
-        },
-        {
-          "name": "Reliability - Queue depth metric",
-          "desc": "Who: Security Admin\n\nWhat Feature: Reliability Queue depth metric\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 5",
-          "labels": [
-            "backend",
-            "ops"
-          ]
-        },
-        {
-          "name": "Reliability - Out-of-order event warning",
-          "desc": "Who: Operations\n\nWhat Feature: Reliability Out-of-order event warning\n\nUse Case: prepare accurate audit evidence\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 8",
-          "labels": [
-            "backend",
-            "ops"
-          ]
-        },
-        {
-          "name": "Reliability - API latency trend",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Reliability API latency trend\n\nUse Case: manage growth across locations\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 1",
-          "labels": [
-            "backend",
-            "ops"
-          ]
-        },
-        {
-          "name": "Reliability - Throughput chart",
-          "desc": "Who: Technician\n\nWhat Feature: Reliability Throughput chart\n\nUse Case: debug production issues without database access\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 2",
-          "labels": [
-            "backend",
-            "ops"
-          ]
-        },
-        {
-          "name": "Reliability - Database health indicator",
-          "desc": "Who: Analyst\n\nWhat Feature: Reliability Database health indicator\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 3",
-          "labels": [
-            "backend",
-            "ops"
-          ]
-        },
-        {
-          "name": "Reliability - System health card",
-          "desc": "Who: Admin\n\nWhat Feature: Reliability System health card\n\nUse Case: reduce manual work during daily operations\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 5",
-          "labels": [
-            "backend",
-            "ops"
-          ]
-        },
-        {
-          "name": "Integrations - Webhook for scanner offline",
-          "desc": "Who: Security Admin\n\nWhat Feature: Integrations Webhook for scanner offline\n\nUse Case: prepare accurate audit evidence\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 5",
-          "labels": [
-            "backend",
-            "integrations"
-          ]
-        },
-        {
-          "name": "Integrations - Webhook for denial spikes",
-          "desc": "Who: Operations\n\nWhat Feature: Integrations Webhook for denial spikes\n\nUse Case: manage growth across locations\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 8",
-          "labels": [
-            "backend",
-            "integrations"
-          ]
-        },
-        {
-          "name": "Integrations - Export to BI connector",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Integrations Export to BI connector\n\nUse Case: debug production issues without database access\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 1",
-          "labels": [
-            "backend",
-            "integrations"
-          ]
-        },
-        {
-          "name": "Integrations - Incident tool integration",
-          "desc": "Who: Technician\n\nWhat Feature: Integrations Incident tool integration\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 2",
-          "labels": [
-            "backend",
-            "integrations"
-          ]
-        },
-        {
-          "name": "Integrations - Calendar sync export",
-          "desc": "Who: Analyst\n\nWhat Feature: Integrations Calendar sync export\n\nUse Case: reduce manual work during daily operations\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 3",
-          "labels": [
-            "backend",
-            "integrations"
-          ]
-        },
-        {
-          "name": "Integrations - SFTP nightly export",
-          "desc": "Who: Admin\n\nWhat Feature: Integrations SFTP nightly export\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Improves data quality for analytics and compliance reporting.\n\nStory Points: 5",
-          "labels": [
-            "backend",
-            "integrations"
-          ]
-        },
-        {
-          "name": "Integrations - Partner API token management",
-          "desc": "Who: Security Admin\n\nWhat Feature: Integrations Partner API token management\n\nUse Case: prepare accurate audit evidence\n\nValue: Increases security posture by reducing policy drift.\n\nStory Points: 8",
-          "labels": [
-            "backend",
-            "integrations"
-          ]
-        },
-        {
-          "name": "Quality - Device API contract tests",
-          "desc": "Who: Operations\n\nWhat Feature: Quality Device API contract tests\n\nUse Case: debug production issues without database access\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 8",
-          "labels": [
-            "qa",
-            "devops"
-          ]
-        },
-        {
-          "name": "Quality - E2E smoke suite",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Quality E2E smoke suite\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 1",
-          "labels": [
-            "qa",
-            "devops"
-          ]
-        },
-        {
-          "name": "Quality - Load test profile",
-          "desc": "Who: Technician\n\nWhat Feature: Quality Load test profile\n\nUse Case: reduce manual work during daily operations\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 2",
-          "labels": [
-            "qa",
-            "devops"
-          ]
-        },
-        {
-          "name": "Quality - Release checklist",
-          "desc": "Who: Analyst\n\nWhat Feature: Quality Release checklist\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 3",
-          "labels": [
-            "qa",
-            "devops"
-          ]
-        },
-        {
-          "name": "Quality - Staging seed pack",
-          "desc": "Who: Admin\n\nWhat Feature: Quality Staging seed pack\n\nUse Case: prepare accurate audit evidence\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 5",
-          "labels": [
-            "qa",
-            "devops"
-          ]
-        },
-        {
-          "name": "Quality - Regression test matrix",
-          "desc": "Who: Security Admin\n\nWhat Feature: Quality Regression test matrix\n\nUse Case: manage growth across locations\n\nValue: Makes the dashboard more usable for day-to-day admins.\n\nStory Points: 8",
-          "labels": [
-            "qa",
-            "devops"
-          ]
-        },
-        {
-          "name": "Quality - Canary rollout checklist",
-          "desc": "Who: Operations\n\nWhat Feature: Quality Canary rollout checklist\n\nUse Case: debug production issues without database access\n\nValue: Improves visibility, enabling faster operational decisions.\n\nStory Points: 1",
-          "labels": [
-            "qa",
-            "devops"
-          ]
-        },
-        {
-          "name": "Security Ops - Blocked scanner list",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Security Ops Blocked scanner list\n\nUse Case: reduce manual work during daily operations\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 1",
-          "labels": [
-            "security",
-            "backend"
-          ]
-        },
-        {
-          "name": "Security Ops - Bulk token rotation",
-          "desc": "Who: Technician\n\nWhat Feature: Security Ops Bulk token rotation\n\nUse Case: respond quickly to access and scanner incidents\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 2",
-          "labels": [
-            "security",
-            "backend"
-          ]
-        },
-        {
-          "name": "Security Ops - Sensitive token masking",
-          "desc": "Who: Analyst\n\nWhat Feature: Security Ops Sensitive token masking\n\nUse Case: prepare accurate audit evidence\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 3",
-          "labels": [
-            "security",
-            "backend"
-          ]
-        },
-        {
-          "name": "Security Ops - Geo anomaly alert",
-          "desc": "Who: Admin\n\nWhat Feature: Security Ops Geo anomaly alert\n\nUse Case: manage growth across locations\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 5",
-          "labels": [
-            "security",
-            "backend"
-          ]
-        },
-        {
-          "name": "Security Ops - Brute-force detection",
-          "desc": "Who: Security Admin\n\nWhat Feature: Security Ops Brute-force detection\n\nUse Case: debug production issues without database access\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 8",
-          "labels": [
-            "security",
-            "backend"
-          ]
-        },
-        {
-          "name": "Security Ops - Security events timeline",
-          "desc": "Who: Operations\n\nWhat Feature: Security Ops Security events timeline\n\nUse Case: make reporting easier for non-technical teams\n\nValue: Improves reliability and shortens incident recovery time.\n\nStory Points: 1",
-          "labels": [
-            "security",
-            "backend"
-          ]
-        },
-        {
-          "name": "Security Ops - Credential exposure response playbook",
-          "desc": "Who: Platform Owner\n\nWhat Feature: Security Ops Credential exposure response playbook\n\nUse Case: reduce manual work during daily operations\n\nValue: Reduces repetitive tasks and improves team efficiency.\n\nStory Points: 2",
-          "labels": [
-            "security",
-            "backend"
+          "name": "Retention Policy: purge job",
+          "desc": "As a devops engineer, I want to auto-delete old logs.",
+          "idLabels": ["lab_backend", "lab_devops"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "Cron job scheduled for log rotation", "state": "incomplete" },
+                { "name": "Dry run verification on staging", "state": "incomplete" }
+              ]
+            }
           ]
         }
       ]
@@ -1089,206 +153,33 @@
       "name": "Sprint Backlog",
       "cards": [
         {
-          "name": "POST RFID Event to Backend API",
-          "desc": "Value: Send RFID scan events to the backend API.\n\nStory Points: 3\nSource URL: https://trello.com/c/rlL9VJmm/23-post-rfid-event-to-backend-api-3",
-          "labels": [
-            "backend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Hardware packaging",
-          "desc": "Who: card holder\n\nWhat Feature: Hardware enclosure\n\nUse Case: Want to make the physical product look good for user interaction\n\nSource URL: https://trello.com/c/kNjSjPhq/19-hardware-packaging",
-          "labels": [
-            "hardware",
-            "ux"
-          ]
-        },
-        {
-          "name": "LIST: Integration & Testing",
-          "desc": "Verify full system integration from scanner to UI.\n\nSource URL: https://trello.com/c/GSkf7XCb/42-list-integration-testing",
-          "labels": [
-            "testing"
-          ]
-        },
-        {
-          "name": "Error Handling Validation",
-          "desc": "Test common failure cases.\n\nSource URL: https://trello.com/c/sd1u06Ll/44-error-handling-validation",
-          "labels": [
-            "testing",
-            "backend",
-            "frontend"
-          ]
-        },
-        {
           "name": "Adjust NavBar to be a drawer",
-          "desc": "Source URL: https://trello.com/c/AdanYVxW/89-adjust-navbar-to-be-a-drawer",
-          "labels": [
-            "frontend"
-          ]
-        },
-        {
-          "name": "Hamburger Menu Button",
-          "desc": "Source URL: https://trello.com/c/vgchqb6f/90-hamburger-menu-button",
-          "labels": [
-            "frontend"
-          ]
-        },
-        {
-          "name": "All Scanner Button on Scanner Panel",
-          "desc": "Source URL: https://trello.com/c/tX0nL9Zq/91-all-scanner-button-on-scanner-panel",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "All Events Button on Events Panel",
-          "desc": "Source URL: https://trello.com/c/vWn2SuWj/92-all-events-button-on-events-panel",
-          "labels": [
-            "frontend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Scanner Info Card",
-          "desc": "Source URL: https://trello.com/c/49RVaDho/93-scanner-info-card",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Edit button on Info card",
-          "desc": "Source URL: https://trello.com/c/wwGQaCly/94-edit-button-on-info-card",
-          "labels": [
-            "frontend"
-          ]
-        },
-        {
-          "name": "Edit Card",
-          "desc": "Source URL: https://trello.com/c/3syQ6Yop/95-edit-card",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Scanner Search on Scanner Panel",
-          "desc": "Source URL: https://trello.com/c/ElnHfxt1/96-scanner-search-on-scanner-panel",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Event Search on Events Card",
-          "desc": "Source URL: https://trello.com/c/V1GxMBtg/97-event-search-on-events-card",
-          "labels": [
-            "frontend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "\"Issues Panel\" - Downed Scanners, Denial Rate",
-          "desc": "Source URL: https://trello.com/c/lmsSwZRr/100-issues-panel-downed-scanners-denial-rate",
-          "labels": [
-            "frontend",
-            "analytics",
-            "hardware"
+          "desc": "As a mobile user, I want a collapsible nav drawer.",
+          "idLabels": ["lab_frontend"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "Responsive breakpoints (Mobile/Tablet)", "state": "incomplete" },
+                { "name": "Touch/Swipe support tested", "state": "incomplete" },
+                { "name": "Z-index verified against modals", "state": "incomplete" }
+              ]
+            }
           ]
         },
         {
           "name": "Events Graph",
-          "desc": "Source URL: https://trello.com/c/HrstgPYl/101-events-graph",
-          "labels": [
-            "frontend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Complete Haptic/Sound Indicator - implement firmware buzzer patterns",
-          "desc": "Who: Technician\n\nWhat Feature: Haptic/Sound Indicator firmware completion\n\nUse Case: Ensure scanners provide audible feedback for success, denied, and hardware fault states\n\nValue: Turns the partially implemented indicator story into production-ready operator feedback.\n\nStory Points: 3",
-          "labels": [
-            "firmware",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Complete LED indicator - define and implement status state matrix",
-          "desc": "Who: Technician\n\nWhat Feature: LED state matrix implementation\n\nUse Case: Map LED colors/patterns to idle, authorized, denied, offline, and error states\n\nValue: Closes ambiguity in visual scanner signaling and reduces field troubleshooting time.\n\nStory Points: 3",
-          "labels": [
-            "firmware",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Complete LED and Buzzer Feedback - add hardware integration tests",
-          "desc": "Who: QA Engineer\n\nWhat Feature: Hardware feedback verification tests\n\nUse Case: Validate LED and buzzer behavior against expected scan outcomes on device\n\nValue: Prevents regressions and confirms feedback works in real hardware conditions.\n\nStory Points: 5",
-          "labels": [
-            "qa",
-            "firmware",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Complete Read RFID UID - publish firmware module and sample payload",
-          "desc": "Who: Firmware Developer\n\nWhat Feature: RFID UID read module completion\n\nUse Case: Ensure scanner firmware reliably reads UID and emits canonical payload fields\n\nValue: Finalizes the RFID read story so backend ingestion receives dependable device data.\n\nStory Points: 5",
-          "labels": [
-            "firmware",
-            "iot"
-          ]
-        },
-        {
-          "name": "Complete Enforce Scan Cooldown - move cooldown logic to backend API",
-          "desc": "Who: Backend Developer\n\nWhat Feature: Server-side cooldown enforcement\n\nUse Case: Prevent rapid duplicate scans even if device/client protections are bypassed\n\nValue: Makes cooldown policy tamper-resistant and consistent across all scanners.\n\nStory Points: 3",
-          "labels": [
-            "backend",
-            "security"
-          ]
-        },
-        {
-          "name": "Complete Secure Admin Login - replace mock token with signed JWT/session",
-          "desc": "Who: Security Admin\n\nWhat Feature: Production-grade admin authentication tokening\n\nUse Case: Remove mock tokens and issue verifiable credentials for authenticated sessions\n\nValue: Closes a major security gap and aligns login flow with production requirements.\n\nStory Points: 5",
-          "labels": [
-            "auth",
-            "backend",
-            "security"
-          ]
-        },
-        {
-          "name": "Complete Secure Admin Login - enforce auth checks on admin API routes",
-          "desc": "Who: Security Admin\n\nWhat Feature: Admin route authorization middleware\n\nUse Case: Require valid auth for scanner/user/event management endpoints\n\nValue: Ensures login protections actually guard privileged backend operations.\n\nStory Points: 5",
-          "labels": [
-            "auth",
-            "backend",
-            "security"
-          ]
-        },
-        {
-          "name": "Complete Fetch Event Data from Backend - add loading/error/retry states",
-          "desc": "Who: Admin\n\nWhat Feature: Resilient event data fetching UX\n\nUse Case: Handle backend delays or failures without blank or broken event screens\n\nValue: Turns basic fetch behavior into reliable production UX.\n\nStory Points: 2",
-          "labels": [
-            "frontend",
-            "backend",
-            "ux"
-          ]
-        },
-        {
-          "name": "Complete Display Scanners from Backend data - add empty/error states",
-          "desc": "Who: Admin\n\nWhat Feature: Scanner list robustness\n\nUse Case: Communicate when no scanners exist or backend calls fail\n\nValue: Completes scanner data display behavior for real-world operational conditions.\n\nStory Points: 2",
-          "labels": [
-            "frontend",
-            "ux"
-          ]
-        },
-        {
-          "name": "Complete LIST: Backend API & Prisma/PostgreSQL - add endpoint auth and tests",
-          "desc": "Who: Backend Developer\n\nWhat Feature: Backend epic hardening\n\nUse Case: Close remaining gaps in API security and automated regression coverage\n\nValue: Finishes the backend epic with production-grade confidence.\n\nStory Points: 8",
-          "labels": [
-            "backend",
-            "database",
-            "qa"
+          "desc": "As an analyst, I want to see a visual graph of scan events.",
+          "idLabels": ["lab_frontend", "lab_backend"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "Chart library (Recharts/D3) implemented", "state": "incomplete" },
+                { "name": "Data aggregation query optimized", "state": "incomplete" },
+                { "name": "Interactive tooltips added", "state": "incomplete" }
+              ]
+            }
           ]
         }
       ]
@@ -1297,148 +188,17 @@
       "name": "In Progress",
       "cards": [
         {
-          "name": "ESP32 Firmware",
-          "desc": "Configure ESP32 to connect to Wi-Fi and load API configuration.\n\nStory Points: 5\nSource URL: https://trello.com/c/JNH3dH5y/21-esp32-firmware-5",
-          "labels": [
-            "firmware",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Data Export API",
-          "desc": "Source URL: https://trello.com/c/DeMCFgEc/61-data-export-api",
-          "labels": [
-            "backend",
-            "data"
-          ]
-        },
-        {
-          "name": "Implement POST /device/event Endpoint",
-          "desc": "Create the endpoint to receive RFID scan events.\n\nStory Points: 4\nSource URL: https://trello.com/c/fS8UJ87Y/28-implement-post-device-event-endpoint-4",
-          "labels": [
-            "backend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Update Scanners location",
-          "desc": "Who: Admin\n\nWhat Feature: Update Scanners location\n\nUse Case: Relabel scanner when moving physical location\n\nValue: Ensures data integrity and spatial accuracy in reporting by guaranteeing that interaction events are correctly mapped to their physical context for precise utilization analysis.\n\nStory Points: 2\nSource URL: https://trello.com/c/jRpXpb9W/12-update-scanners-location-2",
-          "labels": [
-            "frontend",
-            "hardware",
-            "data"
-          ]
-        },
-        {
-          "name": "Feature: Update RFID Purpose",
-          "desc": "Source URL: https://trello.com/c/e4chUgdT/45-feature-update-rfid-purpose",
-          "labels": [
-            "hardware",
-            "backend",
-            "data"
-          ]
-        },
-        {
-          "name": "API endpoints",
-          "desc": "What Feature: API endpoints\n\nUse Case: Finalize device-to-backend API endpoints for Sprint 1.\n\nValue: Promotes a \"platform-as-a-service\" architecture, empowering third-party developers to build custom automation and bespoke visualizations on top of the core event stream.\n\nStory Points: 4\nSource URL: https://trello.com/c/aROLmh4y/13-api-endpoints-4",
-          "labels": [
-            "backend"
-          ]
-        },
-        {
-          "name": "UUID and Access Level for Cards",
-          "desc": "Source URL: https://trello.com/c/xXfz3Ehx/62-uuid-and-access-level-for-cards",
-          "labels": [
-            "backend",
-            "database",
-            "auth"
-          ]
-        },
-        {
-          "name": "Persist RFID events to PstgreSQL",
-          "desc": "Persist RFID events to MongoDB.\n\nStory Points: 5\nSource URL: https://trello.com/c/S2lVYvXy/29-persist-rfid-events-to-pstgresql-5",
-          "labels": [
-            "backend",
-            "database",
-            "data"
-          ]
-        },
-        {
-          "name": "Display Live Event List",
-          "desc": "Display recent RFID scan events in the UI.\n\nStory Points: 5\nSource URL: https://trello.com/c/GEAvLEfB/34-display-live-event-list-5",
-          "labels": [
-            "frontend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Get all events (IN PROGRESS TILL HARDWARE)",
-          "desc": "Source URL: https://trello.com/c/8fNBAYpQ/67-get-all-events-in-progress-till-hardware",
-          "labels": [
-            "backend",
-            "analytics",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Make new user",
-          "desc": "Source URL: https://trello.com/c/85ozUE7A/68-make-new-user",
-          "labels": [
-            "auth",
-            "backend",
-            "frontend"
-          ]
-        },
-        {
           "name": "Chart with Calendar that shows heat map",
-          "desc": "Source URL: https://trello.com/c/GGq1scYB/98-chart-with-calendar-that-shows-heat-map",
-          "labels": [
-            "frontend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Node script to autoseed DB",
-          "desc": "Source URL: https://trello.com/c/RDRhiblw/99-node-script-to-autoseed-db",
-          "labels": [
-            "devops",
-            "database"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Ready for QA",
-      "cards": [
-        {
-          "name": "Add new scanner from frontend",
-          "desc": "Source URL: https://trello.com/c/BCbBaGRb/84-add-new-scanner-from-frontend",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Feature: Delete RFID Scanner",
-          "desc": "Source URL: https://trello.com/c/u109EbDJ/47-feature-delete-rfid-scanner",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "add new RFID readers",
-          "desc": "Who: Admin\n\nWhat Feature: add new RFID readers\n\nUse Case: Define the canonical RFID activation event schema to be shared by firmware, backend, and frontend.\n\nValue: Enables seamless platform scaling and hardware redundancy, allowing the system to expand its physical footprint with minimal configuration downtime.\n\nStory Points: 3\nSource URL: https://trello.com/c/OyOTJ7w9/11-add-new-rfid-readers-3",
-          "labels": [
-            "backend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Click behind add/update modal to close",
-          "desc": "Source URL: https://trello.com/c/hCkTmhNv/88-click-behind-add-update-modal-to-close",
-          "labels": [
-            "frontend"
+          "desc": "As a site manager, I want a calendar heatmap.",
+          "idLabels": ["lab_frontend", "lab_backend"],
+          "checklists": [
+            {
+              "name": "Definition of Done",
+              "items": [
+                { "name": "Color scale logic defined", "state": "incomplete" },
+                { "name": "Date-range selector integrated", "state": "incomplete" }
+              ]
+            }
           ]
         }
       ]
@@ -1447,267 +207,18 @@
       "name": "Complete",
       "cards": [
         {
-          "name": "Large Screen Accessibility",
-          "desc": "Source URL: https://trello.com/c/F2K04vGg/82-large-screen-accessibility",
-          "labels": [
-            "frontend",
-            "ux",
-            "accessibility"
-          ]
-        },
-        {
-          "name": "Haptic/Sound Indicator",
-          "desc": "Who: Visually Impaired User\n\nWhat Feature: a haptic/sound indicator\n\nUse Case: so I can know when my scan is successful\n\nValue: Ensures platform inclusivity and multi-modal accessibility, allowing the system to be reliably used by all individuals through non-visual confirmation signals.\n\nStory Points: 1\nSource URL: https://trello.com/c/KKDDf73u/15-haptic-sound-indicator-1",
-          "labels": [
-            "hardware",
-            "accessibility"
-          ]
-        },
-        {
-          "name": "LED indicator",
-          "desc": "Who: card holder\n\nWhat Feature: LED indicator\n\nUse Case: Have a visual indicator to inform the card holder their card was scanned\n\nValue: Provides immediate deterministic feedback, confirming the successful registration of a physical input and reducing user friction or \"double-scanning\" errors.\n\nStory Points: 1\nSource URL: https://trello.com/c/tYAn7ZCH/14-led-indicator-1",
-          "labels": [
-            "hardware"
-          ]
-        },
-        {
-          "name": "Fetch Event Data from Backend",
-          "desc": "Story Points: 4\nSource URL: https://trello.com/c/gwXxjfNP/31-fetch-event-data-from-backend-4",
-          "labels": [
-            "frontend",
-            "backend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "LIST: Backend API & Prisma/PostgreSQL",
-          "desc": "Initialize backend service and development environment.\n\nStory Points: 5\nSource URL: https://trello.com/c/S8PrJqrj/26-list-backend-api-prisma-postgresql-5",
-          "labels": [
-            "backend",
-            "database",
-            "devops"
-          ]
-        },
-        {
-          "name": "Admin User Page",
-          "desc": "Source URL: https://trello.com/c/vlkXdXEs/75-admin-user-page",
-          "labels": [
-            "frontend",
-            "auth"
-          ]
-        },
-        {
-          "name": "Login Page (No logic, just visuals)",
-          "desc": "Source URL: https://trello.com/c/dldmL3K4/70-login-page-no-logic-just-visuals",
-          "labels": [
-            "frontend",
-            "auth"
-          ]
-        },
-        {
-          "name": "Admin Event Page",
-          "desc": "Source URL: https://trello.com/c/dYfaYIuH/76-admin-event-page",
-          "labels": [
-            "frontend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "LED and Buzzer Feedback",
-          "desc": "Provide user feedback on scan success or failure.\n\nStory Points: 1\nSource URL: https://trello.com/c/XetKOmis/24-led-and-buzzer-feedback-1",
-          "labels": [
-            "hardware"
-          ]
-        },
-        {
-          "name": "Get scanner by:",
-          "desc": "Source URL: https://trello.com/c/tOzQfw8p/66-get-scanner-by",
-          "labels": [
-            "backend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Admin Scanner Page",
-          "desc": "Source URL: https://trello.com/c/GcW3J05e/74-admin-scanner-page",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "NavBar: Users",
-          "desc": "Source URL: https://trello.com/c/qnCbIl2N/78-navbar-users",
-          "labels": [
-            "frontend"
-          ]
-        },
-        {
-          "name": "Display Active Scanners",
-          "desc": "Source URL: https://trello.com/c/rX7Qbdw8/51-display-active-scanners",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "NavBar: Scanners",
-          "desc": "Source URL: https://trello.com/c/uCq75W6L/79-navbar-scanners",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "NavBar: Events",
-          "desc": "Source URL: https://trello.com/c/7TEOuXW3/80-navbar-events",
-          "labels": [
-            "frontend",
-            "analytics"
-          ]
-        },
-        {
-          "name": "Consistent Logo throughout Website",
-          "desc": "Source URL: https://trello.com/c/v3MBvpIk/69-consistent-logo-throughout-website",
-          "labels": [
-            "frontend",
-            "ux"
-          ]
-        },
-        {
-          "name": "NavBar: Log Out",
-          "desc": "Source URL: https://trello.com/c/X9TWA5tc/81-navbar-log-out",
-          "labels": [
-            "frontend",
-            "auth"
-          ]
-        },
-        {
-          "name": "Create theme system",
-          "desc": "Source URL: https://trello.com/c/UGg3iMkz/58-create-theme-system",
-          "labels": [
-            "frontend",
-            "ux"
-          ]
-        },
-        {
-          "name": "Secure Admin Login",
-          "desc": "The first user to register in the dashboard will be given admin privileges, and that user can make additional users admins after.\n\nNeed to just have login first\n\nSource URL: https://trello.com/c/kntFpgGx/65-secure-admin-login",
-          "labels": [
-            "auth",
-            "backend",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Integrate Clerk to Login Page",
-          "desc": "Source URL: https://trello.com/c/LNdZKXNN/71-integrate-clerk-to-login-page",
-          "labels": [
-            "auth",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Display Inactive Scanners",
-          "desc": "Source URL: https://trello.com/c/0RGP6wC3/52-display-inactive-scanners",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Initialize the React frontend application",
-          "desc": "Initialize the React frontend application.\n\nStory Points: 3\nSource URL: https://trello.com/c/0QB6rvTV/30-initialize-the-react-frontend-application-3",
-          "labels": [
-            "frontend",
-            "devops"
-          ]
-        },
-        {
-          "name": "Display Scanners from Backend data",
-          "desc": "Source URL: https://trello.com/c/ua6e8h36/64-display-scanners-from-backend-data",
-          "labels": [
-            "frontend",
-            "backend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Admin Page: Install React Router DOM",
-          "desc": "Source URL: https://trello.com/c/ardpz7Zg/60-admin-page-install-react-router-dom",
-          "labels": [
-            "frontend",
-            "devops"
-          ]
-        },
-        {
-          "name": "Enforce Scan Cooldown",
-          "desc": "Prevent rapid repeated scans.\n\nStory Points: 1\nSource URL: https://trello.com/c/2lY4mlsM/25-enforce-scan-cooldown-1",
-          "labels": [
-            "firmware",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Feature: Database Creation",
-          "desc": "Source URL: https://trello.com/c/7U8UmFcD/38-feature-database-creation",
-          "labels": [
-            "database",
-            "backend"
-          ]
-        },
-        {
-          "name": "Read RFID UID",
-          "desc": "Read RFID tag UID using the selected RFID module.\n\nStory Points: 5\nSource URL: https://trello.com/c/QlhC4Goc/22-read-rfid-uid-5",
-          "labels": [
-            "firmware",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Display List of Scanners",
-          "desc": "Source URL: https://trello.com/c/3RXZkhdR/50-display-list-of-scanners",
-          "labels": [
-            "frontend",
-            "hardware"
-          ]
-        },
-        {
-          "name": "Feature: Database Communication/Connection",
-          "desc": "Source URL: https://trello.com/c/KFrlCtwc/41-feature-database-communication-connection",
-          "labels": [
-            "backend",
-            "database"
-          ]
-        },
-        {
-          "name": "NavBar moves with Page",
-          "desc": "Source URL: https://trello.com/c/F3Kpn2cz/83-navbar-moves-with-page",
-          "labels": [
-            "frontend"
-          ]
-        },
-        {
-          "name": "Clerk Integration into Login",
-          "desc": "Source URL: https://trello.com/c/nud93Vub/85-clerk-integration-into-login",
-          "labels": [
-            "auth",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Log out Confirmation",
-          "desc": "Source URL: https://trello.com/c/4MBhiJ0F/86-log-out-confirmation",
-          "labels": [
-            "auth",
-            "frontend"
-          ]
-        },
-        {
-          "name": "Base route dashboard display",
-          "desc": "Source URL: https://trello.com/c/1qlc07hg/87-base-route-dashboard-display",
-          "labels": [
-            "frontend"
+          "name": "Feature: Secure Account Creation",
+          "desc": "As a new user, I want a secure registration flow.",
+          "idLabels": ["lab_backend", "lab_software"],
+          "checklists": [
+            {
+              "name": "Implementation Roadmap",
+              "items": [
+                { "name": "Implement bcrypt hashing", "state": "complete" },
+                { "name": "Username uniqueness validation", "state": "complete" },
+                { "name": "Database connection established", "state": "complete" }
+              ]
+            }
           ]
         }
       ]
