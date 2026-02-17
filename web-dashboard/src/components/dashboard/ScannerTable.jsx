@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react"
 import CardShell from "./CardShell.jsx"
 import { StatusPill } from "../ui/StatusPill.jsx"
+import { buildApiUrl } from "../../lib/apiBase.js"
 
-const BASE_URL = "http://localhost:8080/"
 
 const getScanners = async () => {
-  const scanners = await fetch(`${BASE_URL}`)
-  const scannerData = await scanners.json()
-  return scannerData
+  const scanners = await fetch(buildApiUrl())
+  return scanners
 }
 
 const formatTime = (value) => {

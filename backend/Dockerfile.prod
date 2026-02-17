@@ -1,0 +1,14 @@
+FROM node:18-alpine
+WORKDIR /app
+
+COPY backend/package.json ./package.json
+COPY backend/package-lock.json ./package-lock.json
+COPY backend/prisma ./prisma
+
+RUN npm ci
+RUN npx prisma generate
+
+COPY backend/. .
+
+EXPOSE 8080
+CMD ["node", "index.js"]
