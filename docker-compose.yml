@@ -6,6 +6,36 @@ services:
     command: sleep infinity
     depends_on:
       - postgres
+      - backend
+      - web-dashboard
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-imprint}:${POSTGRES_PASSWORD:-imprint}@postgres:5432/${POSTGRES_DB:-imprint}
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  web-dashboard:
+    build:
+      context: .
+      dockerfile: web-dashboard/Dockerfile
+    environment:
+      VITE_API_BASE_URL: http://backend:8080
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - app-network
 
   postgres:
     image: postgres:16
@@ -15,9 +45,13 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-imprint}
     ports:
       - "5432:5432"
-      - "8080:8080"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
 
 volumes:
   postgres_data:
+
+networks:
+  app-network:

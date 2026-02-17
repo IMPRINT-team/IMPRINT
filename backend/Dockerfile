@@ -1,9 +1,12 @@
-FROM python:3.11-alpine
-
-RUN apk add --no-cache curl netcat-openbsd
+FROM node:18-alpine
 
 WORKDIR /app
 
+COPY package.json ./
+RUN npm install && npx prisma generate
+
+COPY . .
+
 EXPOSE 8080
 
-CMD ["python", "-m", "http.server", "8080"]
+CMD ["npm", "run", "dev"]
