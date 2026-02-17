@@ -28,10 +28,12 @@ Routing in deploy mode is single-origin through Caddy:
 - `/api/*` -> backend API (`backend:8080`)
 - everything else -> frontend SPA
 
+The deploy stack also runs a one-off `migrate` service (`prisma migrate deploy`) before backend startup.
+
 ## Workspace Layout
 - `backend/`: Node.js API service (Express + Prisma).
 - `web-dashboard/`: Vite-powered React UI.
-- `deploy/`: homelab/prod-like compose stack (Caddy + frontend + backend + postgres).
+- `deploy/`: homelab/prod-like compose stack (Caddy + frontend + migrate + backend + postgres).
 - `docs/`: architecture, onboarding, and deploy documentation.
 - `infra/`: Docker orchestration and networking notes.
 - `setup/`: bootstrap and connectivity verification scripts.
@@ -48,7 +50,7 @@ Routing in deploy mode is single-origin through Caddy:
 │   │   ├── lib/          # Shared frontend helpers (e.g., API base)
 │   │   └── pages/        # Route-level pages
 │   └── public/           # Static assets
-├── deploy/               # Caddy + compose deploy stack
+├── deploy/               # Caddy + compose deploy stack (+ migrate job)
 ├── packages/             # Shared packages and build tooling
 ├── docs/                 # Architecture and onboarding docs
 ├── infra/                # Docker/network notes
@@ -67,6 +69,7 @@ Routing in deploy mode is single-origin through Caddy:
 
 ## API/Networking Conventions
 - Browser-facing API base defaults to `/api` in the frontend.
+- In dev, Vite proxies `/api` to `http://localhost:8080` by default (override with `VITE_DEV_API_TARGET`).
 - Backend exposes API routes under `/api` (with temporary root compatibility routes).
 - Docker service hostnames like `backend` and `postgres` are internal to Docker networks, not browser URLs.
 

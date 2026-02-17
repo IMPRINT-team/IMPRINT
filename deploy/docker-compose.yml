@@ -16,6 +16,18 @@ services:
       dockerfile: web-dashboard/Dockerfile.prod
     restart: unless-stopped
 
+  migrate:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile.prod
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://${POSTGRES_USER:-imprint}:${POSTGRES_PASSWORD:-imprint}@postgres:5432/${POSTGRES_DB:-imprint}}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["npx", "prisma", "migrate", "deploy"]
+    restart: "no"
+
   backend:
     build:
       context: ..
@@ -24,8 +36,8 @@ services:
       DATABASE_URL: ${DATABASE_URL:-postgresql://${POSTGRES_USER:-imprint}:${POSTGRES_PASSWORD:-imprint}@postgres:5432/${POSTGRES_DB:-imprint}}
       PORT: 8080
     depends_on:
-      postgres:
-        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
