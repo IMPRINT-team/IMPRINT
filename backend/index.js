@@ -2,10 +2,16 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import homeRouter from "./routes/homeRoutes.js";
 
 
-dotenv.config({ path: "../.env" });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const repoEnvPath = path.resolve(__dirname, "..", ".env");
+
+dotenv.config({ path: repoEnvPath });
 
 const app = express();
 const databaseUrl = process.env.DATABASE_URL;
