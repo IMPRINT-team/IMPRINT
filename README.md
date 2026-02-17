@@ -60,6 +60,11 @@ workspace lockfile conflicts, always run installs from the repository root
 (`npm install`) and update dependency versions in each package’s
 `package.json` rather than running `npm install` inside a workspace folder.
 
+## Startup Order (Docker Compose)
+- `postgres` starts first and is considered ready only after its `pg_isready` healthcheck succeeds.
+- `app` uses `depends_on` with `condition: service_healthy`, so it waits for PostgreSQL readiness before starting.
+- Inside the dev container, continue using `postgres` as the hostname in connection strings (`DATABASE_URL`).
+
 ## PostgreSQL Configuration
 The dev container copies `.env.example` to `.env` on first boot. The PostgreSQL
 service in `docker-compose.yml` loads values from `.env`, and Prisma reads
