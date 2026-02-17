@@ -12,7 +12,8 @@ The backend service hosts the IMPRINT central API, ingesting scan events and man
 ## Local Development
 - Run `npm run dev -w backend` from the repo root to start the service.
 - Default port: `8080` (override with `PORT`).
-- Configure PostgreSQL credentials and `DATABASE_URL` via `.env` at the repo root.
+- Configure PostgreSQL credentials and `DATABASE_URL` via `.env` at the repo root (`postgres:5432` for container-to-container access).
+- For host-run tooling outside the dev container, use `DATABASE_URL_HOST` (`localhost:5432`) to avoid mixing host/container database contexts.
 
 ## Key Files
 - `index.js`: HTTP server and PostgreSQL connectivity logic.
