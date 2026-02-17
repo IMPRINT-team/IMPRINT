@@ -27,6 +27,7 @@ const prisma = new PrismaClient({
   },
 });
 const port = process.env.PORT || 8080;
+const host = process.env.HOST || "0.0.0.0";
 
 app.use(express.json());
 app.use(cors());
@@ -52,7 +53,7 @@ app.get("/health", async (req, res) => {
 app.use("/api", homeRouter);
 app.use("/", homeRouter);
 
-app.listen(8080, "0.0.0.0", () => {
-  console.log(`Backend listening on port ${port}!`);
+app.listen(port, host, () => {
+  console.log(`Backend listening on http://${host}:${port}`);
   connectToDatabase();
 });
