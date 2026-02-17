@@ -1,7 +1,19 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
-const prisma = new PrismaClient();
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+    throw new Error("DATABASE_URL must be set for backend runtime");
+}
+
+const prisma = new PrismaClient({
+    datasources: {
+        db: {
+            url: databaseUrl,
+        },
+    },
+});
 
 async function hashPassword(password) {
     return bcrypt.hash(password, 10);
