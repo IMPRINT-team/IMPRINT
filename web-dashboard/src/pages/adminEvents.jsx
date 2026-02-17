@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { ResultPill } from '../components/ui/StatusPill.jsx'
 import { ArrowLeft } from 'lucide-react'
 import React from "react"
-
-const BASE_URL = "http://localhost:8080/"
+import { buildApiUrl } from "../lib/apiBase.js"
 
 const getEvents = async () => {
-    const eventData = await fetch(`${BASE_URL}event`)
+    const eventData = await fetch(buildApiUrl('event'))
     return eventData
 }
 

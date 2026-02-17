@@ -1,11 +1,11 @@
 import { ResponsiveCalendar } from "@nivo/calendar";
 import { useEffect, useMemo, useState } from "react";
 import React from "react";
+import { buildApiUrl } from "../../../../lib/apiBase.js";
 
-const BASE_URL = "http://localhost:8080/";
 
 const getEvents = async () => {
-  const eventData = await fetch(`${BASE_URL}event`);
+  const eventData = await fetch(buildApiUrl('event'));
   return eventData;
 };
 

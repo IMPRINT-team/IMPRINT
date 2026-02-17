@@ -6,7 +6,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import homeRouter from "./routes/homeRoutes.js";
 
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoEnvPath = path.resolve(__dirname, "..", ".env");
@@ -41,18 +40,19 @@ async function connectToDatabase() {
   }
 }
 
-app.listen(8080, '0.0.0.0', () => {
+app.get("/health", async (req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.status(200).json({ status: "ok", database: "ok" });
+  } catch {
+    res.status(503).json({ status: "degraded", database: "unavailable" });
+  }
+});
+
+app.use("/api", homeRouter);
+app.use("/", homeRouter);
+
+app.listen(8080, "0.0.0.0", () => {
   console.log(`Backend listening on port ${port}!`);
   connectToDatabase();
 });
-
-app.get("/", async (req, res) => {
-    try {
-        const scanners = await prisma.scanner.findMany();
-        res.status(200).json(scanners);
-    } catch (err) {
-        res.status(500).json({success: false, error: err})
-    }
-})
-
-app.use("/", homeRouter);

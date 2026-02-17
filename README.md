@@ -10,7 +10,7 @@ The platform integrates network-connected RFID scanners with a centralized backe
 
 Each scanner provides immediate user feedback via LED indicators (green/red) and supports a minimum scan rate of one scan every three seconds per scanner. While IMPRINT can operate as a standalone solution for simple interaction logging or time-based actions, it is intentionally designed as an open, extensible foundation that can support more advanced RFID-driven systems. The architecture scales from small, single-location deployments to larger, multi-building environments wherever scanners can reach the API.
 
-## Getting Started
+## Getting Started (Dev Container)
 1. Install Docker Desktop and VS Code.
 2. Install the "Dev Containers" extension in VS Code.
 3. Open this folder.
@@ -19,38 +19,56 @@ Each scanner provides immediate user feedback via LED indicators (green/red) and
 6. Run `npm run verify` to check database connection.
 7. Run `npm run dev` to start coding.
 
+## Deploy Quickstart (Homelab / Prod-like)
+1. `cp deploy/.env.example deploy/.env`
+2. `docker compose -f deploy/docker-compose.yml up -d`
+3. Open `http://localhost`
+
+Routing in deploy mode is single-origin through Caddy:
+- `/api/*` -> backend API (`backend:8080`)
+- everything else -> frontend SPA
+
 ## Workspace Layout
-- `backend/`: Node.js API service for ingesting scan events and returning status responses.
-- `web-dashboard/`: Vite-powered React UI for real-time visibility.
+- `backend/`: Node.js API service (Express + Prisma).
+- `web-dashboard/`: Vite-powered React UI.
+- `deploy/`: homelab/prod-like compose stack (Caddy + frontend + backend + postgres).
+- `docs/`: architecture, onboarding, and deploy documentation.
 - `infra/`: Docker orchestration and networking notes.
-- `setup/`: Bootstrap and connectivity verification scripts.
-- `docs/`: Architecture and onboarding documentation.
-- `firmware/`: Hardware and firmware reference materials.
-- `scripts/`: Repository-level automation scripts.
+- `setup/`: bootstrap and connectivity verification scripts.
+- `firmware/`: hardware and firmware reference materials.
+- `scripts/`: repository-level automation scripts.
 
 ## Repository File Structure
 ```
 .
-├── backend/            # Node.js API service (Prisma, routes, services)
-├── web-dashboard/      # React SPA (Vite, Tailwind, UI components)
+├── backend/              # Node.js API service (Express, Prisma)
+├── web-dashboard/        # React SPA (Vite, Tailwind, DaisyUI)
 │   ├── src/
-│   │   ├── features/   # Feature-level screens and domain modules
-│   │   └── ui/         # Reusable UI primitives and layout pieces
-│   └── public/         # Static assets
-├── packages/           # Shared packages and build tooling
-├── infra/              # Docker orchestration and network notes
-├── setup/              # Bootstrap scripts and connectivity checks
-├── docs/               # Architecture and onboarding documentation
-├── firmware/           # Hardware/firmware references
-├── scripts/            # Repository-level automation
-└── .devcontainer/      # VS Code dev container configuration
+│   │   ├── components/   # UI components, dashboard modules, stores
+│   │   ├── lib/          # Shared frontend helpers (e.g., API base)
+│   │   └── pages/        # Route-level pages
+│   └── public/           # Static assets
+├── deploy/               # Caddy + compose deploy stack
+├── packages/             # Shared packages and build tooling
+├── docs/                 # Architecture and onboarding docs
+├── infra/                # Docker/network notes
+├── setup/                # Bootstrap scripts and connectivity checks
+├── firmware/             # Hardware/firmware references
+├── scripts/              # Repository-level automation
+└── .devcontainer/        # VS Code dev container configuration
 ```
 
 ## Common Commands
-- `npm run dev`: Run backend + web dashboard concurrently.
-- `npm run verify`: Validate database connectivity from inside the dev container.
-- `npm run db:generate`: Generate Prisma client.
-- `npm run db:migrate`: Run Prisma migrations for the local database.
+- `npm run dev`: run backend + web dashboard concurrently.
+- `npm run verify`: validate database connectivity from inside the dev container.
+- `npm run db:generate`: generate Prisma client.
+- `npm run db:migrate`: run Prisma migrations for the local database.
+- `docker compose -f deploy/docker-compose.yml up -d`: run deploy stack.
+
+## API/Networking Conventions
+- Browser-facing API base defaults to `/api` in the frontend.
+- Backend exposes API routes under `/api` (with temporary root compatibility routes).
+- Docker service hostnames like `backend` and `postgres` are internal to Docker networks, not browser URLs.
 
 ## Dependency Management Notes
 This repo uses npm workspaces, which rely on a single root `package-lock.json`.
@@ -60,14 +78,16 @@ workspace lockfile conflicts, always run installs from the repository root
 (`npm install`) and update dependency versions in each package’s
 `package.json` rather than running `npm install` inside a workspace folder.
 
-## Startup Order (Docker Compose)
+## Startup Order (Dev Docker Compose)
 - `postgres` starts first and is considered ready only after its `pg_isready` healthcheck succeeds.
-- `app` uses `depends_on` with `condition: service_healthy`, so it waits for PostgreSQL readiness before starting.
+- `backend` depends on `postgres`.
+- `web-dashboard` depends on `backend`.
+- `app` container depends on all runtime services and is used for the devcontainer workflow.
 - Inside the dev container, continue using `postgres` as the hostname in connection strings (`DATABASE_URL`).
 
 ## PostgreSQL Configuration
 The dev container copies `.env.example` to `.env` on first boot. The PostgreSQL
-service in `docker-compose.yml` loads values from `.env`, and Prisma reads
+service in root `docker-compose.yml` loads values from `.env`, and Prisma reads
 `DATABASE_URL` to connect. Update `POSTGRES_USER`, `POSTGRES_PASSWORD`,
 `POSTGRES_DB`, or `DATABASE_URL` in `.env` if your database settings differ
 from the defaults.
