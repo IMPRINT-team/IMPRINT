@@ -8,5 +8,5 @@
       "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
     }
   },
-  "postCreateCommand": "npm install && cp .env.example .env"
+  "postCreateCommand": "cp .env.example .env"
 }
