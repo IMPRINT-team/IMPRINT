@@ -5,6 +5,7 @@ const devApiTarget = process.env.VITE_DEV_API_TARGET ?? 'http://localhost:8080'
 
 export default defineConfig({
   plugins: [react()],
+  envPrefix: ['VITE_', 'CLERK_'],
   server: {
     host: '0.0.0.0', // Necessary for Dev Containers
     proxy: {
