@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useThemeStore } from "./components/stores/useThemeStore.js";
 
-import Dashboard from "./pages/dashboard.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 import Login from "./pages/Login.jsx";
 import PlaygroundPage from "./pages/playground/PlaygroundPage.jsx";
 import AdminEvents from "./pages/adminEvents.jsx";
