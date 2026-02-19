@@ -1,11 +1,10 @@
 import React from 'react'
-import ScannerFormModal from '../components/modals/AddScanBaseModal.jsx'
-
-const BASE_URL = 'http://localhost:8080/'
+import ScannerFormModal from '../components/modals/ScannerFormModal.jsx'
+import { buildApiUrl } from "../lib/apiBase.js"
 
 function AddScannerModal({ onClose }) {
   async function addScanner(scannerData) {
-    await fetch(`${BASE_URL}`, {
+    await fetch(buildApiUrl(), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

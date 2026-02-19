@@ -14,41 +14,45 @@ const topStats = [
 ];
 
 const StatsPannel = () => (
-  <CardShell className="h-full" data-debug-label="StatsPannel">
-    <h2 id="stats-panel-title" className="text-lg font-semibold">
+  <CardShell className="h-full overflow-hidden" data-debug-label="StatsPannel">
+    <h2 id="stats-panel-title" className="shrink-0 text-lg font-semibold">
       Quick stats
     </h2>
 
-    {/* Basic stats */}
-    <ul className="grid flex-1 gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-      {stats.map((item) => (
-        <li
-          key={item.name}
-          className="rounded-lg bg-base-200 border border-primary/30 p-3"
-        >
-          <p className="text-xs uppercase tracking-wide opacity-70">
-            {item.name}
-          </p>
-          <p className="mt-1 text-xl font-semibold">{item.value}</p>
-        </li>
-      ))}
-    </ul>
+    <div className="mt-2 flex min-h-0 flex-col gap-3 overflow-y-auto pr-1">
+      {/* Basic stats */}
+      <ul className="grid grid-cols-1 gap-2 xl:grid-cols-3">
+        {stats.map((item) => (
+          <li
+            key={item.name}
+            className="rounded-lg border border-primary/30 bg-base-200 p-2.5"
+          >
+            <p className="text-[10px] uppercase tracking-wide opacity-70">
+              {item.name}
+            </p>
+            <p className="mt-0.5 text-lg font-semibold">{item.value}</p>
+          </li>
+        ))}
+      </ul>
 
-    {/* Top stats */}
-    <ul className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-      {topStats.map((item) => (
-        <li
-          key={item.name}
-          className="rounded-lg border border-primary/30 bg-base-200 p-3"
-        >
-          <p className="text-xs uppercase tracking-wide opacity-70">
-            {item.name}
-          </p>
-          <p className="mt-1 text-xl font-semibold">{item.value}</p>
-          <p className="text-xs opacity-70">{item.detail}</p>
-        </li>
-      ))}
-    </ul>
+      {/* Top stats */}
+      <ul className="grid grid-cols-1 gap-2">
+        {topStats.map((item) => (
+          <li
+            key={item.name}
+            className="flex items-center justify-between rounded-lg border border-primary/30 bg-base-200 p-2.5"
+          >
+            <div>
+              <p className="text-[10px] uppercase tracking-wide opacity-70">
+                {item.name}
+              </p>
+              <p className="text-lg font-semibold leading-tight">{item.value}</p>
+            </div>
+            <p className="max-w-[50%] text-right text-xs opacity-70">{item.detail}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   </CardShell>
 );
 

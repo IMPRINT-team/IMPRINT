@@ -1,0 +1,18 @@
+FROM node:18-alpine AS build
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+COPY backend/package.json backend/package.json
+COPY web-dashboard/package.json web-dashboard/package.json
+COPY packages/vitejs-plugin-react/package.json packages/vitejs-plugin-react/package.json
+
+RUN npm ci
+
+COPY . .
+RUN npm run build -w web-dashboard
+
+FROM caddy:alpine
+COPY web-dashboard/Caddyfile /etc/caddy/Caddyfile
+COPY --from=build /app/web-dashboard/dist /srv
+
+EXPOSE 80

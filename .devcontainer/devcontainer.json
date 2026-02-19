@@ -1,11 +1,16 @@
 {
   "name": "IMPRINT Dev Environment",
-  "dockerComposeFile": ["../docker-compose.yml"],
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
   "service": "app",
   "workspaceFolder": "/workspace",
   "customizations": {
     "vscode": {
-      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
     }
   },
   "postCreateCommand": "npm install && cp .env.example .env"

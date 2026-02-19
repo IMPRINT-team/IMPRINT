@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import React from "react"
 import { Link } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react';
-
-const BASE_URL = "http://localhost:8080/"
+import { buildApiUrl } from "../lib/apiBase.js"
 
 const getUsers = async () => {
-    const scannerData = await fetch(`${BASE_URL}user`)
+    const scannerData = await fetch(buildApiUrl('user'))
     return scannerData
 }
 

@@ -148,8 +148,8 @@
           "name": "Device Authentication: 2",
           "desc": "As an IMPRINT developer, I want each scanner to authenticate with a unique device secret so that only trusted hardware can submit RFID scans.\n\nEstimated time to implement: {2}",
           "idLabels": [
-            "lab_hardware",
-            "lab_backend"
+            "lab_backend",
+            "lab_hardware"
           ],
           "checklists": [
             {
@@ -175,8 +175,8 @@
           "name": "Export data as a csv",
           "desc": "As an operations manager, I want to export scan logs as CSV so that I can analyze RFID activity outside the dashboard.\n\nEstimated time to implement: {3}",
           "idLabels": [
-            "lab_backend",
-            "lab_admin"
+            "lab_admin",
+            "lab_backend"
           ],
           "checklists": [
             {
@@ -202,8 +202,8 @@
           "name": "Firmware - Provisioning QR flow",
           "desc": "As a field technician, I want to provision an IMPRINT scanner from a QR payload so that device setup is repeatable and low-friction.\n\nEstimated time to implement: {5}",
           "idLabels": [
-            "lab_hardware",
-            "lab_frontend"
+            "lab_frontend",
+            "lab_hardware"
           ],
           "checklists": [
             {
@@ -306,8 +306,8 @@
           "name": "Events Graph",
           "desc": "As an analyst, I want an events graph in the web dashboard so that I can quickly understand RFID scan trends over time.\n\nEstimated time to implement: {3}",
           "idLabels": [
-            "lab_frontend",
-            "lab_backend"
+            "lab_backend",
+            "lab_frontend"
           ],
           "checklists": [
             {
@@ -338,8 +338,8 @@
           "name": "Chart with Calendar that shows heat map",
           "desc": "As a site manager, I want a calendar heatmap of scan volume so that I can identify unusually high or low RFID activity days.\n\nEstimated time to implement: {5}",
           "idLabels": [
-            "lab_frontend",
-            "lab_backend"
+            "lab_backend",
+            "lab_frontend"
           ],
           "checklists": [
             {

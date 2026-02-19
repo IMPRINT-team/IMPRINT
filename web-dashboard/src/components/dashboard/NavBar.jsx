@@ -1,87 +1,115 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { X } from "lucide-react";
 import Logout from "./Logout.jsx";
 import { SignedIn } from "@clerk/clerk-react";
 import { NavLink } from "react-router-dom";
+import ImprintLogo from "../branding/ImprintLogo.jsx";
+import ThemeSelector from "../dashboard/ThemeSelector.jsx";
 
 const linkClasses =
-  "rounded-full px-6 sm:px-10 lg:px-16 py-2 whitespace-nowrap " +
+  "rounded-xl px-4 py-3 text-left whitespace-nowrap " +
   "hover:shadow-glowHover hover:bg-primary/95 hover:text-neutral " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
 
-const NavBar = () => {
+const NavBar = ({ isOpen, onClose }) => {
   const [confirmLogout, setConfirmLogout] = useState(false);
 
   return (
-    <div data-debug-label="NavBar" className="overflow-x-hidden">
-      <nav
-        aria-label="Primary"
-        className="
-          mx-auto max-w-screen-xl
-          flex flex-wrap items-center justify-center md:justify-between md:flex-nowrap gap-2
-          rounded-full border border-primary bg-base-100 shadow-sm
-          px-4 py-2
-        "
+    <>
+      {/* Backdrop - Mobile only (below md) */}
+      <div
+        className={`fixed inset-0 z-40 bg-black/45 transition-opacity duration-200 md:hidden ${
+          isOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+        aria-hidden="true"
+        onClick={onClose}
+      />
+
+      {/* Sidebar / Drawer */}
+      <aside
+        id="dashboard-drawer"
+        className={`
+          fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-primary bg-base-100 p-4 shadow-xl transition-transform duration-200
+          md:static md:translate-x-0
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
       >
-        <NavLink to="/admin/users" className={linkClasses}>
-          Users
-        </NavLink>
+        <div className="mb-6 flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <ImprintLogo className="text-primary size-10 shrink-0" />
 
-        <NavLink to="/admin/scanners" className={linkClasses}>
-          Scanners
-        </NavLink>
+            {/* Close button - Mobile only */}
+            <button
+              type="button"
+              onClick={onClose}
+              className="btn btn-ghost btn-sm md:hidden"
+              aria-label="Close navigation menu"
+            >
+              <X className="size-5" />
+            </button>
+          </div>
 
-        <NavLink to="/admin/events" className={linkClasses}>
-          Events
-        </NavLink>
+          <div className="flex items-center justify-between px-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-base-content/60">
+              Theme
+            </span>
+            <ThemeSelector />
+          </div>
+        </div>
 
-        {/* Logout Trigger */}
-        <SignedIn>
-          <button
-            type="button"
-            onClick={() => setConfirmLogout(true)}
-            className={`${linkClasses} min-w-[7rem]`}
-            aria-haspopup="dialog"
-            aria-expanded={confirmLogout}
-          >
-            Log out
-          </button>
-        </SignedIn>
-      </nav>
+        <div className="divider my-2"></div>
 
-      {/* Logout Confirmation Dialog */}
+        <nav className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto">
+          <h2 className="mb-2 px-1 text-xs font-bold uppercase tracking-widest text-base-content/50">
+            Menu
+          </h2>
+
+          <NavLink to="/admin/users" className={linkClasses} onClick={onClose}>
+            Users
+          </NavLink>
+
+          <NavLink to="/admin/scanners" className={linkClasses} onClick={onClose}>
+            Scanners
+          </NavLink>
+
+          <NavLink to="/admin/events" className={linkClasses} onClick={onClose}>
+            Events
+          </NavLink>
+
+          <div className="mt-auto pt-4">
+            <SignedIn>
+              <button
+                type="button"
+                onClick={() => setConfirmLogout(true)}
+                className={`${linkClasses} w-full`}
+              >
+                Log out
+              </button>
+            </SignedIn>
+          </div>
+        </nav>
+      </aside>
+
+      {/* Logout Modal */}
       {confirmLogout && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="logout-title"
-        >
-          <div className="bg-base-100 rounded-xl p-6 shadow-lg text-center w-96 max-w-[90vw]">
-            <h2 id="logout-title" className="mb-4 text-lg font-semibold">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50">
+          <div className="w-96 max-w-[90vw] rounded-xl bg-base-100 p-6 text-center shadow-lg">
+            <h2 className="mb-4 text-lg font-semibold">
               Are you sure you want to log out?
             </h2>
-
-            <div className="flex gap-4 justify-between">
+            <div className="flex gap-4">
               <button
                 type="button"
                 onClick={() => setConfirmLogout(false)}
-                className="
-                  flex-1 rounded-xl px-4 py-2 border
-                  hover:bg-base-200
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary
-                "
+                className="flex-1 rounded-xl border px-4 py-2 hover:bg-base-200"
               >
                 Cancel
               </button>
-
               <Logout redirectUrl="/login">
                 <button
                   type="button"
-                  className="
-                    flex-1 rounded-xl px-4 py-2 bg-primary text-neutral
-                    hover:bg-primary/90
-                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary
-                  "
+                  className="flex-1 rounded-xl bg-primary px-4 py-2 text-neutral hover:bg-primary/90"
                 >
                   Log out
                 </button>
@@ -90,8 +118,13 @@ const NavBar = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
+};
+
+NavBar.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default NavBar;
