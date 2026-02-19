@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useThemeStore } from "./components/stores/useThemeStore.js";
 
-import DashboardLayout from "./pages/DashboardLayout.jsx";
-import HomeDashboard from "./pages/HomeDashboard.jsx";
+import Dashboard from "./pages/dashboard.jsx";
 import Login from "./pages/Login.jsx";
 import PlaygroundPage from "./pages/playground/PlaygroundPage.jsx";
 import AdminEvents from "./pages/adminEvents.jsx";
@@ -26,17 +25,55 @@ const App = () => {
         path="/"
         element={
           <RequireAuth>
-            <DashboardLayout />
+            <Dashboard />
           </RequireAuth>
         }
-      >
-        <Route index element={<HomeDashboard />} />
-        <Route path="playground" element={<HomeDashboard />} />
-        <Route path="playground/figma" element={<PlaygroundPage />} />
-        <Route path="admin/users" element={<AdminUsers />} />
-        <Route path="admin/scanners" element={<AdminScanners />} />
-        <Route path="admin/events" element={<AdminEvents />} />
-      </Route>
+      />
+
+      <Route
+        path="/playground"
+        element={
+          <RequireAuth>
+            <Dashboard />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="/playground/figma"
+        element={
+          <RequireAuth>
+            <PlaygroundPage />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="/admin/users"
+        element={
+          <RequireAuth>
+            <AdminUsers />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="/admin/scanners"
+        element={
+          <RequireAuth>
+            <AdminScanners />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="/admin/events"
+        element={
+          <RequireAuth>
+            <AdminEvents />
+          </RequireAuth>
+        }
+      />
     </Routes>
   );
 };
