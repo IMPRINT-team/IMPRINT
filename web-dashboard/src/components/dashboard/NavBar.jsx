@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { X } from "lucide-react";
 import Logout from "./Logout.jsx";
-import { SignedIn } from "@clerk/clerk-react";
 import { NavLink } from "react-router-dom";
-import ImprintLogo from "../branding/ImprintLogo.jsx";
-import ThemeSelector from "../dashboard/ThemeSelector.jsx";
 
 const linkClasses =
   "rounded-xl px-4 py-3 text-left whitespace-nowrap " +
@@ -35,35 +32,23 @@ const NavBar = ({ isOpen, onClose }) => {
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-        {/* Header inside the Drawer */}
-        <div className="mb-6 flex flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <ImprintLogo className="text-primary size-12 shrink-0" />
-            
-            {/* Close button - Mobile only */}
-            <button
-              type="button"
-              onClick={onClose}
-              className="btn btn-ghost btn-sm lg:hidden"
-              aria-label="Close navigation menu"
-            >
-              <X className="size-5" />
-            </button>
-          </div>
-          
-          <div className="flex items-center justify-between px-1">
-             <span className="text-sm font-semibold uppercase tracking-wider text-primary">Theme</span>
-             <ThemeSelector />
-          </div>
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="px-1 text-xs font-bold uppercase tracking-widest text-base-content/50">
+            Menu
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            className="btn btn-ghost btn-sm lg:hidden"
+            aria-label="Close navigation menu"
+          >
+            <X className="size-5" />
+          </button>
         </div>
 
         <div className="divider my-2"></div>
 
         <nav className="flex flex-1 flex-col gap-2 overflow-y-auto">
-          <h2 className="mb-2 px-1 text-xs font-bold uppercase tracking-widest text-base-content/50">
-            Menu
-          </h2>
-
           <NavLink to="/admin/users" className={linkClasses} onClick={onClose}>
             Users
           </NavLink>
@@ -77,15 +62,13 @@ const NavBar = ({ isOpen, onClose }) => {
           </NavLink>
 
           <div className="mt-auto">
-            <SignedIn>
-              <button
-                type="button"
-                onClick={() => setConfirmLogout(true)}
-                className={`${linkClasses} w-full`}
-              >
-                Log out
-              </button>
-            </SignedIn>
+            <button
+              type="button"
+              onClick={() => setConfirmLogout(true)}
+              className={`${linkClasses} w-full`}
+            >
+              Log out
+            </button>
           </div>
         </nav>
       </aside>
