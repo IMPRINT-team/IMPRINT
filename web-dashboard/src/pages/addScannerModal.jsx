@@ -1,5 +1,5 @@
 import React from 'react'
-import ScannerFormModal from '../components/modals/ScannerFormModal.jsx'
+import ScannerFormModal from '../components/modals/AddScanBaseModal.jsx'
 
 const BASE_URL = 'http://localhost:8080/'
 
@@ -14,7 +14,6 @@ function AddScannerModal({ onClose }) {
     })
 
     onClose()
-    window.location.reload()
   }
 
   return (
@@ -22,7 +21,7 @@ function AddScannerModal({ onClose }) {
       onClose={onClose}
       title="Add New Scanner"
       submitLabel="Add Scanner"
-      onSubmit={addScanner}
+      purpose={addScanner}
     />
   )
 }

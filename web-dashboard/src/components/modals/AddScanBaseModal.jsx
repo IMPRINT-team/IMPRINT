@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
-import { MapPin, CuboidIcon } from 'lucide-react'
+import { MapPin, CuboidIcon, PlusCircleIcon } from 'lucide-react'
 import BaseModal from './BaseModal.jsx'
 
 const EMPTY_SCANNER_DATA = {
@@ -13,7 +14,7 @@ function ScannerFormModal({
   onClose,
   title,
   submitLabel,
-  onSubmit,
+  purpose,
   initialData = EMPTY_SCANNER_DATA,
 }) {
   const [scannerData, setScannerData] = useState({
@@ -32,9 +33,9 @@ function ScannerFormModal({
     await onSubmit(scannerData)
   }
 
-  return (
+  return(
     <BaseModal id="scannerModal" title={title} onClose={onClose}>
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form className="space-y-6">
         <div className="grid gap-6">
           <div className="form-control">
             <span className="label-text text-base font-medium mb-2">Scanner General Location</span>
@@ -105,8 +106,9 @@ function ScannerFormModal({
 
         <div className="modal-action">
           <button className="btn btn-ghost" type="button" onClick={onClose}>Cancel</button>
-          <button type="submit" className="btn btn-primary min-w-[120px]" disabled={isSubmitDisabled}>
-            {submitLabel}
+          <button type="button" className="btn btn-primary min-w-[120px]" disabled={isSubmitDisabled} onClick={purpose(scannerData)}>
+            <PlusCircleIcon />
+            Add Scanner
           </button>
         </div>
       </form>

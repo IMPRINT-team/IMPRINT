@@ -1,5 +1,5 @@
 import React from 'react'
-import ScannerFormModal from '../components/modals/ScannerFormModal.jsx'
+import ScannerFormModal from '../components/modals/AddScanBaseModal.jsx'
 
 function UpdateScannerModal({ onClose, scanner }) {
   async function updateScanner(updatedScannerData) {

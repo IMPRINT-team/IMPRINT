@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import { ResultPill } from '../components/ui/StatusPill.jsx'
 import { ArrowLeft } from 'lucide-react'
 import React from "react"
@@ -42,7 +43,7 @@ const AdminEvents = () => {
         <div className="h-svh">
             <div className="grid grid-cols-[1fr_2.5fr] items-center my-3 mt-4">
                 <div className="flex align-middle justify-start ms-2">
-                    <a type="button" className="btn btn-primary" href="/playground"><ArrowLeft /></a>
+                    <Link type="button" className="btn btn-primary" to="/playground"><ArrowLeft /></Link>
                 </div>
                 <div className="flex justify-left align-middle">
                     <select name="SearchFor" id="txtParam" className="select border border-primary rounded-lg">

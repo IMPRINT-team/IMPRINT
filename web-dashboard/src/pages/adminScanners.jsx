@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { ArrowLeft } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import AddScannerModal from './addScannerModal.jsx'
 import UpdateScannerModal from './updateScannerModal.jsx'
 import { StatusPill } from '../components/ui/StatusPill.jsx'
@@ -78,7 +79,7 @@ const AdminScanners = () => {
       <div className="h-dvh">
         <div className="flex align-middle justify-around my-3 mt-4">
           <div className="flex align-middle">
-            <a type="button" className="btn btn-primary" href="/playground"><ArrowLeft /></a>
+            <Link type="button" className="btn btn-primary" to="/playground"><ArrowLeft /></Link>
           </div>
           <div className="flex justify-center align-middle">
             <select name="SearchFor" id="txtParam" className="select border border-primary rounded-lg" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
@@ -131,7 +132,7 @@ const AdminScanners = () => {
           </div>
         </div>
       </div>
-      {showAddModal && <AddScannerModal onClose={() => setShowAddModal(false)} />}
+      {showAddModal && <AddScannerModal onClose={setShowAddModal(false)} />}
       {showUpdateModal && selectedScanner && (
         <UpdateScannerModal onClose={closeUpdateModal} scanner={selectedScanner} />
       )}

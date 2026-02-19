@@ -2,7 +2,6 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-const BASE_URL = "http://localhost:8080"
 
 async function seedDB() {
   await prisma.scanner.createMany({

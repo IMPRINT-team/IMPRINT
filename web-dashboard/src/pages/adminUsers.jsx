@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import React from "react"
+import { Link } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react';
 
 const BASE_URL = "http://localhost:8080/"
@@ -31,7 +32,7 @@ const AdminUsers = () => {
         <div className="h-svh">
             <div className="flex align-middle justify-around my-3 mt-4">
                 <div className="flex align-middle">
-                    <a type="button" className="btn btn-primary" href="/playground"><ArrowLeft /></a>
+                    <Link type="button" className="btn btn-primary" to="/playground"><ArrowLeft /></Link>
                 </div>
                 <div className="flex justify-center align-middle">
                     <select name="SearchFor" id="txtParam" className="select border border-primary rounded-lg">
