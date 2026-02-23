@@ -22,13 +22,25 @@ Each scanner provides immediate user feedback via LED indicators (green/red) and
 ## Deploy Quickstart (Homelab / Prod-like)
 1. `cp deploy/.env.example deploy/.env`
 2. `docker compose -f deploy/docker-compose.yml up -d`
-3. Open `http://localhost`
+3. Open `http://Imprint` (or use your host LAN IP if DNS/hosts for `Imprint` is not configured).
 
 Routing in deploy mode is single-origin through Caddy:
 - `/api/*` -> backend API (`backend:8080`)
 - everything else -> frontend SPA
 
 The deploy stack also runs a one-off `migrate` service (`prisma migrate deploy`) before backend startup.
+
+## Access from LAN (phone/tablet/other devices)
+To access the deploy stack from another device on your local network, ensure the client can resolve `Imprint` to the machine running Docker/Caddy.
+
+1. Find the host machine LAN IP (example: `192.168.1.42`).
+2. Configure name resolution for `Imprint`:
+   - Preferred: add a DNS `A` record in your router/local DNS (`Imprint` -> host LAN IP).
+   - Quick test: add a hosts entry on the client device (`192.168.1.42 Imprint`).
+3. Ensure firewall rules allow inbound HTTP on TCP `80`.
+4. From the client device, open `http://Imprint`.
+
+If you cannot configure DNS/hosts, open `http://<host-lan-ip>` directly instead.
 
 ## Workspace Layout
 - `backend/`: Node.js API service (Express + Prisma).
