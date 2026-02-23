@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-const devApiTarget = process.env.VITE_DEV_API_TARGET ?? 'http://localhost:8080'
+const isDevContainer =
+  process.env.REMOTE_CONTAINERS === 'true' || process.env.DEVCONTAINER === 'true'
+const devApiTarget = process.env.VITE_DEV_API_TARGET ?? (isDevContainer ? 'http://backend:8080' : 'http://localhost:8080')
 
 export default defineConfig({
   plugins: [react()],
