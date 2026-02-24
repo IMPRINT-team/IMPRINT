@@ -21,7 +21,7 @@ services:
       NO_PROXY: localhost,127.0.0.1,::1,backend,postgres,web-dashboard,app
       no_proxy: localhost,127.0.0.1,::1,backend,postgres,web-dashboard,app
     ports:
-      - "8080:8080"
+      - "0.0.0.0:8080:8080"
     depends_on:
       - postgres
     networks:
@@ -35,7 +35,7 @@ services:
       VITE_API_BASE_URL: http://backend:8080
       VITE_CLERK_PUBLISHABLE_KEY: ${VITE_CLERK_PUBLISHABLE_KEY:-}
     ports:
-      - "5173:5173"
+      - "0.0.0.0:5173:5173"
     depends_on:
       - backend
     networks:
@@ -49,7 +49,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-imprint}
       POSTGRES_DB: ${POSTGRES_DB:-imprint}
     ports:
-      - "5432:5432"
+      - "0.0.0.0:5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:

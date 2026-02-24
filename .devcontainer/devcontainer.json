@@ -15,7 +15,7 @@
   "portsAttributes": {
     "8080": {
       "label": "IMPRINT Backend API",
-      "onAutoForward": "openBrowserOnce"
+      "onAutoForward": "notify"
     },
     "5173": {
       "label": "IMPRINT Web Dashboard (Vite)",
