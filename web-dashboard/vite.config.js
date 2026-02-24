@@ -10,6 +10,7 @@ export default defineConfig({
   envPrefix: ['VITE_', 'CLERK_'],
   server: {
     host: '0.0.0.0', // Necessary for Dev Containers
+    port: 5173,
     proxy: {
       '/api': {
         target: devApiTarget,

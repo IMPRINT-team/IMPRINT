@@ -19,6 +19,7 @@ services:
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-imprint}:${POSTGRES_PASSWORD:-imprint}@postgres:5432/${POSTGRES_DB:-imprint}
       PORT: 8080
+      HOST: 0.0.0.0
       NO_PROXY: localhost,127.0.0.1,::1,backend,postgres,web-dashboard,app
       no_proxy: localhost,127.0.0.1,::1,backend,postgres,web-dashboard,app
     ports:
