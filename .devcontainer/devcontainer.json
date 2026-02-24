@@ -10,6 +10,19 @@
   ],
   "shutdownAction": "stopCompose",
   "workspaceFolder": "/workspace",
+
+  "forwardPorts": [8080, 5173],
+  "portsAttributes": {
+    "8080": {
+      "label": "IMPRINT Backend API",
+      "onAutoForward": "openBrowserOnce"
+    },
+    "5173": {
+      "label": "IMPRINT Web Dashboard (Vite)",
+      "onAutoForward": "openBrowserOnce"
+    }
+  },
+
   "customizations": {
     "vscode": {
       "extensions": [
