@@ -4,6 +4,11 @@
     "../docker-compose.yml"
   ],
   "service": "app",
+  "runServices": [
+    "postgres",
+    "backend"
+  ],
+  "shutdownAction": "stopCompose",
   "workspaceFolder": "/workspace",
   "customizations": {
     "vscode": {
