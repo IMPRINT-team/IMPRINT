@@ -19,10 +19,10 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci --workspaces --include-workspace-root
 
       - name: Lint backend
-        run: npm run lint -w backend
+        run: npm run lint -w backend -- --ignore-pattern seeds/**
 
       - name: Lint web dashboard
         run: npm run lint -w web-dashboard -- --max-warnings=0

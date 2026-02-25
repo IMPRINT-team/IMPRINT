@@ -2,7 +2,6 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-const BASE_URL = "http://localhost:8080"
 
 async function seedDB() {
   await prisma.scanner.createMany({
@@ -27,16 +26,19 @@ async function seedDB() {
       },
     ],
   });
-  const scanner = await prisma.scanner.findFirst()
-  await await prisma.event.create({
+
+  const scanner = await prisma.scanner.findFirst();
+
+  await prisma.event.create({
     data: {
       uid: "BE:00:28:AF",
       result: "ACCEPTED",
       scanner: {
-        connect: {deviceId: scanner.deviceId}
+        connect: { deviceId: scanner.deviceId },
       },
     },
-  })
+  });
+
   console.log("Database seeded successfully!");
 }
 
