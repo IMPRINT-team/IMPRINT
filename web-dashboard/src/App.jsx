@@ -31,7 +31,7 @@ const App = () => {
       />
 
       <Route
-        path="/playground"
+        path="/dashboard"
         element={
           <RequireAuth>
             <Dashboard />
@@ -40,7 +40,7 @@ const App = () => {
       />
 
       <Route
-        path="/playground/figma"
+        path="/dashboard/figma"
         element={
           <RequireAuth>
             <PlaygroundPage />
