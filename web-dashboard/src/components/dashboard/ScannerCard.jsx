@@ -1,53 +1,85 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { StatusPill } from "../ui/StatusPill.jsx";
-import { formatTime } from "../../lib/formatTime.js";
+
+const padNumber = (value) => String(value).padStart(2, "0");
+
+const formatDuration = (totalSeconds) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${padNumber(hours)}:${padNumber(minutes)}:${padNumber(seconds)}`;
+};
+
+const resolveHeartbeatValue = (scanner) => (
+  scanner.lastHeartbeat
+  || scanner.last_seen
+  || scanner.lastSeen
+  || scanner.updatedAt
+  || scanner.createdAt
+);
+
+const formatHeartbeat = (value) => {
+  if (!value) {
+    return "--:--:--";
+  }
+
+  const parsed = new Date(value);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return "--:--:--";
+  }
+
+  const diffInSeconds = Math.max(0, Math.floor((Date.now() - parsed.getTime()) / 1000));
+  return formatDuration(diffInSeconds);
+};
 
 const ScannerCard = ({ scanner, onClick, className = "" }) => {
+  const heartbeat = formatHeartbeat(resolveHeartbeatValue(scanner));
+  const scannerName = scanner.name || scanner.location || "Unknown Scanner";
+
   const handleClick = () => {
-    onClick(scanner);
+    if (onClick) {
+      onClick(scanner);
+    }
   };
 
   return (
     <button
       type="button"
       onClick={handleClick}
-      className={`w-full rounded-xl border border-primary/40 bg-base-300 p-4 text-left shadow-sm transition hover:border-primary hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-base-100 ${className}`}
-      aria-label={`Open scanner details for ${scanner.location} ${scanner.specificLocation}`}
+      className={`group flex w-full items-center justify-between gap-4 rounded-xl bg-base-300 px-3 py-2.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary hover:ring-1 hover:ring-primary/70 ${className}`}
+      aria-label={`Open scanner details for ${scannerName}`}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-xs uppercase tracking-wider text-base-content/60">General Area</p>
-          <p className="text-sm font-semibold">{scanner.location || "Unknown"}</p>
-          <p className="mt-1 text-xs text-base-content/70">{scanner.specificLocation || "Unknown"}</p>
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        <span className="h-8 w-2 shrink-0 rounded-full bg-primary/70" aria-hidden="true" />
+
+        <div className="flex min-w-0 flex-col gap-1">
+          <p className="truncate text-sm font-bold uppercase tracking-wide text-base-content">{scannerName}</p>
+          <StatusPill status={scanner.status} />
         </div>
-        <StatusPill status={scanner.status} />
       </div>
 
-      <dl className="mt-4 grid grid-cols-1 gap-2 text-xs sm:grid-cols-2">
-        <div>
-          <dt className="uppercase tracking-wide text-base-content/60">Last Seen</dt>
-          <dd className="mt-0.5 text-sm text-base-content">{formatTime(scanner.createdAt)}</dd>
-        </div>
-        <div>
-          <dt className="uppercase tracking-wide text-base-content/60">Authorization</dt>
-          <dd className="mt-0.5 text-sm text-base-content">{scanner.authorization || "Unknown"}</dd>
-        </div>
-      </dl>
+      <span className="shrink-0 font-mono text-xs font-semibold text-primary">{heartbeat}</span>
     </button>
   );
 };
 
 ScannerCard.propTypes = {
   scanner: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     deviceId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    name: PropTypes.string,
     location: PropTypes.string,
-    specificLocation: PropTypes.string,
     status: PropTypes.string,
+    lastHeartbeat: PropTypes.string,
+    last_seen: PropTypes.string,
+    lastSeen: PropTypes.string,
+    updatedAt: PropTypes.string,
     createdAt: PropTypes.string,
-    authorization: PropTypes.string,
   }).isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   className: PropTypes.string,
 };
 
