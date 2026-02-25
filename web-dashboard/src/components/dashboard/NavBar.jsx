@@ -122,7 +122,9 @@ const NavBar = ({
             </NavLink>
           ))}
 
-          <div className="mt-auto">
+          <div className="mt-auto flex flex-col gap-2">
+            <ThemeSelector isExpanded />
+
             <button
               type="button"
               onClick={() => setConfirmLogout(true)}
