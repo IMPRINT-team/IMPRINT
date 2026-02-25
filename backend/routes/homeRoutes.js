@@ -8,6 +8,7 @@ import {
     getScannersByAuthLevel,
     scan, 
     createScanner,
+    updateScanner,
     addUser, 
     getEvents, 
     getUsers, 
@@ -20,6 +21,8 @@ const homeRouter = express.Router();
 
 homeRouter.get("/", getScanners);
 homeRouter.post("/", createScanner);
+homeRouter.get("/scanners", getScanners);
+homeRouter.put("/scanners/:id", updateScanner);
 homeRouter.get("/search/location/:location", getScannersByLocation);
 homeRouter.get("/search/status/:status", getScannerByStatus);
 homeRouter.get("/search/specificLocation/:specificLocation", getScannersBySpecLocation);
