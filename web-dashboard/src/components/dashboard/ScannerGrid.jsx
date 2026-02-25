@@ -12,9 +12,13 @@ const ScannerGrid = ({ scanners, onSelect }) => {
           No scanner data yet.
         </div>
       ) : (
-        <div className="grid min-h-0 flex-1 auto-rows-max gap-3 overflow-y-auto pr-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-          {scanners.map((scanner) => (
-            <ScannerCard key={scanner.deviceId} scanner={scanner} onClick={onSelect} />
+        <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-1">
+          {scanners.map((scanner, index) => (
+            <ScannerCard
+              key={scanner.deviceId ?? scanner.id ?? scanner.name ?? index}
+              scanner={scanner}
+              onClick={onSelect}
+            />
           ))}
         </div>
       )}
