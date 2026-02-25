@@ -22,6 +22,7 @@ const homeRouter = express.Router();
 homeRouter.get("/", getScanners);
 homeRouter.post("/", createScanner);
 homeRouter.get("/scanners", getScanners);
+homeRouter.post("/scanners", createScanner);
 homeRouter.put("/scanners/:id", updateScanner);
 homeRouter.get("/search/location/:location", getScannersByLocation);
 homeRouter.get("/search/status/:status", getScannerByStatus);
