@@ -1,8 +1,18 @@
 import React from 'react'
+import { createPortal } from 'react-dom'
 
-function BaseModal({ id = 'modal', title, onClose, children }) {
-  return (
-    <dialog id={id} className="modal modal-open">
+function BaseModal({ id = 'modal', title, onClose, children, portalTarget }) {
+  const resolvedTarget =
+    portalTarget ||
+    (typeof document !== 'undefined' &&
+      (document.getElementById('modal-root') || document.body))
+
+  if (!resolvedTarget) {
+    return null
+  }
+
+  return createPortal(
+    <dialog id={id} className="modal modal-open z-[55]" onCancel={onClose}>
       <div className="modal-box">
         <form method="dialog">
           <button
@@ -22,7 +32,8 @@ function BaseModal({ id = 'modal', title, onClose, children }) {
       <form method="dialog" className="modal-backdrop">
         <button type="button" onClick={onClose}>close</button>
       </form>
-    </dialog>
+    </dialog>,
+    resolvedTarget,
   )
 }
 
