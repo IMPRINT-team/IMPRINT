@@ -43,20 +43,6 @@ const StatsPannel = () => {
           </button>
         </li>
       </ul>
-
-      {/* Static Non-Interactive Stats */}
-      <ul className="grid gap-2 grid-cols-3">
-        {[
-          { name: "Avg Valid", value: "1.3s" },
-          { name: "Peak", value: "09:00" },
-          { name: "Total Scans", value: "1,248" },
-        ].map((item) => (
-          <li key={item.name} className="rounded-lg bg-base-300/30 p-2 border border-white/5">
-            <p className="text-[10px] uppercase opacity-50 truncate">{item.name}</p>
-            <p className="text-sm font-semibold">{item.value}</p>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 

@@ -60,7 +60,7 @@ const LatestEvents = () => {
   return (
     <CardShell className="h-full" data-debug-label="LatestEvents">
       <h2 id="latest-events-title" className="text-lg font-semibold">
-        Latest events
+        Events
       </h2>
 
       {isLoading ? (

@@ -1,23 +1,30 @@
-import React from "react";
 import { useClerk } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const Logout = () => {
+const Logout = ({ className, children }) => {
   const { signOut } = useClerk();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     await signOut();
-    navigate("/login"); // or "/" if that’s your entry point
+    navigate("/login");
   };
 
   return (
-        <div>
-            <button onClick={handleLogout} className="logout-button">
-                Log out
-            </button>
-        </div>
+    <button onClick={handleLogout} className={className}>
+      {children || "Log out"}
+    </button>
   );
+};
+
+Logout.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node,
+};
+
+Logout.defaultProps = {
+  className: "",
 };
 
 export default Logout;
