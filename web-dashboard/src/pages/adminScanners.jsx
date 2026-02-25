@@ -77,7 +77,7 @@ const AdminScanners = () => {
       <div className="h-dvh">
         <div className="flex align-middle justify-around my-3 mt-4">
           <div className="flex align-middle">
-            <a type="button" className="btn btn-primary" href="/playground"><ArrowLeft /></a>
+            <a type="button" className="btn btn-primary" href="/dashboard"><ArrowLeft /></a>
           </div>
           <div className="flex justify-center align-middle">
             <select name="SearchFor" id="txtParam" className="select border border-primary rounded-lg" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
