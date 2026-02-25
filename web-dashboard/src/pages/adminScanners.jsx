@@ -7,7 +7,7 @@ import { StatusPill } from '../components/ui/StatusPill.jsx'
 import { buildApiUrl } from "../lib/apiBase.js"
 
 const getScanners = async () => {
-  const scannerData = await fetch(buildApiUrl())
+  const scannerData = await fetch(buildApiUrl('/scanners'))
   return scannerData
 }
 

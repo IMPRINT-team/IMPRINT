@@ -5,7 +5,7 @@ import { buildApiUrl } from "../../lib/apiBase.js"
 
 
 const getScanners = async () => {
-  const scanners = await fetch(buildApiUrl())
+  const scanners = await fetch(buildApiUrl('/scanners'))
   return scanners
 }
 
