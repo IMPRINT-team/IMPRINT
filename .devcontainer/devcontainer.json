@@ -31,5 +31,5 @@
       ]
     }
   },
-  "postCreateCommand": "npm install"
+  "postCreateCommand": "npm run dev"
 }
