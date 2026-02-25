@@ -4,6 +4,7 @@ import { ChevronRight, PanelLeftClose, PanelLeftOpen, X } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import Logout from "./Logout.jsx";
 import ImprintLogo from "../branding/ImprintLogo.jsx";
+import ThemeSelector from "./ThemeSelector.jsx";
 
 const baseLinkClasses =
   "rounded-xl px-3 py-3 text-left transition-colors duration-200 " +
@@ -135,7 +136,7 @@ const NavBar = ({
 
       <aside
         className={[
-          "relative hidden min-h-0 rounded-2xl border border-primary/40 bg-base-100/90 shadow-xl backdrop-blur",
+          "relative hidden h-full min-h-0 rounded-2xl border border-primary/40 bg-base-100/90 shadow-xl backdrop-blur",
           "lg:flex lg:flex-col",
         ].join(" ")}
         onMouseEnter={() => !isPinned && onHoverChange(true)}
@@ -143,14 +144,16 @@ const NavBar = ({
       >
         <div className="pointer-events-none absolute inset-y-3 right-2 w-2 rounded-full bg-base-content/10 opacity-70" />
 
-        <button
-          type="button"
-          onClick={onTogglePinned}
-          aria-label={isPinned ? "Collapse sidebar" : "Pin sidebar open"}
-          className="btn btn-ghost btn-sm absolute right-2 top-2 z-10"
-        >
-          {isPinned ? <PanelLeftClose className="size-4" /> : <PanelLeftOpen className="size-4" />}
-        </button>
+        {isExpanded && (
+          <button
+            type="button"
+            onClick={onTogglePinned}
+            aria-label={isPinned ? "Collapse sidebar" : "Pin sidebar open"}
+            className="btn btn-ghost btn-sm absolute right-2 top-2 z-10"
+          >
+            {isPinned ? <PanelLeftClose className="size-4" /> : <PanelLeftOpen className="size-4" />}
+          </button>
+        )}
 
         <div className="flex min-h-0 flex-1 flex-col p-3">
           <div className="mb-3 mt-2 flex items-center gap-3 px-1">
@@ -169,19 +172,23 @@ const NavBar = ({
               <DesktopNavItem key={item.to} to={item.to} label={item.label} isExpanded={isExpanded} />
             ))}
 
-            <button
-              type="button"
-              onClick={() => setConfirmLogout(true)}
-              className={[baseLinkClasses, "mt-auto flex w-full items-center gap-3 border border-transparent"].join(
-                " ",
-              )}
-              title={!isExpanded ? "Log out" : undefined}
-            >
-              <span className="grid w-9 place-items-center">
-                <ChevronRight className="size-4 shrink-0" aria-hidden="true" />
-              </span>
-              <CollapsibleLabel isExpanded={isExpanded}>Log out</CollapsibleLabel>
-            </button>
+            <div className="mt-auto flex flex-col gap-2">
+              <ThemeSelector isExpanded={isExpanded} />
+
+              <button
+                type="button"
+                onClick={() => setConfirmLogout(true)}
+                className={[baseLinkClasses, "flex w-full items-center gap-3 border border-transparent"].join(
+                  " ",
+                )}
+                title={!isExpanded ? "Log out" : undefined}
+              >
+                <span className="grid w-9 place-items-center">
+                  <ChevronRight className="size-4 shrink-0" aria-hidden="true" />
+                </span>
+                <CollapsibleLabel isExpanded={isExpanded}>Log out</CollapsibleLabel>
+              </button>
+            </div>
           </nav>
         </div>
       </aside>

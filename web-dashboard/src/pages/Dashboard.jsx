@@ -4,8 +4,6 @@ import ScannerTable from "../components/dashboard/ScannerTable.jsx";
 import LatestEvents from "../components/dashboard/LatestEvents.jsx";
 import HeroPanel from "../components/dashboard/HeroPanel.jsx";
 import NavBar from "../components/dashboard/NavBar.jsx";
-import ImprintLogo from "../components/branding/ImprintLogo.jsx";
-import ThemeSelector from "../components/dashboard/ThemeSelector.jsx";
 import StatsPannel from "../components/dashboard/StatsPannel.jsx";
 
 const Dashboard = () => {
@@ -25,10 +23,6 @@ const Dashboard = () => {
     <div className="h-screen overflow-hidden bg-base-100 text-base-content">
       <div className="mx-auto flex h-full max-w-screen-2xl flex-col p-3 lg:p-4">
         <header className="shrink-0">
-          <div className="flex items-center justify-between gap-4">
-            <ThemeSelector />
-          </div>
-
           <div className="mt-3 flex items-center gap-3 lg:hidden">
             <button
               type="button"
@@ -56,7 +50,7 @@ const Dashboard = () => {
               lg:data-[sidebar=expanded]:[--sidebar-width:12rem]
             "
           >
-            <section className="hidden min-h-0 min-w-0 lg:block lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3">
+            <section className="hidden h-full min-h-0 min-w-0 lg:block lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3">
               <NavBar
                 isExpanded={sidebarState === "expanded"}
                 isPinned={isSidebarPinned}
