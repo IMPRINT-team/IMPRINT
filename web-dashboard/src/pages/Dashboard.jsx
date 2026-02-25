@@ -26,10 +26,6 @@ const Dashboard = () => {
       <div className="mx-auto flex h-full max-w-screen-2xl flex-col p-3 lg:p-4">
         <header className="shrink-0">
           <div className="flex items-center justify-between gap-4">
-            <ImprintLogo
-              className="text-primary size-14 shrink-0"
-              aria-hidden="true"
-            />
             <ThemeSelector />
           </div>
 
@@ -48,16 +44,13 @@ const Dashboard = () => {
             <div className="divider divider-primary my-0 flex-1" />
           </div>
         </header>
-
-        <NavBar isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
-
         <main className="mt-3 min-h-0 flex-1 overflow-hidden">
           <div
             data-sidebar={sidebarState}
             className="
               grid h-full w-full gap-3
               grid-cols-1 grid-rows-4
-              lg:grid-cols-[var(--sidebar-width)_minmax(0,12fr)_minmax(0,4fr)]
+              lg:grid-cols-[var(--sidebar-width)_minmax(0,11fr)_minmax(0,4fr)]
               lg:grid-rows-[minmax(0,3fr)_minmax(0,1fr)]
               lg:[--sidebar-width:5.5rem]
               lg:data-[sidebar=expanded]:[--sidebar-width:12rem]

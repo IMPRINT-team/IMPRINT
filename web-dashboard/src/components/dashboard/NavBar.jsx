@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { ChevronRight, PanelLeftClose, PanelLeftOpen, X } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import Logout from "./Logout.jsx";
+import ImprintLogo from "../branding/ImprintLogo.jsx";
 
 const baseLinkClasses =
   "rounded-xl px-3 py-3 text-left transition-colors duration-200 " +
@@ -153,9 +154,7 @@ const NavBar = ({
 
         <div className="flex min-h-0 flex-1 flex-col p-3">
           <div className="mb-3 mt-2 flex items-center gap-3 px-1">
-            <div className="grid size-9 place-items-center rounded-xl bg-primary/15 text-primary">
-              <span className="text-sm font-black">I</span>
-            </div>
+            <ImprintLogo className="text-primary size-14 shrink-0" aria-hidden="true" />
 
             <div className={[labelTransitionClasses, getRevealClasses(isExpanded, "max-w-[180px]")].join(" ")}>
               <div className="text-sm font-bold tracking-wide">IMPRINT</div>
