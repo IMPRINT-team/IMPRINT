@@ -13,7 +13,7 @@ const getRevealClasses = (isExpanded, expandedWidth = "max-w-[200px]") =>
     ? `${expandedWidth} opacity-100 translate-x-0`
     : "max-w-0 opacity-0 -translate-x-1";
 
-function ThemeSelector({ isExpanded }) {
+function ThemeSelector({ isExpanded = false }) {
   const { theme, setTheme } = useThemeStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -77,8 +77,5 @@ ThemeSelector.propTypes = {
   isExpanded: PropTypes.bool,
 };
 
-ThemeSelector.defaultProps = {
-  isExpanded: false,
-};
 
 export default ThemeSelector;

@@ -25,7 +25,7 @@ const getRevealClasses = (isExpanded, expandedWidth = "max-w-[200px]") =>
     ? `${expandedWidth} opacity-100 translate-x-0`
     : "max-w-0 opacity-0 -translate-x-1";
 
-const CollapsibleLabel = ({ isExpanded, children, expandedWidth }) => (
+const CollapsibleLabel = ({ isExpanded = false, children, expandedWidth = "max-w-[200px]" }) => (
   <span className={[labelTransitionClasses, getRevealClasses(isExpanded, expandedWidth)].join(" ")}>
     {children}
   </span>
@@ -37,12 +37,8 @@ CollapsibleLabel.propTypes = {
   expandedWidth: PropTypes.string,
 };
 
-CollapsibleLabel.defaultProps = {
-  isExpanded: false,
-  expandedWidth: "max-w-[200px]",
-};
 
-const DesktopNavItem = ({ to, label, isExpanded }) => (
+const DesktopNavItem = ({ to, label, isExpanded = false }) => (
   <NavLink
     to={to}
     className={({ isActive }) =>
@@ -67,17 +63,14 @@ DesktopNavItem.propTypes = {
   isExpanded: PropTypes.bool,
 };
 
-DesktopNavItem.defaultProps = {
-  isExpanded: false,
-};
 
 const NavBar = ({
-  isOpen,
-  onClose,
-  isExpanded,
-  isPinned,
-  onHoverChange,
-  onTogglePinned,
+  isOpen = false,
+  onClose = () => {},
+  isExpanded = false,
+  isPinned = false,
+  onHoverChange = () => {},
+  onTogglePinned = () => {},
 }) => {
   const [confirmLogout, setConfirmLogout] = useState(false);
 
@@ -227,13 +220,5 @@ NavBar.propTypes = {
   onTogglePinned: PropTypes.func,
 };
 
-NavBar.defaultProps = {
-  isOpen: false,
-  onClose: () => {},
-  isExpanded: false,
-  isPinned: false,
-  onHoverChange: () => {},
-  onTogglePinned: () => {},
-};
 
 export default NavBar;
