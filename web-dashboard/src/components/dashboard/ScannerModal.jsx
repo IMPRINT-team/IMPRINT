@@ -14,12 +14,12 @@ const createInitialState = (scanner) => ({
 
 const ScannerModal = ({
   isOpen,
-  scanner,
+  scanner = null,
   isSaving,
-  saveError,
+  saveError = null,
   onClose,
   onSave,
-  restoreFocusRef,
+  restoreFocusRef = null,
 }) => {
   const modalRef = useRef(null);
   const headingId = useId();
@@ -223,12 +223,6 @@ ScannerModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   restoreFocusRef: PropTypes.shape({ current: PropTypes.any }),
-};
-
-ScannerModal.defaultProps = {
-  scanner: null,
-  saveError: null,
-  restoreFocusRef: null,
 };
 
 export default ScannerModal;
