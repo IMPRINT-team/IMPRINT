@@ -15,7 +15,7 @@ import ImprintLogo from "../branding/ImprintLogo.jsx";
 import ThemeSelector from "./ThemeSelector.jsx";
 
 const baseLinkClasses =
-  "rounded-xl border border-transparent bg-base-100 px-3 py-3 text-left transition-all duration-200 " +
+  "rounded-xl border border-transparent bg-base-100 px-3 py-3 text-left transition-all duration-500 " +
   "hover:border-primary/30 hover:bg-gradient-to-br hover:from-primary/20 hover:via-secondary/10 hover:to-base-200 hover:text-base-content " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
@@ -26,12 +26,12 @@ const navItems = [
 ];
 
 const labelTransitionClasses =
-  "overflow-hidden whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(.2,.8,.2,1)]";
+  "overflow-hidden whitespace-nowrap transition-all duration-500 ease-[cubic-bezier(.2,.8,.2,1)]";
 
-const getRevealClasses = (isExpanded, expandedWidth = "max-w-[200px]") =>
+const getRevealClasses = (isExpanded) =>
   isExpanded
-    ? `${expandedWidth} opacity-100 translate-x-0`
-    : "max-w-0 opacity-0 -translate-x-1";
+    ? "opacity-100"
+    : "opacity-0 pointer-events-none";
 
 const CollapsibleLabel = ({ isExpanded, children, expandedWidth }) => (
   <span
@@ -61,7 +61,7 @@ const DesktopNavItem = ({ to, label, icon: Icon, isExpanded }) => (
     className={({ isActive }) =>
       [
         baseLinkClasses,
-        "flex items-center gap-3",
+        "flex items-center gap-3 min-w-0" ,
         isActive
           ? "border border-primary/30 bg-primary/15 text-primary"
           : "border border-transparent",
@@ -69,7 +69,7 @@ const DesktopNavItem = ({ to, label, icon: Icon, isExpanded }) => (
     }
     title={!isExpanded ? label : undefined}
   >
-    <span className="grid w-9 place-items-center">
+    <span className="flex w-9 shrink-0 items-center justify-center">
       <Icon className="size-4 shrink-0" aria-hidden="true" />
     </span>
 
@@ -104,7 +104,7 @@ const NavBar = ({
     <>
       {/* Mobile Overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-black/45 transition-opacity duration-200 lg:hidden ${
+        className={`fixed inset-0 z-40 bg-black/45 transition-opacity duration-500 lg:hidden ${
           isOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         aria-hidden="true"
@@ -113,48 +113,81 @@ const NavBar = ({
 
       {/* Mobile Drawer */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-primary bg-base-100 p-4 shadow-xl transition-transform duration-200 lg:hidden ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className="relative hidden h-full min-h-0 rounded-2xl border border-primary/40 bg-base-100/90 shadow-xl backdrop-blur lg:flex lg:flex-col"
+        onMouseEnter={() => !isPinned && onHoverChange(true)}
+        onMouseLeave={() => !isPinned && onHoverChange(false)}
       >
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="px-1 text-xs font-bold uppercase tracking-widest text-base-content/50">
-            Menu
-          </h2>
+        {isExpanded && (
           <button
             type="button"
-            onClick={onClose}
-            className="btn btn-ghost btn-sm"
+            onClick={onTogglePinned}
+            className="btn btn-ghost btn-sm absolute right-2 top-2 z-10"
           >
-            <X className="size-5" />
+            {isPinned ? (
+              <PanelLeftClose className="size-4" />
+            ) : (
+              <PanelLeftOpen className="size-4" />
+            )}
           </button>
-        </div>
+        )}
 
-        <div className="divider my-2" />
-
-        <nav className="flex flex-1 flex-col gap-2 overflow-y-auto">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={baseLinkClasses}
-              onClick={onClose}
+        <div className="flex min-h-0 flex-1 flex-col p-3">
+          {/* Brand Logo Section */}
+          <div className="mb-3 mt-2 flex items-center gap-3 px-1">
+            <ImprintLogo className="text-primary size-14 shrink-0" />
+            <div
+              className={[
+                labelTransitionClasses,
+                getRevealClasses(isExpanded, "max-w-[180px]"),
+              ].join(" ")}
             >
-              {item.label}
-            </NavLink>
-          ))}
-
-          <div className="mt-auto flex flex-col gap-2">
-            <ThemeSelector isExpanded />
-            <button
-              type="button"
-              onClick={() => setConfirmLogout(true)}
-              className={`${baseLinkClasses} w-full`}
-            >
-              Log out
-            </button>
+              <div className="text-sm font-bold tracking-wide">IMPRINT</div>
+              <div className="text-[11px] uppercase tracking-widest opacity-50">
+                Admin
+              </div>
+            </div>
           </div>
-        </nav>
+
+          <div className="divider my-2" />
+
+          {/* Main Navigation */}
+          <nav className="flex min-h-0 flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-2 overflow-y-auto">
+              {navItems.map((item) => (
+                <DesktopNavItem
+                  key={item.to}
+                  to={item.to}
+                  label={item.label}
+                  icon={item.icon}
+                  isExpanded={isExpanded}
+                />
+              ))}
+            </div>
+
+            {/* Bottom Actions - Grouped together */}
+            <div className="mt-auto flex flex-col gap-2 pt-2">
+              <div className="divider my-2" />
+              
+              {/* Theme Selector - Ensure this component accepts isExpanded and matches baseLinkClasses internally */}
+              <ThemeSelector isExpanded={isExpanded} />
+
+              <button
+                type="button"
+                onClick={() => setConfirmLogout(true)}
+                className={`${baseLinkClasses} flex items-center gap-3 min-w-0`}
+                title={!isExpanded ? "Log out" : undefined}
+              >
+                <span className="flex w-9 shrink-0 items-center justify-center">
+                  <LogOut className="size-4 shrink-0" aria-hidden="true" />
+                </span>
+
+                <CollapsibleLabel isExpanded={isExpanded}>
+                  Log out
+                </CollapsibleLabel>
+              </button>
+            </div>
+          </nav>
+        </div>
       </aside>
 
       {/* Desktop Sidebar */}

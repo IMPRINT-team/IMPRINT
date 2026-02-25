@@ -157,6 +157,7 @@ const Dashboard = () => {
                 lg:grid-rows-[minmax(0,3fr)_minmax(0,1fr)]
                 lg:[--sidebar-width:5.5rem]
                 lg:data-[sidebar=expanded]:[--sidebar-width:12rem]
+                lg:transition-[grid-template-columns] lg:duration-500 lg:ease-[cubic-bezier(.2,.8,.2,1)]
               "
             >
               <section className="hidden h-full min-h-0 min-w-0 lg:block lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3">

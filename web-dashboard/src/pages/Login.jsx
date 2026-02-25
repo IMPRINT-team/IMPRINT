@@ -79,7 +79,7 @@ const Login = () => {
 
                   /* Primary button */
                   formButtonPrimary:
-                    "mt-2 w-full rounded-md bg-primary text-white font-semibold py-2 hover:bg-primary/90 transition",
+                    "mt-2 w-full btn btn-primary",
 
                   /* Footer */
                   footer:
