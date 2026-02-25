@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import CardShell from "./CardShell.jsx";
 import { ResultPill } from "../ui/StatusPill.jsx";
-import { buildApiUrl } from "../../lib/apiBase.js";
+import { eventApi } from "../../lib/eventApi.js";
 
 const formatTime = (value) => {
   if (!value) {
@@ -26,29 +26,42 @@ const formatTime = (value) => {
 const LatestEvents = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const loadEvents = async () => {
-      try {
-        const response = await fetch(buildApiUrl("event"));
+    let isCancelled = false;
 
-        if (!response.ok) {
-          throw new Error("Unable to load events");
+    const loadEvents = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const data = await eventApi.getEvents();
+
+        if (isCancelled) {
+          return;
         }
 
-        const data = await response.json();
         setEvents(Array.isArray(data) ? data : []);
-        setHasError(false);
-      } catch (error) {
-        console.error(error);
-        setHasError(true);
+      } catch (loadError) {
+        if (isCancelled) {
+          return;
+        }
+
+        console.error(loadError);
+        setError(loadError.message);
       } finally {
-        setIsLoading(false);
+        if (!isCancelled) {
+          setIsLoading(false);
+        }
       }
     };
 
     loadEvents();
+
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   const latestEvents = useMemo(() => {
@@ -63,15 +76,11 @@ const LatestEvents = () => {
         Events
       </h2>
 
-      {isLoading ? (
-        <p className="text-sm opacity-70">Loading events...</p>
-      ) : null}
+      {isLoading ? <p className="text-sm opacity-70">Loading events...</p> : null}
 
-      {hasError ? (
-        <p className="text-sm text-error">Unable to load recent events.</p>
-      ) : null}
+      {error ? <p className="text-sm text-error">Unable to load recent events.</p> : null}
 
-      {!isLoading && !hasError ? (
+      {!isLoading && !error ? (
         <div className="overflow-x-auto">
           <table className="table table-sm">
             <thead>
