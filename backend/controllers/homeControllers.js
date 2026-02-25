@@ -108,6 +108,39 @@ export const createScanner = async (req, res) => {
     }
 }
 
+export const updateScanner = async (req, res) => {
+    const scannerId = req.params.id;
+    const { location, specificLocation, status, authorization } = req.body;
+
+    const updateData = {
+        ...(location !== undefined ? { location } : {}),
+        ...(specificLocation !== undefined ? { specificLocation } : {}),
+        ...(status !== undefined ? { status } : {}),
+        ...(authorization !== undefined ? { authorization } : {}),
+    };
+
+    if (Object.keys(updateData).length === 0) {
+        return res.status(400).json({ success: false, error: "No scanner fields provided for update." });
+    }
+
+    try {
+        const updatedScanner = await prisma.scanner.update({
+            where: {
+                deviceId: scannerId,
+            },
+            data: updateData,
+        });
+
+        res.status(200).json(updatedScanner);
+    } catch (err) {
+        if (err?.code === "P2025") {
+            return res.status(404).json({ success: false, error: "Scanner not found." });
+        }
+
+        res.status(500).json({ success: false, error: err });
+    }
+}
+
 export const deleteScanner = async (req, res) => {
     try {
         const scannerId = req.params.id;
