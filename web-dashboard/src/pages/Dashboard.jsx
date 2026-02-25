@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Menu } from "lucide-react";
 import ScannerTable from "../components/dashboard/ScannerTable.jsx";
 import LatestEvents from "../components/dashboard/LatestEvents.jsx";
@@ -10,6 +10,16 @@ import StatsPannel from "../components/dashboard/StatsPannel.jsx";
 
 const Dashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isSidebarPinned, setIsSidebarPinned] = useState(false);
+  const [isSidebarHovered, setIsSidebarHovered] = useState(false);
+
+  const sidebarState = useMemo(() => {
+    if (isSidebarPinned) {
+      return "expanded";
+    }
+
+    return isSidebarHovered ? "expanded" : "collapsed";
+  }, [isSidebarHovered, isSidebarPinned]);
 
   return (
     <div className="h-screen overflow-hidden bg-base-100 text-base-content">
@@ -23,7 +33,7 @@ const Dashboard = () => {
             <ThemeSelector />
           </div>
 
-          <div className="mt-3 flex items-center gap-3">
+          <div className="mt-3 flex items-center gap-3 lg:hidden">
             <button
               type="button"
               onClick={() => setIsDrawerOpen(true)}
@@ -43,26 +53,38 @@ const Dashboard = () => {
 
         <main className="mt-3 min-h-0 flex-1 overflow-hidden">
           <div
+            data-sidebar={sidebarState}
             className="
               grid h-full w-full gap-3
               grid-cols-1 grid-rows-4
-              lg:grid-cols-[2fr_1fr]
-              lg:grid-rows-[minmax(0,1.7fr)_minmax(0,1fr)]
+              lg:grid-cols-[var(--sidebar-width)_minmax(0,12fr)_minmax(0,4fr)]
+              lg:grid-rows-[minmax(0,3fr)_minmax(0,1fr)]
+              lg:[--sidebar-width:5.5rem]
+              lg:data-[sidebar=expanded]:[--sidebar-width:12rem]
             "
           >
-            <section className="min-h-0 min-w-0">
+            <section className="hidden min-h-0 min-w-0 lg:block lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3">
+              <NavBar
+                isExpanded={sidebarState === "expanded"}
+                isPinned={isSidebarPinned}
+                onHoverChange={setIsSidebarHovered}
+                onTogglePinned={() => setIsSidebarPinned((current) => !current)}
+              />
+            </section>
+
+            <section className="min-h-0 min-w-0 lg:col-start-2 lg:col-end-3 lg:row-start-1 lg:row-end-2">
               <HeroPanel />
             </section>
 
-            <section className="min-h-0 min-w-0">
+            <section className="min-h-0 min-w-0 lg:col-start-3 lg:col-end-4 lg:row-start-1 lg:row-end-2">
               <ScannerTable />
             </section>
 
-            <section className="min-h-0 min-w-0">
+            <section className="min-h-0 min-w-0 lg:col-start-2 lg:col-end-3 lg:row-start-2 lg:row-end-3">
               <StatsPannel />
             </section>
 
-            <section className="min-h-0 min-w-0">
+            <section className="min-h-0 min-w-0 lg:col-start-3 lg:col-end-4 lg:row-start-2 lg:row-end-3">
               <LatestEvents />
             </section>
           </div>
