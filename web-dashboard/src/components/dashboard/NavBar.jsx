@@ -1,19 +1,73 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { ChevronRight, PanelLeftClose, PanelLeftOpen, X } from "lucide-react";
-import Logout from "./Logout.jsx";
 import { NavLink } from "react-router-dom";
+import Logout from "./Logout.jsx";
 
 const baseLinkClasses =
-  "rounded-xl px-4 py-3 text-left transition-colors duration-200 " +
+  "rounded-xl px-3 py-3 text-left transition-colors duration-200 " +
   "hover:shadow-glowHover hover:bg-primary/95 hover:text-neutral " +
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
 const navItems = [
   { to: "/admin/users", label: "Users" },
   { to: "/admin/scanners", label: "Scanners" },
   { to: "/admin/events", label: "Events" },
 ];
+
+const labelTransitionClasses =
+  "overflow-hidden whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(.2,.8,.2,1)]";
+
+const getRevealClasses = (isExpanded, expandedWidth = "max-w-[200px]") =>
+  isExpanded
+    ? `${expandedWidth} opacity-100 translate-x-0`
+    : "max-w-0 opacity-0 -translate-x-1";
+
+const CollapsibleLabel = ({ isExpanded, children, expandedWidth }) => (
+  <span className={[labelTransitionClasses, getRevealClasses(isExpanded, expandedWidth)].join(" ")}>
+    {children}
+  </span>
+);
+
+CollapsibleLabel.propTypes = {
+  isExpanded: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+  expandedWidth: PropTypes.string,
+};
+
+CollapsibleLabel.defaultProps = {
+  isExpanded: false,
+  expandedWidth: "max-w-[200px]",
+};
+
+const DesktopNavItem = ({ to, label, isExpanded }) => (
+  <NavLink
+    to={to}
+    className={({ isActive }) =>
+      [
+        baseLinkClasses,
+        "flex items-center gap-3",
+        isActive ? "border border-primary/30 bg-primary/15 text-primary" : "border border-transparent",
+      ].join(" ")
+    }
+    title={!isExpanded ? label : undefined}
+  >
+    <span className="grid w-9 place-items-center">
+      <ChevronRight className="size-4 shrink-0" aria-hidden="true" />
+    </span>
+    <CollapsibleLabel isExpanded={isExpanded}>{label}</CollapsibleLabel>
+  </NavLink>
+);
+
+DesktopNavItem.propTypes = {
+  to: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  isExpanded: PropTypes.bool,
+};
+
+DesktopNavItem.defaultProps = {
+  isExpanded: false,
+};
 
 const NavBar = ({
   isOpen,
@@ -27,7 +81,6 @@ const NavBar = ({
 
   return (
     <>
-      {/* Backdrop - Only visible on mobile when open */}
       <div
         className={`fixed inset-0 z-40 bg-black/45 transition-opacity duration-200 lg:hidden ${
           isOpen ? "opacity-100" : "pointer-events-none opacity-0"
@@ -36,7 +89,6 @@ const NavBar = ({
         onClick={onClose}
       />
 
-      {/* Mobile Sidebar / Drawer */}
       <aside
         id="dashboard-drawer"
         className={`
@@ -80,12 +132,16 @@ const NavBar = ({
         </nav>
       </aside>
 
-      {/* Desktop Sidebar */}
       <aside
-        className="relative hidden min-h-0 rounded-2xl border border-primary/40 bg-base-100/90 p-3 shadow-xl backdrop-blur lg:flex lg:flex-col"
-        onMouseEnter={() => onHoverChange(true)}
-        onMouseLeave={() => onHoverChange(false)}
+        className={[
+          "relative hidden min-h-0 rounded-2xl border border-primary/40 bg-base-100/90 shadow-xl backdrop-blur",
+          "lg:flex lg:flex-col",
+        ].join(" ")}
+        onMouseEnter={() => !isPinned && onHoverChange(true)}
+        onMouseLeave={() => !isPinned && onHoverChange(false)}
       >
+        <div className="pointer-events-none absolute inset-y-3 right-2 w-2 rounded-full bg-base-content/10 opacity-70" />
+
         <button
           type="button"
           onClick={onTogglePinned}
@@ -95,58 +151,46 @@ const NavBar = ({
           {isPinned ? <PanelLeftClose className="size-4" /> : <PanelLeftOpen className="size-4" />}
         </button>
 
-        <div className="mb-4 mt-2 px-2 text-xs font-bold uppercase tracking-widest text-base-content/50">
-          Menu
-        </div>
+        <div className="flex min-h-0 flex-1 flex-col p-3">
+          <div className="mb-3 mt-2 flex items-center gap-3 px-1">
+            <div className="grid size-9 place-items-center rounded-xl bg-primary/15 text-primary">
+              <span className="text-sm font-black">I</span>
+            </div>
 
-        <nav className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={`${baseLinkClasses} ${isExpanded ? "justify-start" : "justify-center px-3"} flex items-center gap-2`}
-              title={isExpanded ? undefined : item.label}
-            >
-              <ChevronRight className="size-4 shrink-0" aria-hidden="true" />
-              <span
-                className={`overflow-hidden whitespace-nowrap transition-all duration-200 ${
-                  isExpanded ? "max-w-32 opacity-100" : "max-w-0 opacity-0"
-                }`}
-              >
-                {item.label}
-              </span>
-            </NavLink>
-          ))}
+            <div className={[labelTransitionClasses, getRevealClasses(isExpanded, "max-w-[180px]")].join(" ")}>
+              <div className="text-sm font-bold tracking-wide">IMPRINT</div>
+              <div className="text-[11px] uppercase tracking-widest opacity-50">Admin</div>
+            </div>
+          </div>
 
-          <div className="mt-auto">
+          <div className="divider my-2" />
+
+          <nav className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto">
+            {navItems.map((item) => (
+              <DesktopNavItem key={item.to} to={item.to} label={item.label} isExpanded={isExpanded} />
+            ))}
+
             <button
               type="button"
               onClick={() => setConfirmLogout(true)}
-              className={`${baseLinkClasses} ${
-                isExpanded ? "justify-start" : "justify-center px-3"
-              } flex w-full items-center gap-2`}
-              title={isExpanded ? undefined : "Log out"}
+              className={[baseLinkClasses, "mt-auto flex w-full items-center gap-3 border border-transparent"].join(
+                " ",
+              )}
+              title={!isExpanded ? "Log out" : undefined}
             >
-              <ChevronRight className="size-4 shrink-0" aria-hidden="true" />
-              <span
-                className={`overflow-hidden whitespace-nowrap transition-all duration-200 ${
-                  isExpanded ? "max-w-32 opacity-100" : "max-w-0 opacity-0"
-                }`}
-              >
-                Log out
+              <span className="grid w-9 place-items-center">
+                <ChevronRight className="size-4 shrink-0" aria-hidden="true" />
               </span>
+              <CollapsibleLabel isExpanded={isExpanded}>Log out</CollapsibleLabel>
             </button>
-          </div>
-        </nav>
+          </nav>
+        </div>
       </aside>
 
-      {/* Logout Modal */}
       {confirmLogout && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50">
           <div className="w-96 max-w-[90vw] rounded-xl bg-base-100 p-6 text-center shadow-lg">
-            <h2 className="mb-4 text-lg font-semibold">
-              Are you sure you want to log out?
-            </h2>
+            <h2 className="mb-4 text-lg font-semibold">Are you sure you want to log out?</h2>
             <div className="flex gap-4">
               <button
                 onClick={() => setConfirmLogout(false)}
