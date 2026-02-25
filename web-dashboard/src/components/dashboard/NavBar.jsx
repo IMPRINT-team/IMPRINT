@@ -122,7 +122,9 @@ const NavBar = ({
             </NavLink>
           ))}
 
-          <div className="mt-auto">
+          <div className="mt-auto flex flex-col gap-2">
+            <ThemeSelector isExpanded />
+
             <button
               type="button"
               onClick={() => setConfirmLogout(true)}
@@ -142,7 +144,6 @@ const NavBar = ({
         onMouseEnter={() => !isPinned && onHoverChange(true)}
         onMouseLeave={() => !isPinned && onHoverChange(false)}
       >
-        <div className="pointer-events-none absolute inset-y-3 right-2 w-2 rounded-full bg-base-content/10 opacity-70" />
 
           {isExpanded && (
             <button
