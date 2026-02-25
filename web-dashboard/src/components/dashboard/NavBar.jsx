@@ -7,8 +7,8 @@ import ImprintLogo from "../branding/ImprintLogo.jsx";
 import ThemeSelector from "./ThemeSelector.jsx";
 
 const baseLinkClasses =
-  "rounded-xl px-3 py-3 text-left transition-colors duration-200 " +
-  "hover:shadow-glowHover hover:bg-primary/95 hover:text-neutral " +
+  "rounded-xl border border-transparent bg-base-100 px-3 py-3 text-left transition-all duration-200 " +
+  "hover:border-primary/30 hover:bg-gradient-to-br hover:from-primary/20 hover:via-secondary/10 hover:to-base-200 hover:text-base-content " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
 const navItems = [
