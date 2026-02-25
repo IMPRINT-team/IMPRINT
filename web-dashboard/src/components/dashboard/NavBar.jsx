@@ -144,16 +144,16 @@ const NavBar = ({
       >
         <div className="pointer-events-none absolute inset-y-3 right-2 w-2 rounded-full bg-base-content/10 opacity-70" />
 
-        {isExpanded && (
-          <button
-            type="button"
-            onClick={onTogglePinned}
-            aria-label={isPinned ? "Collapse sidebar" : "Pin sidebar open"}
-            className="btn btn-ghost btn-sm absolute right-2 top-2 z-10"
-          >
-            {isPinned ? <PanelLeftClose className="size-4" /> : <PanelLeftOpen className="size-4" />}
-          </button>
-        )}
+          {isExpanded && (
+            <button
+              type="button"
+              onClick={onTogglePinned}
+              aria-label={isPinned ? "Unpin sidebar" : "Pin sidebar open"}
+              className="btn btn-ghost btn-sm absolute right-2 top-2 z-10"
+            >
+              {isPinned ? <PanelLeftClose className="size-4" /> : <PanelLeftOpen className="size-4" />}
+            </button>
+          )}
 
         <div className="flex min-h-0 flex-1 flex-col p-3">
           <div className="mb-3 mt-2 flex items-center gap-3 px-1">
@@ -167,7 +167,7 @@ const NavBar = ({
 
           <div className="divider my-2" />
 
-          <nav className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto">
+          <nav className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-hidden">
             {navItems.map((item) => (
               <DesktopNavItem key={item.to} to={item.to} label={item.label} isExpanded={isExpanded} />
             ))}
