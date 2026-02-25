@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
 import CardShell from "./CardShell.jsx"
 import { StatusPill } from "../ui/StatusPill.jsx"
-import { buildApiUrl } from "../../lib/apiBase.js"
+import { scannerApi } from "../../lib/scannerApi.js"
 
 
 const getScanners = async () => {
-  const scanners = await fetch(buildApiUrl())
+  const scanners = await fetch(scannerApi.listUrl())
   return scanners
 }
 

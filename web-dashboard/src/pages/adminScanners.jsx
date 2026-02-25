@@ -4,10 +4,10 @@ import { ArrowLeft } from 'lucide-react'
 import AddScannerModal from './addScannerModal.jsx'
 import UpdateScannerModal from './updateScannerModal.jsx'
 import { StatusPill } from '../components/ui/StatusPill.jsx'
-import { buildApiUrl } from "../lib/apiBase.js"
+import { scannerApi } from "../lib/scannerApi.js"
 
 const getScanners = async () => {
-  const scannerData = await fetch(buildApiUrl())
+  const scannerData = await fetch(scannerApi.listUrl())
   return scannerData
 }
 
@@ -50,7 +50,7 @@ const AdminScanners = () => {
     if (searchType === 'backToScanners') {
       scannerData = await getScanners()
     } else {
-      scannerData = await fetch(buildApiUrl(`search/${searchType}/${searchValue}`))
+      scannerData = await fetch(scannerApi.searchUrl(searchType, searchValue))
     }
 
     const filteredScanners = await scannerData.json()
@@ -58,7 +58,7 @@ const AdminScanners = () => {
   }
 
   async function deleteScanner(id) {
-    await fetch(buildApiUrl(`admin/scanners/${id}`), { method: 'DELETE' })
+    await fetch(scannerApi.deleteUrl(id), { method: 'DELETE' })
     window.location.reload()
   }
 
