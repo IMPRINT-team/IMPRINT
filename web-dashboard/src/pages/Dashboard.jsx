@@ -89,7 +89,19 @@ const Dashboard = () => {
 
           try {
             const errorPayload = await response.json();
-            errorMessage = errorPayload?.message ?? errorMessage;
+
+            if (typeof errorPayload?.message === "string" && errorPayload.message.trim()) {
+              errorMessage = errorPayload.message;
+            } else if (typeof errorPayload?.error === "string" && errorPayload.error.trim()) {
+              errorMessage = errorPayload.error;
+            } else if (
+              errorPayload?.error &&
+              typeof errorPayload.error === "object" &&
+              typeof errorPayload.error.message === "string" &&
+              errorPayload.error.message.trim()
+            ) {
+              errorMessage = errorPayload.error.message;
+            }
           } catch {
             // Ignore JSON parse issues and use fallback message.
           }
