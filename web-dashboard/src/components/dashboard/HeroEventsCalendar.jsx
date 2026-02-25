@@ -108,22 +108,22 @@ const HeroEventsCalendar = () => {
 
   const nivoTheme = useMemo(
     () => ({
-      background: "var(--b1)",
+      background: "oklch(var(--b1))",
       text: {
-        fill: "var(--bc)",
+        fill: "oklch(var(--bc))",
       },
       labels: {
         text: {
-          fill: "var(--bc)",
+          fill: "oklch(var(--bc))",
           fontSize: 11,
           fontWeight: 500,
         },
       },
       tooltip: {
         container: {
-          background: "var(--b1)",
-          color: "var(--bc)",
-          border: "1px solid var(--b3)",
+          background: "oklch(var(--b1))",
+          color: "oklch(var(--bc))",
+          border: "1px solid oklch(var(--b3))",
           borderRadius: "0.5rem",
           boxShadow: "0 8px 20px rgba(0, 0, 0, 0.15)",
         },
@@ -163,17 +163,17 @@ const HeroEventsCalendar = () => {
               data={calendarData}
               from={dateWindow.from}
               to={dateWindow.to}
-              emptyColor="var(--b2)"
-              colors={["var(--b3)", "var(--p)"]}
+              emptyColor="oklch(var(--b1))"
+              colors={["oklch(var(--b3))", "oklch(var(--p))"]}
               margin={
                 isCompact
                   ? { top: 18, right: 18, bottom: 18, left: 20 }
                   : { top: 28, right: 28, bottom: 28, left: 36 }
               }
               yearSpacing={40}
-              monthBorderColor="var(--b3)"
+              monthBorderColor="oklch(var(--b3))"
               dayBorderWidth={1}
-              dayBorderColor="var(--b2)"
+              dayBorderColor="oklch(var(--b2))"
               monthLegendOffset={8}
               monthLegendPosition="before"
               weekdayTicks={isCompact ? [1, 3, 5] : [0, 1, 2, 3, 4, 5, 6]}
