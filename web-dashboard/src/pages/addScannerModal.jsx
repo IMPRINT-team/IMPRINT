@@ -4,7 +4,7 @@ import { buildApiUrl } from "../lib/apiBase.js"
 
 function AddScannerModal({ onClose }) {
   async function addScanner(scannerData) {
-    await fetch(buildApiUrl(), {
+    await fetch(buildApiUrl('/scanners'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
