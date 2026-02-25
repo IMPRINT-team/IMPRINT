@@ -6,10 +6,10 @@ import LatestEvents from "../components/dashboard/LatestEvents.jsx";
 import HeroPanel from "../components/dashboard/HeroPanel.jsx";
 import NavBar from "../components/dashboard/NavBar.jsx";
 import StatsPannel from "../components/dashboard/StatsPannel.jsx";
-import { buildApiUrl } from "../lib/apiBase.js";
+import { scannerApi } from "../lib/scannerApi.js";
 
 const getScanners = async () => {
-  const response = await fetch(buildApiUrl("/scanners"));
+  const response = await fetch(scannerApi.listUrl());
 
   if (!response.ok) {
     throw new Error("Unable to load scanners");
@@ -76,7 +76,7 @@ const Dashboard = () => {
       setSaveError(null);
 
       try {
-        const response = await fetch(buildApiUrl(`/scanners/${selectedScanner.deviceId}`), {
+        const response = await fetch(scannerApi.updateUrl(selectedScanner.deviceId), {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
