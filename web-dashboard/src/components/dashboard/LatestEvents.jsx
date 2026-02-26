@@ -1,22 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import CardShell from "./CardShell.jsx";
-import { ResultPill } from "../ui/StatusPill.jsx";
+import { ResultPill } from "../ui/StatusPill.jsx"; // Assuming ResultPill handles 'accepted/denied'
 import { eventApi } from "../../lib/eventApi.js";
 
 const formatTime = (value) => {
-  if (!value) {
-    return "—";
-  }
-
+  if (!value) return "—";
   const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return "—";
-  }
+  if (Number.isNaN(date.getTime())) return "—";
 
   return date.toLocaleString("en-US", {
-    month: "short",
-    day: "numeric",
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
@@ -30,38 +22,23 @@ const LatestEvents = () => {
 
   useEffect(() => {
     let isCancelled = false;
-
     const loadEvents = async () => {
       setIsLoading(true);
       setError(null);
-
       try {
         const data = await eventApi.getEvents();
-
-        if (isCancelled) {
-          return;
-        }
-
-        setEvents(Array.isArray(data) ? data : []);
+        if (!isCancelled) setEvents(Array.isArray(data) ? data : []);
       } catch (loadError) {
-        if (isCancelled) {
-          return;
-        }
-
-        console.error(loadError);
-        setError(loadError.message);
-      } finally {
         if (!isCancelled) {
-          setIsLoading(false);
+          console.error(loadError);
+          setError(loadError.message);
         }
+      } finally {
+        if (!isCancelled) setIsLoading(false);
       }
     };
-
     loadEvents();
-
-    return () => {
-      isCancelled = true;
-    };
+    return () => { isCancelled = true; };
   }, []);
 
   const latestEvents = useMemo(() => {
@@ -71,47 +48,71 @@ const LatestEvents = () => {
   }, [events]);
 
   return (
-    <CardShell className="h-full" data-debug-label="LatestEvents">
-      <h2 id="latest-events-title" className="text-lg font-semibold">
-        Events
-      </h2>
+    <CardShell className="h-full flex flex-col gap-4" data-debug-label="LatestEvents">
+      <div className="flex items-center justify-between">
+        <h2 id="latest-events-title" className="text-lg font-semibold">
+          Recent Events
+        </h2>
+        {!isLoading && (
+          <span className="text-[10px] uppercase tracking-widest opacity-50 font-bold">
+            Live Feed
+          </span>
+        )}
+      </div>
 
-      {isLoading ? <p className="text-sm opacity-70">Loading events...</p> : null}
+      <div className="flex flex-col gap-2 overflow-y-auto pr-1">
+        {isLoading && (
+          <div className="flex h-32 w-full animate-pulse items-center justify-center rounded-xl bg-base-300/50 text-sm opacity-70">
+            Loading events...
+          </div>
+        )}
 
-      {error ? <p className="text-sm text-error">Unable to load recent events.</p> : null}
+        {error && (
+          <div className="rounded-xl border border-error/20 bg-error/5 p-4 text-center text-sm text-error">
+            Unable to load recent events.
+          </div>
+        )}
 
-      {!isLoading && !error ? (
-        <div className="overflow-x-auto">
-          <table className="table table-sm">
-            <thead>
-              <tr>
-                <th className="text-xs uppercase">Event Type</th>
-                <th className="text-xs uppercase">Occurred At</th>
-                <th className="text-xs uppercase text-center">Result</th>
-              </tr>
-            </thead>
-            <tbody>
-              {latestEvents.length > 0 ? (
-                latestEvents.map((event) => (
-                  <tr key={event.id}>
-                    <td>{event.eventType}</td>
-                    <td>{formatTime(event.occurredAt)}</td>
-                    <td className="text-center">
-                      <ResultPill result={event.result} />
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={3} className="text-center opacity-70">
-                    No recent events.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      ) : null}
+        {!isLoading && !error && latestEvents.length > 0 ? (
+          latestEvents.map((event) => (
+            <div
+              key={event.id}
+              className="group flex w-full items-center justify-between gap-4 rounded-xl bg-base-200/50 px-3 py-2.5 transition-all hover:bg-base-200 hover:ring-1 hover:ring-primary/40"
+            >
+              {/* Left Side: Accent + Info */}
+              <div className="flex min-w-0 flex-1 items-center gap-3">
+                {/* Accent bar matches ScannerCard style */}
+                <span 
+                  className={`h-8 w-1.5 shrink-0 rounded-full ${
+                    event.result === 'denied' ? 'bg-error/60' : 'bg-success/60'
+                  }`} 
+                  aria-hidden="true" 
+                />
+
+                <div className="flex min-w-0 flex-col gap-0.5">
+                  <p className="truncate text-sm font-bold uppercase tracking-wide text-base-content">
+                    {event.eventType}
+                  </p>
+                  <div className="flex items-center">
+                    <ResultPill result={event.result} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Side: Timestamp (Matches Heartbeat font) */}
+              <div className="flex flex-col items-end gap-1">
+                 <span className="shrink-0 font-mono text-xs font-semibold text-primary/80">
+                  {formatTime(event.occurredAt)}
+                </span>
+              </div>
+            </div>
+          ))
+        ) : !isLoading && !error && (
+          <div className="flex h-32 items-center justify-center rounded-xl border border-dashed border-base-300 opacity-50">
+            <p className="text-sm">No recent events.</p>
+          </div>
+        )}
+      </div>
     </CardShell>
   );
 };
