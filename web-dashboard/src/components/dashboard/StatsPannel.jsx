@@ -17,13 +17,14 @@ const StatsPannel = () => {
   ];
 
   const renderOverview = () => (
-    <div className="flex flex-col gap-4">
-      <ul className="grid gap-3 sm:grid-cols-2">
+    <div className="h-full">
+      <ul className="grid gap-4 sm:grid-cols-2 h-full">
         {/* Downed Scanners Card */}
-        <li>
+        <li className="h-full">
           <button
             onClick={() => setView("scanners")}
-            className="w-full text-left rounded-lg border border-error/40 bg-error/5 p-3 hover:bg-error/10 transition-all focus:ring-2 focus:ring-error outline-none"
+            // Added h-full to make the button stretch vertically
+            className="w-full h-full text-left rounded-lg border border-error/40 bg-error/5 p-3 hover:bg-error/10 transition-all focus:ring-2 focus:ring-error outline-none flex flex-col justify-center"
           >
             <p className="text-xs uppercase tracking-wide text-error font-bold">Downed Scanners</p>
             <p className="mt-1 text-2xl font-bold text-error">{downScanners.length}</p>
@@ -32,10 +33,11 @@ const StatsPannel = () => {
         </li>
 
         {/* Denial Rate Card */}
-        <li>
+        <li className="h-full">
           <button
             onClick={() => setView("denials")}
-            className="w-full text-left rounded-lg border border-primary/30 bg-base-200 p-3 hover:bg-base-300 transition-all focus:ring-2 focus:ring-primary outline-none"
+            // Added h-full and flex-col justify-center for vertical alignment
+            className="w-full h-full text-left rounded-lg border border-primary/30 bg-base-200 p-3 hover:bg-base-300 transition-all focus:ring-2 focus:ring-primary outline-none flex flex-col justify-center"
           >
             <p className="text-xs uppercase tracking-wide opacity-70">Denial Rate</p>
             <p className="mt-1 text-2xl font-bold text-primary">4.2%</p>

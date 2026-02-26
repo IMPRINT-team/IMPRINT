@@ -108,15 +108,23 @@ const HeroEventsCalendar = () => {
 
   const nivoTheme = useMemo(
     () => ({
-      background: "oklch(var(--b1))",
+      background: "transparent", // Let the container handle background
       text: {
         fill: "oklch(var(--bc))",
       },
+      // This lightens the month names and weekday labels
       labels: {
         text: {
-          fill: "oklch(var(--bc))",
+          fill: "oklch(var(--bc) / 0.6)", // Lower opacity for a softer look
           fontSize: 11,
           fontWeight: 500,
+        },
+      },
+      // This targets the grid lines specifically
+      grid: {
+        line: {
+          stroke: "oklch(var(--bc) / 0.1)", // Very light grid lines
+          strokeWidth: 1,
         },
       },
       tooltip: {
@@ -163,23 +171,28 @@ const HeroEventsCalendar = () => {
               data={calendarData}
               from={dateWindow.from}
               to={dateWindow.to}
-              emptyColor="oklch(var(--b1))"
-              colors={["oklch(var(--b3))", "oklch(var(--p))"]}
+              /* emptyColor: Using --b2 or --b3 makes empty cells slightly 
+                visible but not black. 
+              */
+              emptyColor="oklch(var(--b2) / 0.4)" 
+              /* colors: Using primary (--p) but ensuring the start of the 
+                gradient isn't too dark. 
+              */
+              colors={["oklch(var(--p) / 0.2)", "oklch(var(--p))"]}
               margin={
                 isCompact
                   ? { top: 18, right: 18, bottom: 18, left: 20 }
                   : { top: 28, right: 28, bottom: 28, left: 36 }
               }
               yearSpacing={40}
-              monthBorderColor="oklch(var(--b3))"
+              monthBorderColor="oklch(var(--bc) / 0.15" 
+              monthBorderWidth={2}
               dayBorderWidth={1}
-              dayBorderColor="oklch(var(--b2))"
+              dayBorderColor="oklch(var(--bc) / 0.15" 
               monthLegendOffset={8}
               monthLegendPosition="before"
               weekdayTicks={isCompact ? [1, 3, 5] : [0, 1, 2, 3, 4, 5, 6]}
               theme={nivoTheme}
-              role="img"
-              ariaLabel="Events by day calendar"
             />
           ) : null}
         </div>
