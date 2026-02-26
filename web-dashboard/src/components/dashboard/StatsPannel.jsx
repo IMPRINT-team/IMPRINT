@@ -98,7 +98,7 @@ const StatsPannel = () => {
   );
 
   return (
-    <CardShell className="h-full min-h-[220px]" data-debug-label="StatsPannel">
+    <CardShell className="h-full" data-debug-label="StatsPannel">
       {view === "overview" && renderOverview()}
       {view === "scanners" && renderScannerDetail()}
       {view === "denials" && renderDenialHistory()}
