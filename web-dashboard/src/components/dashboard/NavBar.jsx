@@ -121,7 +121,7 @@ const NavBar = ({
           <button
             type="button"
             onClick={onTogglePinned}
-            className="btn btn-ghost btn-sm absolute right-2 top-2 z-10"
+            className="btn btn-ghost btn-round btn-sm absolute right-2 top-2 z-10"
           >
             {isPinned ? (
               <PanelLeftClose className="size-4" />
