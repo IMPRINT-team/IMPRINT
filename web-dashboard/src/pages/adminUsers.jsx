@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import React from "react"
 import { ArrowLeft } from 'lucide-react';
 import { buildApiUrl } from "../lib/apiBase.js"
+import { Link } from "react-router-dom"
 
 const getUsers = async () => {
     const scannerData = await fetch(buildApiUrl('user'))
@@ -30,7 +31,7 @@ const AdminUsers = () => {
         <div className="h-svh">
             <div className="flex align-middle justify-around my-3 mt-4">
                 <div className="flex align-middle">
-                    <a type="button" className="btn btn-primary" href="/dashboard"><ArrowLeft /></a>
+                    <Link type="button" className="btn btn-primary" to="/dashboard"><ArrowLeft /></Link>
                 </div>
                 <div className="flex justify-center align-middle">
                     <select name="SearchFor" id="txtParam" className="select border border-primary rounded-lg">

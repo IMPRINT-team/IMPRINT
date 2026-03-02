@@ -9,6 +9,11 @@ const EMPTY_SCANNER_DATA = {
   authorization: '',
 }
 
+const baseLinkClasses =
+  "rounded-xl border border-primary/30 bg-base-100 px-3 py-3 text-left transition-all duration-200 " +
+  "hover:border-primary/90 hover:bg-gradient-to-br hover:from-primary/20 hover:via-secondary/10 hover:to-base-200 hover:text-base-content " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
+
 function ScannerFormModal({
   onClose,
   title,
@@ -47,7 +52,7 @@ function ScannerFormModal({
                 placeholder="Enter scanner general location"
                 className="input input-bordered w-full pl-10 py-3 focus:input-primary transition-colors duration-200"
                 value={scannerData.location}
-                onChange={(e) => setScannerData({ ...scannerData, location: e.target.value })}
+                onChange={(e) => setScannerData(prev => ({ ...prev, location: e.target.value }))}
               />
             </div>
           </div>
@@ -63,7 +68,7 @@ function ScannerFormModal({
                 placeholder="Enter the specific location (room number)"
                 className="input input-bordered w-full pl-10 py-3 focus:input-primary transition-colors duration-200"
                 value={scannerData.specificLocation}
-                onChange={(e) => setScannerData({ ...scannerData, specificLocation: e.target.value })}
+                onChange={(e) => setScannerData(prev => ({ ...prev, specificLocation: e.target.value }))}
               />
             </div>
           </div>
@@ -75,7 +80,7 @@ function ScannerFormModal({
                 <select
                   className="input input-bordered py-3 text-base-content/50 focus:text-base-content focus:input-primary transition-colors duration-200"
                   value={scannerData.status}
-                  onChange={(e) => setScannerData({ ...scannerData, status: e.target.value })}
+                  onChange={(e) => setScannerData(prev => ({ ...prev, status: e.target.value }))}
                 >
                   <option value="" className="text-base-content/50" disabled>-- Choose your status --</option>
                   <option value="ONLINE" className="text-base-content">Online</option>
@@ -92,7 +97,7 @@ function ScannerFormModal({
                   id="AuthLevel"
                   className="input input-bordered py-3 me-2 w-full text-base-content/50 focus:text-base-content focus:input-primary duration-200 transition-colors"
                   value={scannerData.authorization}
-                  onChange={(e) => setScannerData({ ...scannerData, authorization: e.target.value })}
+                  onChange={(e) => setScannerData(prev => ({ ...prev, authorization: e.target.value }))}
                 >
                   <option value="" className="text-base-content/50" disabled>-- Auth Level --</option>
                   <option value="BASIC" className="text-base-content">Basic</option>
@@ -105,7 +110,7 @@ function ScannerFormModal({
 
         <div className="modal-action">
           <button className="btn btn-ghost" type="button" onClick={onClose}>Cancel</button>
-          <button type="submit" className="btn btn-primary min-w-[120px]" disabled={isSubmitDisabled}>
+          <button type="submit" className={baseLinkClasses} disabled={isSubmitDisabled}>
             {submitLabel}
           </button>
         </div>

@@ -38,5 +38,30 @@ export const THEMES = [
     name: "dark",
     label: "Dark",
     colors: ["#282A36","#282A36","#282A36"]
-  }
+  },
+  {
+    name: "cupcake",
+    label: "Cupcake",
+    colors: ["#faf7f5", "#44ebd3", "#f9cbe5"]
+  },
+  {
+    name: "corporate",
+    label: "Corporate",
+    colors: ["#ffffff", "#61738d", "#009689"]
+  },
+  {
+    name: "black",
+    label: "Black",
+    colors: ["#000000", "#3a3a3a", "#3a3a3a"]
+  },
+  {
+    name: "autumn",
+    label: "Autumn",
+    colors: ["#f1f1f1", "#8c0327", "#d85251"]
+  },
+  {
+    name: "abyss",
+    label: "Abyss",
+    colors: ["#001e29", "#bdff00", "#cebef4"]
+  },
 ];

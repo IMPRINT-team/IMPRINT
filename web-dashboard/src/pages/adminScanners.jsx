@@ -5,11 +5,23 @@ import AddScannerModal from './addScannerModal.jsx'
 import UpdateScannerModal from './updateScannerModal.jsx'
 import { StatusPill } from '../components/ui/StatusPill.jsx'
 import { scannerApi } from "../lib/scannerApi.js"
+import { Link } from "react-router-dom"
 
 const getScanners = async () => {
   const scannerData = await fetch(scannerApi.listUrl())
   return scannerData
 }
+
+const baseLinkClasses =
+  "rounded-xl border border-primary/30 bg-base-100 px-3 py-3 text-left transition-all duration-200 " +
+  "hover:border-primary/90 hover:bg-gradient-to-br hover:from-primary/20 hover:via-secondary/10 hover:to-base-200 hover:text-base-content " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
+
+const errLinkClasses =
+  "rounded-xl border border-error/30 bg-error/40 px-3 py-3 text-left transition-all duration-200 " +
+  "hover:border-error/90 hover:bg-radial hover:from-error/60 hover:via-secondary/30 hover:to-error/60 hover:text-base-content " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
+
 
 const formatTime = (value) => {
   const date = new Date(value)
@@ -59,7 +71,7 @@ const AdminScanners = () => {
 
   async function deleteScanner(id) {
     await fetch(scannerApi.deleteUrl(id), { method: 'DELETE' })
-    window.location.reload()
+    setScanners(prev => prev.filter(scanner => scanner.deviceId !== id))
   }
 
   function openUpdateModal(scanner) {
@@ -74,13 +86,13 @@ const AdminScanners = () => {
 
   return (
     <>
-      <div className="h-dvh">
-        <div className="flex align-middle justify-around my-3 mt-4">
+      <div className="min-h-dvh bg-gradient-to-r from-base-100/30 to-primary/30 pt-2">
+        <div className="flex items-center justify-between mb-6 gap-4 mt-2 mx-4">
           <div className="flex align-middle">
-            <a type="button" className="btn btn-primary" href="/dashboard"><ArrowLeft /></a>
+            <Link className={baseLinkClasses} to="/dashboard"><ArrowLeft /></Link>
           </div>
           <div className="flex justify-center align-middle">
-            <select name="SearchFor" id="txtParam" className="select border border-primary rounded-lg" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+            <select name="SearchFor" id="txtParam" className="select border border-primary/30 rounded-lg" value={searchType} onChange={(e) => setSearchType(e.target.value)}>
               <option value="backToScanners">Show All Scanners</option>
               <option value="location">General Area</option>
               <option value="specificLocation">Specific Location</option>
@@ -88,11 +100,11 @@ const AdminScanners = () => {
               <option value="authorization">Authorization Level</option>
             </select>
             <label htmlFor="txtReq" className="label mx-3">Specific Search:</label>
-            <input type="text" className="input form-control border border-primary" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} id="txtReq" placeholder="Type the scanner information" />
-            <button type="button" id="btnSearch" className="btn btn-primary mx-3" onClick={getBy}>Search</button>
+            <input type="text" className="input form-control border border-primary/30" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} id="txtReq" placeholder="Type the scanner information" />
+            <button type="button" id="btnSearch" className={`${baseLinkClasses} mx-3`} onClick={getBy}>Search</button>
           </div>
           <div>
-            <button type="button" id="btnAddScanner" className="btn btn-primary" onClick={() => setShowAddModal(true)}>Add Scanner</button>
+            <button type="button" id="btnAddScanner" className={baseLinkClasses} onClick={() => setShowAddModal(true)}>Add Scanner</button>
           </div>
         </div>
         <div className="divider divider-primary mx-3 mb-3"></div>
@@ -109,9 +121,9 @@ const AdminScanners = () => {
                   <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-primary">
+              <tbody className='bg-base-300'>
                 {scanners.map((scanner) => (
-                  <tr key={scanner.deviceId} className="bg-base-300">
+                  <tr key={scanner.deviceId} className=" hover:bg-gradient-to-br hover:from-primary/10 hover:via-secondary/20 hover:to-neutral/10">
                     <td className="text-center py-3">{scanner.location}</td>
                     <td className="text-center py-3">{scanner.specificLocation}</td>
                     <td className="text-center py-3 px-2">
@@ -120,8 +132,8 @@ const AdminScanners = () => {
                     <td className="text-center py-3">{formatTime(scanner.createdAt)}</td>
                     <td className="text-center py-3">{scanner.authorization}</td>
                     <td className="text-center py-3">
-                      <button type="button" id="btnUpdateScanner" className="btn btn-primary mb-3 lg:mb-0 lg:me-3" onClick={() => openUpdateModal(scanner)}>Update Scanner</button>
-                      <button type="button" id="btnDeleteScanner" className="btn btn-error" onClick={() => deleteScanner(scanner.deviceId)}>Delete Scanner</button>
+                      <button type="button" id="btnUpdateScanner" className={`${baseLinkClasses} me-2`} onClick={() => openUpdateModal(scanner)}>Update Scanner</button>
+                      <button type="button" id="btnDeleteScanner" className={errLinkClasses} onClick={() => deleteScanner(scanner.deviceId)}>Delete Scanner</button>
                     </td>
                   </tr>
                 ))}
@@ -130,7 +142,7 @@ const AdminScanners = () => {
           </div>
         </div>
       </div>
-      {showAddModal && <AddScannerModal onClose={() => setShowAddModal(false)} />}
+      {showAddModal && <AddScannerModal onClose={() => setShowAddModal(false)} data={scanners} setData={setScanners}/>}
       {showUpdateModal && selectedScanner && (
         <UpdateScannerModal onClose={closeUpdateModal} scanner={selectedScanner} />
       )}

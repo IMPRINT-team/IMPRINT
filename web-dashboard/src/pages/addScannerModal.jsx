@@ -2,18 +2,18 @@ import React from 'react'
 import ScannerFormModal from '../components/modals/ScannerFormModal.jsx'
 import { scannerApi } from "../lib/scannerApi.js"
 
-function AddScannerModal({ onClose }) {
+function AddScannerModal({ onClose, data, setData }) {
   async function addScanner(scannerData) {
-    await fetch(scannerApi.createUrl(), {
+    const response = await fetch(scannerApi.createUrl(), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(scannerData),
     })
-
+    const scanner = await response.json()
     onClose()
-    window.location.reload()
+    setData(prev => [...prev, scanner])
   }
 
   return (
