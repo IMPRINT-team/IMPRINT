@@ -12,27 +12,26 @@ function BaseModal({ id = 'modal', title, onClose, children, portalTarget }) {
   }
 
   return createPortal(
-    <dialog id={id} className="modal modal-open z-[55]" onCancel={onClose}>
+    <div id={id} className="modal modal-open z-[55]">
       <div className="modal-box">
-        <form method="dialog">
-          <button
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-            type="button"
-            onClick={onClose}
-          >
-            X
-          </button>
-        </form>
+        
+        <button
+          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          type="button"
+          onClick={onClose}
+        >
+          X
+        </button>
 
         {title && <h3 className="font-bold text-xl mb-8">{title}</h3>}
 
         {children}
       </div>
 
-      <form method="dialog" className="modal-backdrop">
+      <div className="modal-backdrop">
         <button type="button" onClick={onClose}>close</button>
-      </form>
-    </dialog>,
+      </div>
+    </div>,
     resolvedTarget,
   )
 }

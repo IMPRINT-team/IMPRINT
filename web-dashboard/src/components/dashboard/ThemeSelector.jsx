@@ -6,12 +6,12 @@ import { useThemeStore } from "../stores/useThemeStore.js";
 import BaseModal from "../modals/BaseModal.jsx";
 
 const labelTransitionClasses =
-  "overflow-hidden whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(.2,.8,.2,1)]";
+ "overflow-hidden whitespace-nowrap transition-all duration-500 ease-[cubic-bezier(.2,.8,.2,1)]";
 
 const getRevealClasses = (isExpanded, expandedWidth = "max-w-[200px]") =>
   isExpanded
-    ? `${expandedWidth} opacity-100 translate-x-0`
-    : "max-w-0 opacity-0 -translate-x-1";
+    ? `${expandedWidth} opacity-100`
+    : "max-w-0 opacity-0";
 
 function ThemeSelector({ isExpanded }) {
   const { theme, setTheme } = useThemeStore();

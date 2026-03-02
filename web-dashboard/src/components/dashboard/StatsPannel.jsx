@@ -17,13 +17,14 @@ const StatsPannel = () => {
   ];
 
   const renderOverview = () => (
-    <div className="flex flex-col gap-4">
-      <ul className="grid gap-3 sm:grid-cols-2">
+    <div className="h-full">
+      <ul className="grid gap-4 sm:grid-cols-2 h-full">
         {/* Downed Scanners Card */}
-        <li>
+        <li className="h-full">
           <button
             onClick={() => setView("scanners")}
-            className="w-full text-left rounded-lg border border-error/40 bg-error/5 p-3 hover:bg-error/10 transition-all focus:ring-2 focus:ring-error outline-none"
+            // Added h-full to make the button stretch vertically
+            className="w-full h-full text-left rounded-lg border border-error/40 bg-error/5 p-3 hover:bg-error/10 transition-all focus:ring-2 focus:ring-error outline-none flex flex-col justify-center"
           >
             <p className="text-xs uppercase tracking-wide text-error font-bold">Downed Scanners</p>
             <p className="mt-1 text-2xl font-bold text-error">{downScanners.length}</p>
@@ -32,30 +33,17 @@ const StatsPannel = () => {
         </li>
 
         {/* Denial Rate Card */}
-        <li>
+        <li className="h-full">
           <button
             onClick={() => setView("denials")}
-            className="w-full text-left rounded-lg border border-primary/30 bg-base-200 p-3 hover:bg-base-300 transition-all focus:ring-2 focus:ring-primary outline-none"
+            // Added h-full and flex-col justify-center for vertical alignment
+            className="w-full h-full text-left rounded-lg border border-primary/30 bg-base-200 p-3 hover:bg-base-300 transition-all focus:ring-2 focus:ring-primary outline-none flex flex-col justify-center"
           >
             <p className="text-xs uppercase tracking-wide opacity-70">Denial Rate</p>
             <p className="mt-1 text-2xl font-bold text-primary">4.2%</p>
             <p className="text-[10px] opacity-70 underline mt-1">View history</p>
           </button>
         </li>
-      </ul>
-
-      {/* Static Non-Interactive Stats */}
-      <ul className="grid gap-2 grid-cols-3">
-        {[
-          { name: "Avg Valid", value: "1.3s" },
-          { name: "Peak", value: "09:00" },
-          { name: "Total Scans", value: "1,248" },
-        ].map((item) => (
-          <li key={item.name} className="rounded-lg bg-base-300/30 p-2 border border-white/5">
-            <p className="text-[10px] uppercase opacity-50 truncate">{item.name}</p>
-            <p className="text-sm font-semibold">{item.value}</p>
-          </li>
-        ))}
       </ul>
     </div>
   );
@@ -112,7 +100,7 @@ const StatsPannel = () => {
   );
 
   return (
-    <CardShell className="h-full min-h-[220px]" data-debug-label="StatsPannel">
+    <CardShell className="h-full" data-debug-label="StatsPannel">
       {view === "overview" && renderOverview()}
       {view === "scanners" && renderScannerDetail()}
       {view === "denials" && renderDenialHistory()}

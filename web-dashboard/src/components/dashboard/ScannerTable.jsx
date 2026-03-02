@@ -40,7 +40,7 @@ const ScannerTable = () => {
 
   return (
     <CardShell className="h-full overflow-hidden" data-debug-label="ScannerTable">
-      <h2 id="scanner-table-title" className="text-base font-semibold">Scanner status</h2>
+      <h2 id="scanner-table-title" className="text-base font-semibold">Scanners</h2>
       <div className="flex-1 overflow-y-auto min-h-0 min-w-0">
         <table className="border mb-1 border-primary rounded-xl border-collapse bg-base-100 shadow-sm overflow-hidden h-full min-w-0 text-sm">
           <thead className="sticky top-0 bg-base-300 z-10">

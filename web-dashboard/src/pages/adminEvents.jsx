@@ -3,11 +3,22 @@ import { ResultPill } from '../components/ui/StatusPill.jsx'
 import { ArrowLeft } from 'lucide-react'
 import React from "react"
 import { buildApiUrl } from "../lib/apiBase.js"
+import { Link } from "react-router-dom"
 
 const getEvents = async () => {
     const eventData = await fetch(buildApiUrl('event'))
     return eventData
 }
+
+const baseLinkClasses =
+  "rounded-xl border border-primary/30 bg-base-100 px-3 py-3 text-left transition-all duration-200 " +
+  "hover:border-primary/90 hover:bg-gradient-to-br hover:from-primary/20 hover:via-secondary/10 hover:to-base-200 hover:text-base-content " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
+
+const errLinkClasses =
+  "rounded-xl border border-error/30 bg-error/40 px-3 py-3 text-left transition-all duration-200 " +
+  "hover:border-error/90 hover:bg-radial hover:from-error/60 hover:via-secondary/30 hover:to-primary/60 hover:text-base-content " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
 const formatTime = (value) => {
   const date = new Date(value)
@@ -38,13 +49,13 @@ const AdminEvents = () => {
 
     return(
         
-        <div className="h-svh">
+        <div className="min-h-dvh bg-gradient-to-r from-base-100/30 to-primary/30 pt-2">
             <div className="grid grid-cols-[1fr_2.5fr] items-center my-3 mt-4">
                 <div className="flex align-middle justify-start ms-2">
-                    <a type="button" className="btn btn-primary" href="/dashboard"><ArrowLeft /></a>
+                    <Link type="button" className={baseLinkClasses} to="/dashboard"><ArrowLeft /></Link>
                 </div>
                 <div className="flex justify-left align-middle">
-                    <select name="SearchFor" id="txtParam" className="select border border-primary rounded-lg">
+                    <select name="SearchFor" id="txtParam" className="select border border-primary/30 rounded-lg">
                         <option value="" disabled>--- Choose your search type ---</option>
                         <option value="userId">Event ID</option>
                         <option value="email">Event Type</option>
@@ -52,8 +63,8 @@ const AdminEvents = () => {
                         <option value="accessLevel">Result</option>
                     </select>
                     <label htmlFor="txtReq" className="label mx-3 text-nowrap">Specific Search:</label>
-                    <input type="text" className="input border border-primary" id="txtReq" placeholder="Type the user information"/>
-                    <button type="button" id="btnSearch" className="btn btn-primary mx-3">Search</button>
+                    <input type="text" className="input border border-primary/30" id="txtReq" placeholder="Type the user information"/>
+                    <button type="button" id="btnSearch" className={`${baseLinkClasses} ms-3`}>Search</button>
                 </div>
             </div>
             <div className="divider divider-primary mx-3 mb-3"></div>
@@ -66,19 +77,17 @@ const AdminEvents = () => {
                           <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Event Type</th>
                           <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Occurred At</th>
                           <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Result</th>
-                          <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="bg-primary">
                         {events.map((event) => (
-                          <tr key={event.id} className="bg-base-300">
+                          <tr key={event.id} className="bg-base-300 hover:bg-gradient-to-br hover:from-primary/10 hover:via-secondary/20 hover:to-neutral/10">
                             <td className="text-center py-3">{event.id}</td>
                             <td className="text-center py-3">{event.eventType}</td>
                             <td className="text-center py-3">{formatTime(event.occurredAt)}</td>
                             <td className="text-center py-3 px-2">
                               <ResultPill result={event.result} />
                             </td>
-                            <td className="text-center py-3 px-2"><button type="button" id="btnUpdateEvent" className="btn btn-primary mb-3 lg:mb-0 lg:me-3">Update Event</button><button type="button" id="btnDeleteEvent" className="btn btn-error">Delete Event</button></td>
                           </tr>
                         ))}
                       </tbody>

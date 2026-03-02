@@ -99,10 +99,10 @@ export const getScannersBySpecLocation = async (req, res) => {
 export const createScanner = async (req, res) => {
     try {
         const { location, specificLocation, status, authorization } = req.body
-        await prisma.scanner.create({
+        const scanner = await prisma.scanner.create({
             data: {location, specificLocation, status, authorization}
         })
-        res.status(200)
+        res.status(200).json(scanner)
     } catch (err) {
         res.status(500).json({success: false, error: err})
     }
