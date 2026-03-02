@@ -143,7 +143,7 @@ const HeroEventsCalendar = () => {
   return (
     <div className="flex h-full min-h-0 flex-col" aria-label="Events calendar">
       <h2 id="hero-panel-title" className="mb-2 text-lg font-semibold">
-        Event activity calendar
+        Event Activity Calendar
       </h2>
 
       <div className="relative flex-1 min-h-0 w-full rounded-lg border border-base-300 bg-base-100 p-2 sm:p-3">
