@@ -5,6 +5,14 @@ const EVENTS_ERROR_MESSAGE = "Unable to load events.";
 
 export const eventApi = {
   listUrl: () => buildApiUrl(EVENTS_BASE_PATH),
+  searchUrl: (searchValue, searchDate) => {
+    const params = new URLSearchParams();
+
+    if (searchValue) params.append("value", searchValue);
+    if (searchDate) params.append("date", searchDate);
+
+    return buildApiUrl(`event/search?${params.toString()}`);
+  },
   getEvents: async () => {
     try {
       const response = await fetch(eventApi.listUrl());
