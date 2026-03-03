@@ -1,10 +1,11 @@
-import { buildApiUrl } from "./apiBase.js";
+import { buildApiUrl, buildRootUrl } from "./apiBase.js";
 
 const TEST_NEW_PATH = "TestNew";
+const HEALTH_PATH = "health";
 
 const buildHealthUrl = (scannerId) => {
   const params = new URLSearchParams({ scannerId });
-  return `/health?${params.toString()}`;
+  return buildRootUrl(`${HEALTH_PATH}?${params.toString()}`);
 };
 
 export const testNewApi = {
