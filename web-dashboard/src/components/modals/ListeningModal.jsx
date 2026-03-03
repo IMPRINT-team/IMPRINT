@@ -10,7 +10,7 @@ const ListeningModal = ({ isOpen, onClose, onRegisterSuccess }) => {
   const [scanners, setScanners] = useState([]);
   const [error, setError] = useState("");
   const [pendingRegisterScannerId, setPendingRegisterScannerId] = useState(null);
-  const [pendingTargetScannerId, setPendingTargetScannerId] = useState(null);
+  const [pendingTargetByScannerId, setPendingTargetByScannerId] = useState({});
 
   // Poll onboarding scanners only while modal is visible.
   useEffect(() => {
@@ -51,7 +51,7 @@ const ListeningModal = ({ isOpen, onClose, onRegisterSuccess }) => {
 
   // Toggle targeted state for a scanner card.
   const handleTarget = async (scannerId, targeted) => {
-    setPendingTargetScannerId(scannerId);
+    setPendingTargetByScannerId((current) => ({ ...current, [scannerId]: true }));
 
     try {
       const response = await fetch(scannerApi.targetOnboardingUrl(scannerId), {
@@ -76,7 +76,10 @@ const ListeningModal = ({ isOpen, onClose, onRegisterSuccess }) => {
     } catch (targetError) {
       setError(targetError.message);
     } finally {
-      setPendingTargetScannerId(null);
+      setPendingTargetByScannerId((current) => {
+        const { [scannerId]: _removed, ...remaining } = current;
+        return remaining;
+      });
     }
   };
 
@@ -115,7 +118,7 @@ const ListeningModal = ({ isOpen, onClose, onRegisterSuccess }) => {
           <p className="text-sm text-base-content/70">Waiting for unregistered scanners...</p>
         ) : (
           scanners.map((scanner) => {
-            const isPendingTarget = pendingTargetScannerId === scanner.scannerId;
+            const isPendingTarget = pendingTargetByScannerId[scanner.scannerId] === true;
             const isPendingRegister = pendingRegisterScannerId === scanner.scannerId;
             const isScannerPending = isPendingTarget || isPendingRegister;
 

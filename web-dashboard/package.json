@@ -9,7 +9,7 @@
     "rebuild:reload": "node scripts/rebuild-frontend.js",
     "preview": "vite preview",
     "lint": "eslint .",
-    "test": "vitest run && node --test src/lib/apiBase.test.js"
+    "test": "vitest run && node --test"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.60.0",
