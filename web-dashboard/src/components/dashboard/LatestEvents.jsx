@@ -60,7 +60,7 @@ const LatestEvents = () => {
         )}
       </div>
 
-      <div className="flex flex-col gap-2 overflow-y-auto pr-1">
+      <div className="flex flex-col gap-2 overflow-y-auto p-1">
         {isLoading && (
           <div className="flex h-32 w-full animate-pulse items-center justify-center rounded-xl bg-base-300/50 text-sm opacity-70">
             Loading events...
