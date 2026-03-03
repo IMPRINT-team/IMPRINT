@@ -19,7 +19,7 @@ const getUtcDay = (value) => {
 };
 
 const getDateWindow = () => {
-  const year = new Date().getFullYear();
+  const year = new Date().getUTCFullYear();
 
   return {
     from: `${year}-01-01`,
@@ -104,12 +104,10 @@ const HeroEventsCalendar = () => {
       totalsByDay.set(day, (totalsByDay.get(day) ?? 0) + 1);
     });
 
-    const maxDayTotal = Math.max(...totalsByDay.values(), 0);
-
     return Array.from(totalsByDay.entries())
       .map(([day, value]) => ({
         day,
-        value: maxDayTotal > 0 ? value / maxDayTotal : 0,
+        value,
       }))
       .sort((a, b) => a.day.localeCompare(b.day));
   }, [dateWindow.from, dateWindow.to, events]);
