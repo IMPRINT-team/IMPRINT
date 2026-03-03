@@ -53,6 +53,7 @@ const StatsPannel = () => {
           .filter((scanner) => OFFLINE_STATUSES.has((scanner.status ?? "").toUpperCase()))
           .map((scanner) => ({
             id: scanner.deviceId,
+            name: scanner.name ?? scanner.location ?? scanner.specificLocation ?? scanner.deviceId,
             location: scanner.specificLocation ?? scanner.location ?? "Unknown",
             status: scanner.status,
           }));
@@ -157,7 +158,7 @@ const StatsPannel = () => {
               className="flex justify-between items-center p-2 bg-error/10 border border-error/20 rounded text-xs"
             >
               <div>
-                <p className="font-bold">{scanner.id}</p>
+                <p className="font-bold">{scanner.name}</p>
                 <p className="opacity-70">{scanner.location}</p>
               </div>
               <span className="badge badge-error badge-sm animate-pulse">{scanner.status}</span>
