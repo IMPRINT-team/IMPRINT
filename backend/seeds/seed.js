@@ -41,7 +41,7 @@ async function seedDB() {
       {
         location: "Lab Door",
         specificLocation: "Room 302",
-        status: "DEGRADED",
+        status: "OFFLINE",
         authorization: "BASIC",
       },
       {
