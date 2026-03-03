@@ -27,6 +27,9 @@ const getDateWindow = () => {
   };
 };
 
+const isWithinDateWindow = (day, dateWindow) =>
+  day >= dateWindow.from && day <= dateWindow.to;
+
 const HeroEventsCalendar = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -94,12 +97,20 @@ const HeroEventsCalendar = () => {
         return;
       }
 
+      if (!isWithinDateWindow(day, dateWindow)) {
+        return;
+      }
+
       totalsByDay.set(day, (totalsByDay.get(day) ?? 0) + 1);
     });
 
+    const maxDayTotal = Math.max(...totalsByDay.values(), 0);
+
     return Array.from(totalsByDay.entries())
-      .map(([day, value]) => ({ day, value }))
-      .filter(({ day }) => day >= dateWindow.from && day <= dateWindow.to)
+      .map(([day, value]) => ({
+        day,
+        value: maxDayTotal > 0 ? value / maxDayTotal : 0,
+      }))
       .sort((a, b) => a.day.localeCompare(b.day));
   }, [dateWindow.from, dateWindow.to, events]);
 
@@ -182,10 +193,10 @@ const HeroEventsCalendar = () => {
                   : { top: 28, right: 28, bottom: 28, left: 36 }
               }
               yearSpacing={40}
-              monthBorderColor="oklch(var(--bc) / 0.15" 
+              monthBorderColor="oklch(var(--bc) / 0.15)"
               monthBorderWidth={2}
               dayBorderWidth={1}
-              dayBorderColor="oklch(var(--bc) / 0.15" 
+              dayBorderColor="oklch(var(--bc) / 0.15)"
               monthLegendOffset={8}
               monthLegendPosition="before"
               weekdayTicks={isCompact ? [1, 3, 5] : [0, 1, 2, 3, 4, 5, 6]}
