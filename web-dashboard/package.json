@@ -9,7 +9,7 @@
     "rebuild:reload": "node scripts/rebuild-frontend.js",
     "preview": "vite preview",
     "lint": "eslint .",
-    "test": "node --test"
+    "test": "vitest run && node --test src/lib/apiBase.test.js"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.60.0",
@@ -56,6 +56,8 @@
     "sucrase": "^3.35.0",
     "tailwindcss": "^3.4.13",
     "util-deprecate": "^1.0.2",
-    "vite": "^6.4.1"
+    "vite": "^6.4.1",
+    "vitest": "^2.1.9",
+    "react-test-renderer": "^18.3.1"
   }
 }
