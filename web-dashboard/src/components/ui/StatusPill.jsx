@@ -2,7 +2,6 @@ import { statusPillVariants } from './panelVariants'
 
 const statusVariantMap = {
   ONLINE: 'info',
-  DEGRADED: 'warning',
   OFFLINE: 'error',
 }
 
@@ -13,7 +12,7 @@ const resultVariantMap = {
 }
 
 export const StatusPill = ({ status }) => {
-  const variant = statusVariantMap[status]
+  const variant = statusVariantMap[status] ?? 'warning'
   return (
     <span
       className={`rounded-full border px-2.5 py-1 text-[9px] font-semibold tracking-[0.2em] ${statusPillVariants[variant]}`}
