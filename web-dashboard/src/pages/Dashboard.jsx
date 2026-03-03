@@ -3,6 +3,7 @@ import { Menu } from "lucide-react";
 import ScannerGrid from "../components/dashboard/ScannerGrid.jsx";
 import ScannerModal from "../components/dashboard/ScannerModal.jsx";
 import LatestEvents from "../components/dashboard/LatestEvents.jsx";
+import ListeningModal from "../components/modals/ListeningModal.jsx";
 import HeroPanel from "../components/dashboard/HeroPanel.jsx";
 import NavBar from "../components/dashboard/NavBar.jsx";
 import StatsPannel from "../components/dashboard/StatsPannel.jsx";
@@ -25,6 +26,8 @@ const Dashboard = () => {
   const [scanners, setScanners] = useState([]);
   const [selectedScanner, setSelectedScanner] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // Controls new onboarding Listening modal visibility.
+  const [isListeningOpen, setIsListeningOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
   const triggerRef = useRef(null);
@@ -65,6 +68,25 @@ const Dashboard = () => {
     setIsModalOpen(false);
     setSaveError(null);
   }, [isSaving]);
+
+
+
+  // On register success: close Listening, merge scanner into grid data, and open ScannerModal.
+  const handleListeningRegisterSuccess = useCallback((scanner) => {
+    setIsListeningOpen(false);
+    setScanners((current) => {
+      const hasScanner = current.some((entry) => entry.deviceId === scanner.deviceId);
+      if (hasScanner) {
+        return current.map((entry) => (entry.deviceId === scanner.deviceId ? scanner : entry));
+      }
+
+      return [scanner, ...current];
+    });
+    triggerRef.current = document.activeElement;
+    setSaveError(null);
+    setSelectedScanner(scanner);
+    setIsModalOpen(true);
+  }, []);
 
   const handleSaveScanner = useCallback(
     async (updatedFields) => {
@@ -174,7 +196,7 @@ const Dashboard = () => {
               </section>
 
               <section className="min-h-0 min-w-0 lg:col-start-3 lg:col-end-4 lg:row-start-1 lg:row-end-2">
-                <ScannerGrid scanners={scanners} setScanners={setScanners}onSelect={handleSelectScanner} />
+                <ScannerGrid scanners={scanners} onSelect={handleSelectScanner} onAddScanner={() => setIsListeningOpen(true)} />
               </section>
 
               <section className="min-h-0 min-w-0 lg:col-start-2 lg:col-end-3 lg:row-start-2 lg:row-end-3">
@@ -188,6 +210,12 @@ const Dashboard = () => {
           </main>
         </div>
       </div>
+
+      <ListeningModal
+        isOpen={isListeningOpen}
+        onClose={() => setIsListeningOpen(false)}
+        onRegisterSuccess={handleListeningRegisterSuccess}
+      />
 
       <ScannerModal
         isOpen={isModalOpen}

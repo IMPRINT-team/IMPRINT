@@ -14,7 +14,10 @@ import {
     getUsers, 
     getUserByEmail,
     deleteScanner,
-    login // New
+    login, // New
+    getOnboardingScanners,
+    targetOnboardingScanner,
+    registerOnboardingScanner,
 } from "../controllers/homeControllers.js";
 
 const homeRouter = express.Router();
@@ -35,5 +38,9 @@ homeRouter.post("/login", login); //Updated
 homeRouter.post("/user/register", addUser);// New
 homeRouter.get("/user", getUsers);
 homeRouter.get("/user/:email", getUserByEmail);
+// Onboarding endpoints are mounted on the existing /api home router.
+homeRouter.get("/onboarding/scanners", getOnboardingScanners);
+homeRouter.post("/onboarding/scanners/:scannerId/target", targetOnboardingScanner);
+homeRouter.post("/onboarding/scanners/:scannerId/register", registerOnboardingScanner);
 
 export default homeRouter;
