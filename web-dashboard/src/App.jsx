@@ -8,6 +8,7 @@ import PlaygroundPage from "./pages/playground/PlaygroundPage.jsx";
 import AdminEvents from "./pages/adminEvents.jsx";
 import AdminScanners from "./pages/adminScanners.jsx";
 import AdminUsers from "./pages/adminUsers.jsx";
+import TestNewPage from "./pages/TestNew.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/TestNew" element={<TestNewPage />} />
 
       <Route
         path="/"
