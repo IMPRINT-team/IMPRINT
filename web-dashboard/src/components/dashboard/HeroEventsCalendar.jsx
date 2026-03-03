@@ -20,9 +20,7 @@ const getUtcDay = (value) => {
 
 const getDateWindow = () => {
   const toDate = new Date();
-  const fromDate = new Date(toDate);
-
-  fromDate.setUTCDate(fromDate.getUTCDate() - 364);
+ const fromDate = new Date(Date.UTC(toDate.getUTCFullYear(), 0, 1));
 
   return {
     from: fromDate.toISOString().slice(0, 10),

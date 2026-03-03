@@ -21,7 +21,7 @@ const ScannerGrid = ({ scanners, onSelect, onAddScanner }) => {
           No scanner data yet.
         </div>
       ) : (
-        <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-1">
+        <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-1">
           {scanners.map((scanner, index) => (
             <ScannerCard
               key={scanner.deviceId ?? scanner.id ?? scanner.name ?? index}
