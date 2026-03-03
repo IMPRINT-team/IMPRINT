@@ -10,6 +10,7 @@ const ListeningModal = ({ isOpen, onClose, onRegisterSuccess }) => {
   const [scanners, setScanners] = useState([]);
   const [error, setError] = useState("");
   const [pendingRegisterScannerId, setPendingRegisterScannerId] = useState(null);
+  const [pendingTargetByScannerId, setPendingTargetByScannerId] = useState({});
 
   // Poll onboarding scanners only while modal is visible.
   useEffect(() => {
@@ -50,24 +51,36 @@ const ListeningModal = ({ isOpen, onClose, onRegisterSuccess }) => {
 
   // Toggle targeted state for a scanner card.
   const handleTarget = async (scannerId, targeted) => {
-    const response = await fetch(scannerApi.targetOnboardingUrl(scannerId), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ targeted }),
-    });
+    setPendingTargetByScannerId((current) => ({ ...current, [scannerId]: true }));
 
-    if (!response.ok) {
-      throw new Error("Unable to update target state.");
+    try {
+      const response = await fetch(scannerApi.targetOnboardingUrl(scannerId), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ targeted }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Unable to update target state.");
+      }
+
+      const updated = await response.json();
+      setScanners((current) =>
+        current.map((scanner) =>
+          scanner.scannerId === updated.scannerId ? { ...scanner, ...updated } : scanner,
+        ),
+      );
+      setError("");
+    } catch (targetError) {
+      setError(targetError.message);
+    } finally {
+      setPendingTargetByScannerId((current) => {
+        const { [scannerId]: _removed, ...remaining } = current;
+        return remaining;
+      });
     }
-
-    const updated = await response.json();
-    setScanners((current) =>
-      current.map((scanner) =>
-        scanner.scannerId === updated.scannerId ? { ...scanner, ...updated } : scanner,
-      ),
-    );
   };
 
   // Register scanner then hand off to existing ScannerModal flow.
@@ -104,34 +117,41 @@ const ListeningModal = ({ isOpen, onClose, onRegisterSuccess }) => {
         {scanners.length === 0 ? (
           <p className="text-sm text-base-content/70">Waiting for unregistered scanners...</p>
         ) : (
-          scanners.map((scanner) => (
-            <div
-              key={scanner.scannerId}
-              className="rounded-lg border border-base-300 p-3"
-            >
-              <p className="text-sm font-semibold">{scanner.scannerId}</p>
-              <p className="text-xs text-base-content/70">
-                Last seen: {new Date(scanner.lastSeenAt).toLocaleTimeString()}
-              </p>
-              <div className="mt-3 flex gap-2">
-                <button
-                  type="button"
-                  className="btn btn-sm"
-                  onClick={() => handleTarget(scanner.scannerId, !scanner.targeted)}
-                >
-                  {scanner.targeted ? "Untarget" : "Target"}
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-primary"
-                  onClick={() => handleRegister(scanner.scannerId)}
-                  disabled={pendingRegisterScannerId === scanner.scannerId}
-                >
-                  {pendingRegisterScannerId === scanner.scannerId ? "Registering..." : "Register"}
-                </button>
+          scanners.map((scanner) => {
+            const isPendingTarget = pendingTargetByScannerId[scanner.scannerId] === true;
+            const isPendingRegister = pendingRegisterScannerId === scanner.scannerId;
+            const isScannerPending = isPendingTarget || isPendingRegister;
+
+            return (
+              <div
+                key={scanner.scannerId}
+                className="rounded-lg border border-base-300 p-3"
+              >
+                <p className="text-sm font-semibold">{scanner.scannerId}</p>
+                <p className="text-xs text-base-content/70">
+                  Last seen: {new Date(scanner.lastSeenAt).toLocaleTimeString()}
+                </p>
+                <div className="mt-3 flex gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-sm"
+                    onClick={() => handleTarget(scanner.scannerId, !scanner.targeted)}
+                    disabled={isScannerPending}
+                  >
+                    {isPendingTarget ? "Updating..." : scanner.targeted ? "Untarget" : "Target"}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-primary"
+                    onClick={() => handleRegister(scanner.scannerId)}
+                    disabled={isScannerPending}
+                  >
+                    {isPendingRegister ? "Registering..." : "Register"}
+                  </button>
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
     </BaseModal>
