@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-import { listActiveUnregistered, setTargeted, consume } from "../services/unregisteredScannerPresence.js";
+import { listActiveUnregistered, setTargeted, consume, upsertSeen } from "../services/unregisteredScannerPresence.js";
+import { runTestNewEmulation } from "../seeds/testNewEmulation.js";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -376,5 +377,15 @@ export const registerOnboardingScanner = async (req, res) => {
         }
 
         res.status(500).json({success: false, error: err})
+    }
+}
+
+// Test helper route that emulates seeded scanner events and unregistered scanner health checks.
+export const testNew = async (req, res) => {
+    try {
+        const result = await runTestNewEmulation(prisma, req.body, upsertSeen);
+        return res.status(result.status).json(result.body);
+    } catch (err) {
+        return res.status(500).json({ success: false, error: err });
     }
 }

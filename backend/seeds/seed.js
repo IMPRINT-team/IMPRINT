@@ -59,13 +59,12 @@ async function seedDB() {
     data: [
       {
         rfidUid: "aasjndaiusndia",
-        email: "ipchastain42@tntech.edu",
-        passwordHash: "Test Password"
+        name: "Trey Gannod",
+        accessLevel: "BASIC"
       },
       {
         rfidUid: "sufhbiubfiua",
-        email: "imprint_admin",
-        passwordHash: "test",
+        name: "Scrum Lord",
         accessLevel: "ADMIN"
       }
     ]

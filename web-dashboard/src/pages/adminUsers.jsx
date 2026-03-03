@@ -93,8 +93,8 @@ const AdminUsers = () => {
 
         {/* Table Section — MATCHED */}
         <div className="flex justify-center">
-          <div className="border-2 border-primary h-fit rounded-xl min-h-0">
-            <table className="border border-primary border-collapse rounded-xl bg-base-100 shadow-sm overflow-hidden min-w-0">
+          <div className="border-2 border-primary h-fit rounded-xl min-h-0 w-3/4">
+            <table className="border border-primary border-collapse rounded-xl bg-base-100 shadow-sm overflow-hidden min-w-0 w-full justify-center">
               
               <thead className="sticky top-0 bg-base-300 z-10">
                 <tr className="border-b border-secondary uppercase">
