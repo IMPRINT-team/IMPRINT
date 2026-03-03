@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { testNewApi } from "../lib/testNewApi.js";
 
@@ -11,9 +11,54 @@ const TestNewPage = () => {
   const [healthCheckFormState, setHealthCheckFormState] = useState({
     unregisteredScannerId: "",
   });
+  const [dummyScanners, setDummyScanners] = useState([]);
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState("");
   const [activeSubmit, setActiveSubmit] = useState("");
+
+  useEffect(() => {
+    if (dummyScanners.length === 0) {
+      return undefined;
+    }
+
+    let isCancelled = false;
+
+    const pollHealthChecks = async () => {
+      const updatedScanners = await Promise.all(
+        dummyScanners.map(async (scanner) => {
+          try {
+            const healthResponse = await testNewApi.healthCheck(scanner.scannerId);
+            return {
+              ...scanner,
+              targeted: Boolean(healthResponse?.targeted),
+              registered: Boolean(healthResponse?.registered),
+              status: healthResponse?.status ?? "unknown",
+              lastHealthCheckAt: Date.now(),
+              healthError: "",
+            };
+          } catch (pollError) {
+            return {
+              ...scanner,
+              status: "error",
+              healthError: pollError.message,
+            };
+          }
+        }),
+      );
+
+      if (!isCancelled) {
+        setDummyScanners(updatedScanners);
+      }
+    };
+
+    pollHealthChecks();
+    const intervalId = setInterval(pollHealthChecks, 1000);
+
+    return () => {
+      isCancelled = true;
+      clearInterval(intervalId);
+    };
+  }, [dummyScanners]);
 
   const onEventChange = (event) => {
     const { name, value } = event.target;
@@ -36,6 +81,30 @@ const TestNewPage = () => {
       );
       const data = await testNewApi.run({ ...payload, emulationType });
       setResponseData(data);
+
+      if (emulationType === "health-check") {
+        const scannerId = data?.emulatedHealthCheck?.scannerId;
+
+        if (scannerId) {
+          setDummyScanners((current) => {
+            if (current.some((scanner) => scanner.scannerId === scannerId)) {
+              return current;
+            }
+
+            return [
+              {
+                scannerId,
+                targeted: Boolean(data?.emulatedHealthCheck?.response?.targeted),
+                registered: Boolean(data?.emulatedHealthCheck?.response?.registered),
+                status: data?.emulatedHealthCheck?.response?.status ?? "ok",
+                healthError: "",
+                lastHealthCheckAt: Date.now(),
+              },
+              ...current,
+            ];
+          });
+        }
+      }
     } catch (submitError) {
       setError(submitError.message);
     } finally {
@@ -51,6 +120,10 @@ const TestNewPage = () => {
   const onHealthCheckSubmit = async (event) => {
     event.preventDefault();
     await runEmulation({ emulationType: "health-check", values: healthCheckFormState });
+  };
+
+  const clearDummyScanners = () => {
+    setDummyScanners([]);
   };
 
   return (
@@ -134,10 +207,58 @@ const TestNewPage = () => {
 
           <div className="card-actions justify-end px-6 pb-6">
             <button className="btn btn-primary" disabled={activeSubmit !== ""} type="submit">
-              {activeSubmit === "health-check" ? "Running..." : "Run health-check emulation"}
+              {activeSubmit === "health-check" ? "Running..." : "Create test unregistered scanner"}
             </button>
           </div>
         </form>
+
+        <div className="card bg-base-100 shadow">
+          <div className="card-body">
+            <div className="flex items-center justify-between gap-2">
+              <h2 className="card-title">Dummy unregistered scanners</h2>
+              <button
+                type="button"
+                className="btn btn-outline btn-error btn-sm"
+                disabled={dummyScanners.length === 0}
+                onClick={clearDummyScanners}
+              >
+                Clear all dummy unregistered scanners
+              </button>
+            </div>
+
+            {dummyScanners.length === 0 ? (
+              <p className="text-sm text-base-content/70">No dummy scanners yet.</p>
+            ) : (
+              <div className="space-y-2">
+                {dummyScanners.map((scanner) => (
+                  <div
+                    key={scanner.scannerId}
+                    className={`rounded-lg border p-3 ${
+                      scanner.targeted
+                        ? "border-warning bg-warning/10"
+                        : "border-success bg-success/10"
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="font-semibold">{scanner.scannerId}</p>
+                      <span className={`badge ${scanner.targeted ? "badge-warning" : "badge-success"}`}>
+                        {scanner.targeted ? "TARGETED" : "NOT TARGETED"}
+                      </span>
+                      <span className="badge badge-ghost">{scanner.status}</span>
+                    </div>
+                    {scanner.healthError ? (
+                      <p className="text-xs text-error">{scanner.healthError}</p>
+                    ) : (
+                      <p className="text-xs text-base-content/70">
+                        Last health check: {new Date(scanner.lastHealthCheckAt).toLocaleTimeString()}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
         {error ? <div className="alert alert-error">{error}</div> : null}
 
