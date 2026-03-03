@@ -13,6 +13,7 @@ const TestNewPage = () => {
   });
   const [dummyScanners, setDummyScanners] = useState([]);
   const [responseData, setResponseData] = useState(null);
+  const [removedScannerIds, setRemovedScannerIds] = useState([]);
   const [error, setError] = useState("");
   const [activeSubmit, setActiveSubmit] = useState("");
   const dummyScannersRef = useRef([]);
@@ -58,12 +59,24 @@ const TestNewPage = () => {
 
       if (!isCancelled) {
         setDummyScanners((current) => {
-          if (current.length !== updatedScanners.length) {
-            return updatedScanners;
+          const activeScanners = updatedScanners.filter((scanner) => !scanner.registered);
+          const newlyRemovedScannerIds = updatedScanners
+            .filter((scanner) => scanner.registered)
+            .map((scanner) => scanner.scannerId);
+
+          if (newlyRemovedScannerIds.length > 0) {
+            setRemovedScannerIds((existingIds) => {
+              const mergedIds = [...newlyRemovedScannerIds, ...existingIds];
+              return [...new Set(mergedIds)].slice(0, 5);
+            });
+          }
+
+          if (current.length !== activeScanners.length) {
+            return activeScanners;
           }
 
           const hasMeaningfulChange = current.some((scanner, index) => {
-            const updated = updatedScanners[index];
+            const updated = activeScanners[index];
             return (
               scanner.scannerId !== updated.scannerId ||
               scanner.targeted !== updated.targeted ||
@@ -73,7 +86,7 @@ const TestNewPage = () => {
             );
           });
 
-          return hasMeaningfulChange ? updatedScanners : current;
+          return hasMeaningfulChange ? activeScanners : current;
         });
       }
     };
@@ -109,29 +122,6 @@ const TestNewPage = () => {
       const data = await testNewApi.run({ ...payload, emulationType });
       setResponseData(data);
 
-      if (emulationType === "health-check") {
-        const scannerId = data?.emulatedHealthCheck?.scannerId;
-
-        if (scannerId) {
-          setDummyScanners((current) => {
-            if (current.some((scanner) => scanner.scannerId === scannerId)) {
-              return current;
-            }
-
-            return [
-              {
-                scannerId,
-                targeted: Boolean(data?.emulatedHealthCheck?.response?.targeted),
-                registered: Boolean(data?.emulatedHealthCheck?.response?.registered),
-                status: data?.emulatedHealthCheck?.response?.status ?? "ok",
-                healthError: "",
-                lastHealthCheckAt: Date.now(),
-              },
-              ...current,
-            ];
-          });
-        }
-      }
     } catch (submitError) {
       setError(submitError.message);
     } finally {
@@ -146,11 +136,55 @@ const TestNewPage = () => {
 
   const onHealthCheckSubmit = async (event) => {
     event.preventDefault();
-    await runEmulation({ emulationType: "health-check", values: healthCheckFormState });
+
+    setError("");
+    setResponseData(null);
+    setActiveSubmit("health-check");
+
+    const scannerId = healthCheckFormState.unregisteredScannerId.trim() || `UNREGISTERED-${Date.now()}`;
+
+    try {
+      const healthResponse = await testNewApi.healthCheck(scannerId);
+      const nextResponseData = {
+        success: true,
+        emulationType: "health-check",
+        emulatedHealthCheck: {
+          scannerId,
+          response: healthResponse,
+        },
+      };
+
+      setResponseData(nextResponseData);
+
+      if (!healthResponse?.registered) {
+        setDummyScanners((current) => {
+          if (current.some((scanner) => scanner.scannerId === scannerId)) {
+            return current;
+          }
+
+          return [
+            {
+              scannerId,
+              targeted: Boolean(healthResponse?.targeted),
+              registered: Boolean(healthResponse?.registered),
+              status: healthResponse?.status ?? "ok",
+              healthError: "",
+              lastHealthCheckAt: Date.now(),
+            },
+            ...current,
+          ];
+        });
+      }
+    } catch (submitError) {
+      setError(submitError.message);
+    } finally {
+      setActiveSubmit("");
+    }
   };
 
   const clearDummyScanners = () => {
     setDummyScanners([]);
+    setRemovedScannerIds([]);
   };
 
   return (
@@ -284,6 +318,17 @@ const TestNewPage = () => {
                 ))}
               </div>
             )}
+
+            {removedScannerIds.length > 0 ? (
+              <p className="text-xs text-base-content/70">
+                Stopped monitoring registered scanners: {removedScannerIds.join(", ")}
+              </p>
+            ) : null}
+
+            <p className="text-xs text-base-content/70">
+              Monitoring sends a 1s heartbeat while listed here. If you clear a scanner and do not send more
+              heartbeats, onboarding presence expires after ~90s.
+            </p>
           </div>
         </div>
 
