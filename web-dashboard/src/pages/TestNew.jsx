@@ -3,38 +3,54 @@ import { Link } from "react-router-dom";
 import { testNewApi } from "../lib/testNewApi.js";
 
 const TestNewPage = () => {
-  const [formState, setFormState] = useState({
+  const [eventFormState, setEventFormState] = useState({
     registeredScannerId: "",
     rfidUid: "BE:00:28:AF",
     result: "ACCEPTED",
+  });
+  const [healthCheckFormState, setHealthCheckFormState] = useState({
     unregisteredScannerId: "",
   });
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeSubmit, setActiveSubmit] = useState("");
 
-  const onChange = (event) => {
+  const onEventChange = (event) => {
     const { name, value } = event.target;
-    setFormState((current) => ({ ...current, [name]: value }));
+    setEventFormState((current) => ({ ...current, [name]: value }));
   };
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const onHealthCheckChange = (event) => {
+    const { name, value } = event.target;
+    setHealthCheckFormState((current) => ({ ...current, [name]: value }));
+  };
+
+  const runEmulation = async ({ emulationType, values }) => {
     setError("");
     setResponseData(null);
-    setIsSubmitting(true);
+    setActiveSubmit(emulationType);
 
     try {
       const payload = Object.fromEntries(
-        Object.entries(formState).filter(([, value]) => value.trim() !== ""),
+        Object.entries(values).filter(([, value]) => value.trim() !== ""),
       );
-      const data = await testNewApi.run(payload);
+      const data = await testNewApi.run({ ...payload, emulationType });
       setResponseData(data);
     } catch (submitError) {
       setError(submitError.message);
     } finally {
-      setIsSubmitting(false);
+      setActiveSubmit("");
     }
+  };
+
+  const onEventSubmit = async (event) => {
+    event.preventDefault();
+    await runEmulation({ emulationType: "event-and-health-check", values: eventFormState });
+  };
+
+  const onHealthCheckSubmit = async (event) => {
+    event.preventDefault();
+    await runEmulation({ emulationType: "health-check", values: healthCheckFormState });
   };
 
   return (
@@ -47,22 +63,21 @@ const TestNewPage = () => {
           </Link>
         </div>
 
-        <p className="text-sm opacity-80">
-          Use this page to create scanner events and emulate how an unregistered scanner would be
-          handled by health-check onboarding logic.
-        </p>
+        <p className="text-sm opacity-80">Use the sections below to emulate specific TestNew flows.</p>
 
-        <form className="card bg-base-100 shadow" onSubmit={onSubmit}>
+        <form className="card bg-base-100 shadow" onSubmit={onEventSubmit}>
           <div className="card-body grid gap-4 md:grid-cols-2">
+            <h2 className="card-title md:col-span-2">Section 1: Emulate a scanner event</h2>
+
             <label className="form-control">
               <span className="label-text">Registered scanner ID (optional)</span>
               <input
                 className="input input-bordered"
                 name="registeredScannerId"
-                onChange={onChange}
+                onChange={onEventChange}
                 placeholder="UUID of an existing scanner"
                 type="text"
-                value={formState.registeredScannerId}
+                value={eventFormState.registeredScannerId}
               />
             </label>
 
@@ -71,9 +86,9 @@ const TestNewPage = () => {
               <input
                 className="input input-bordered"
                 name="rfidUid"
-                onChange={onChange}
+                onChange={onEventChange}
                 type="text"
-                value={formState.rfidUid}
+                value={eventFormState.rfidUid}
               />
             </label>
 
@@ -82,30 +97,44 @@ const TestNewPage = () => {
               <select
                 className="select select-bordered"
                 name="result"
-                onChange={onChange}
-                value={formState.result}
+                onChange={onEventChange}
+                value={eventFormState.result}
               >
                 <option value="ACCEPTED">ACCEPTED</option>
                 <option value="DENIED">DENIED</option>
               </select>
             </label>
+          </div>
 
-            <label className="form-control">
+          <div className="card-actions justify-end px-6 pb-6">
+            <button className="btn btn-primary" disabled={activeSubmit !== ""} type="submit">
+              {activeSubmit === "event-and-health-check" ? "Running..." : "Run event emulation"}
+            </button>
+          </div>
+        </form>
+
+        <form className="card bg-base-100 shadow" onSubmit={onHealthCheckSubmit}>
+          <div className="card-body grid gap-4 md:grid-cols-2">
+            <h2 className="card-title md:col-span-2">
+              Section 2: Emulate an unregistered scanner health check
+            </h2>
+
+            <label className="form-control md:col-span-2">
               <span className="label-text">Unregistered scanner ID (optional)</span>
               <input
                 className="input input-bordered"
                 name="unregisteredScannerId"
-                onChange={onChange}
+                onChange={onHealthCheckChange}
                 placeholder="Custom ID for onboarding emulation"
                 type="text"
-                value={formState.unregisteredScannerId}
+                value={healthCheckFormState.unregisteredScannerId}
               />
             </label>
           </div>
 
           <div className="card-actions justify-end px-6 pb-6">
-            <button className="btn btn-primary" disabled={isSubmitting} type="submit">
-              {isSubmitting ? "Running..." : "Run /TestNew"}
+            <button className="btn btn-primary" disabled={activeSubmit !== ""} type="submit">
+              {activeSubmit === "health-check" ? "Running..." : "Run health-check emulation"}
             </button>
           </div>
         </form>
