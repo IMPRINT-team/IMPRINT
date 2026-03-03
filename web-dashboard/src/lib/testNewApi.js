@@ -2,7 +2,10 @@ import { buildApiUrl } from "./apiBase.js";
 
 const TEST_NEW_PATH = "TestNew";
 
-const buildHealthUrl = (scannerId) => `/health?scannerId=${encodeURIComponent(scannerId)}`;
+const buildHealthUrl = (scannerId) => {
+  const params = new URLSearchParams({ scannerId });
+  return `${buildApiUrl("/health")}?${params.toString()}`;
+};
 
 export const testNewApi = {
   runUrl: () => buildApiUrl(TEST_NEW_PATH),

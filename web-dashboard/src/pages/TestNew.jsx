@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { testNewApi } from "../lib/testNewApi.js";
 
@@ -15,6 +15,11 @@ const TestNewPage = () => {
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState("");
   const [activeSubmit, setActiveSubmit] = useState("");
+  const dummyScannersRef = useRef([]);
+
+  useEffect(() => {
+    dummyScannersRef.current = dummyScanners;
+  }, [dummyScanners]);
 
   useEffect(() => {
     if (dummyScanners.length === 0) {
@@ -24,8 +29,13 @@ const TestNewPage = () => {
     let isCancelled = false;
 
     const pollHealthChecks = async () => {
+      const scanners = dummyScannersRef.current;
+      if (scanners.length === 0) {
+        return;
+      }
+
       const updatedScanners = await Promise.all(
-        dummyScanners.map(async (scanner) => {
+        scanners.map(async (scanner) => {
           try {
             const healthResponse = await testNewApi.healthCheck(scanner.scannerId);
             return {
@@ -47,7 +57,24 @@ const TestNewPage = () => {
       );
 
       if (!isCancelled) {
-        setDummyScanners(updatedScanners);
+        setDummyScanners((current) => {
+          if (current.length !== updatedScanners.length) {
+            return updatedScanners;
+          }
+
+          const hasMeaningfulChange = current.some((scanner, index) => {
+            const updated = updatedScanners[index];
+            return (
+              scanner.scannerId !== updated.scannerId ||
+              scanner.targeted !== updated.targeted ||
+              scanner.registered !== updated.registered ||
+              scanner.status !== updated.status ||
+              scanner.healthError !== updated.healthError
+            );
+          });
+
+          return hasMeaningfulChange ? updatedScanners : current;
+        });
       }
     };
 
@@ -58,7 +85,7 @@ const TestNewPage = () => {
       isCancelled = true;
       clearInterval(intervalId);
     };
-  }, [dummyScanners]);
+  }, [dummyScanners.length]);
 
   const onEventChange = (event) => {
     const { name, value } = event.target;
