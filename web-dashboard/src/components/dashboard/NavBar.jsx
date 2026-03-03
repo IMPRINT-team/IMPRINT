@@ -8,6 +8,7 @@ import {
   MemoryStick,
   Users,
   X,
+  TestTubeDiagonal,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import Logout from "./Logout.jsx";
@@ -23,6 +24,7 @@ const navItems = [
   { to: "/admin/users", label: "Users", icon: Users },
   { to: "/admin/scanners", label: "Scanners", icon: MemoryStick },
   { to: "/admin/events", label: "Events", icon: ClipboardList },
+  { to: "/TestNew", label: "TestNew", icon: TestTubeDiagonal },
 ];
 
 const labelTransitionClasses =

@@ -18,6 +18,7 @@ import {
     getOnboardingScanners,
     targetOnboardingScanner,
     registerOnboardingScanner,
+    testNew,
 } from "../controllers/homeControllers.js";
 
 const homeRouter = express.Router();
@@ -42,5 +43,6 @@ homeRouter.get("/user/:email", getUserByEmail);
 homeRouter.get("/onboarding/scanners", getOnboardingScanners);
 homeRouter.post("/onboarding/scanners/:scannerId/target", targetOnboardingScanner);
 homeRouter.post("/onboarding/scanners/:scannerId/register", registerOnboardingScanner);
+homeRouter.post("/TestNew", testNew);
 
 export default homeRouter;
