@@ -1,4 +1,5 @@
 import express from "express";
+import { upsertSeen } from "../services/unregisteredScannerPresence.js";
 
 const createHealthRouter = (prisma) => {
   const healthRouter = express.Router();
@@ -25,10 +26,20 @@ const createHealthRouter = (prisma) => {
         },
       });
 
+      // Registered scanners always report targeted=0 in health response.
+      let targeted = 0;
+
+      // Track unregistered scanner pings so dashboard onboarding can discover them.
+      if (!scanner) {
+        const scannerPresence = upsertSeen(scannerId);
+        targeted = scannerPresence?.targeted ? 1 : 0;
+      }
+
       return res.status(200).json({
         status: "ok",
         database: "ok",
         registered: scanner ? 1 : 0,
+        targeted,
       });
     } catch {
       return res.status(503).json({ status: "error", database: "unavailable" });
