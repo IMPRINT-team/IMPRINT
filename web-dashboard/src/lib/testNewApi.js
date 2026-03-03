@@ -4,7 +4,7 @@ const TEST_NEW_PATH = "TestNew";
 
 const buildHealthUrl = (scannerId) => {
   const params = new URLSearchParams({ scannerId });
-  return `${buildApiUrl("/health")}?${params.toString()}`;
+  return `/health?${params.toString()}`;
 };
 
 export const testNewApi = {

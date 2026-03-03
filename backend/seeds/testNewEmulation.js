@@ -1,14 +1,9 @@
+import { getScannerHealthResponse } from "../services/healthResponse.js";
+
 export const DEFAULT_TEST_NEW_PAYLOAD = {
   rfidUid: "BE:00:28:AF",
   result: "ACCEPTED",
 };
-
-const getHealthStyleResponse = (scannerPresence) => ({
-  status: "ok",
-  database: "ok",
-  registered: 0,
-  targeted: scannerPresence?.targeted ? 1 : 0,
-});
 
 export async function runTestNewEmulation(prisma, payload, upsertSeen, logger = console) {
   const {
@@ -19,8 +14,8 @@ export async function runTestNewEmulation(prisma, payload, upsertSeen, logger = 
     unregisteredScannerId = `UNREGISTERED-${Date.now()}`,
   } = payload ?? {};
 
-  const scannerPresence = upsertSeen(unregisteredScannerId);
-  const healthResponse = getHealthStyleResponse(scannerPresence);
+  const healthResult = await getScannerHealthResponse(prisma, unregisteredScannerId, upsertSeen);
+  const healthResponse = healthResult.body;
 
   if (emulationType === "health-check") {
     logger.log("[TestNew] Emulated unregistered scanner health response", {
