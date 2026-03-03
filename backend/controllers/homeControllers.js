@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import { listActiveUnregistered, setTargeted, consume, upsertSeen } from "../services/unregisteredScannerPresence.js";
+import { runTestNewEmulation } from "../seeds/testNewEmulation.js";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -336,5 +338,105 @@ export const login = async (req, res) => {
     } catch (err) {
         console.error("Login error:", err);
         res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+
+// List active unregistered scanners for the dashboard Listening modal.
+export const getOnboardingScanners = async (req, res) => {
+    try {
+        const scanners = listActiveUnregistered()
+            .sort((a, b) => b.lastSeenAt - a.lastSeenAt)
+            .map(({ scannerId, lastSeenAt, targeted }) => ({
+                scannerId,
+                lastSeenAt,
+                targeted,
+            }));
+        res.status(200).json(scanners);
+    } catch (err) {
+        res.status(500).json({success: false, error: err})
+    }
+}
+
+// Set targeted state for a discovered unregistered scanner.
+export const targetOnboardingScanner = async (req, res) => {
+    try {
+        const scannerId = req.params.scannerId;
+                // Default targeting on when body.targeted is omitted.
+        const targeted = req.body?.targeted ?? true;
+        const scanner = setTargeted(scannerId, targeted);
+
+        if (!scanner) {
+            return res.status(404).json({ success: false, error: "Scanner not found." });
+        }
+
+        res.status(200).json({
+            scannerId: scanner.scannerId,
+            lastSeenAt: scanner.lastSeenAt,
+            targeted: scanner.targeted,
+        });
+    } catch (err) {
+        res.status(500).json({success: false, error: err})
+    }
+}
+
+// Idempotently register scanner by deviceId and clear onboarding presence state.
+export const registerOnboardingScanner = async (req, res) => {
+    try {
+        const scannerId = req.params.scannerId;
+        const existingScanner = await prisma.scanner.findUnique({
+            where: {
+                deviceId: scannerId,
+            }
+        });
+
+        if (existingScanner) {
+            consume(scannerId);
+            return res.status(200).json(existingScanner);
+        }
+
+        // Upsert protects against race conditions from concurrent registrations.
+        const scanner = await prisma.scanner.upsert({
+            where: {
+                deviceId: scannerId,
+            },
+            update: {},
+            create: {
+                deviceId: scannerId,
+                // Safe placeholders until admin updates details in ScannerModal.
+                location: "UNASSIGNED",
+                specificLocation: `UNASSIGNED-${scannerId}`,
+                status: "ONLINE",
+                authorization: "BASIC",
+            },
+        });
+
+        consume(scannerId);
+        res.status(201).json(scanner)
+    } catch (err) {
+        if (err?.code === "P2002") {
+            const scanner = await prisma.scanner.findUnique({
+                where: {
+                    deviceId: req.params.scannerId,
+                }
+            });
+
+            if (scanner) {
+                consume(req.params.scannerId);
+                return res.status(200).json(scanner);
+            }
+        }
+
+        res.status(500).json({success: false, error: err})
+    }
+}
+
+// Test helper route that emulates seeded scanner events and unregistered scanner health checks.
+export const testNew = async (req, res) => {
+    try {
+        const result = await runTestNewEmulation(prisma, req.body, upsertSeen);
+        return res.status(result.status).json(result.body);
+    } catch (err) {
+        return res.status(500).json({ success: false, error: err });
     }
 }

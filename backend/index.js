@@ -5,6 +5,7 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import homeRouter from "./routes/homeRoutes.js";
+import createHealthRouter from "./routes/healthRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,15 +42,7 @@ async function connectToDatabase() {
   }
 }
 
-app.get("/health", async (req, res) => {
-  try {
-    await prisma.$queryRaw`SELECT 1`;
-    res.status(200).json({ status: "ok", database: "ok" });
-  } catch {
-    res.status(503).json({ status: "degraded", database: "unavailable" });
-  }
-});
-
+app.use(createHealthRouter(prisma));
 app.use("/api", homeRouter);
 app.use("/", homeRouter);
 

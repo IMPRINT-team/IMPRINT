@@ -37,8 +37,7 @@ model Event {
 model User {
   id           String    @id @default(uuid())
   rfidUid      String    @unique
-  email        String?   @unique
-  passwordHash String?
+  name        String?   @unique
   accessLevel  String    @default("BASIC")
   createdAt    DateTime  @default(now())
   isRegistered Boolean   @default(false)

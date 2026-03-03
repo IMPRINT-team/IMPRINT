@@ -2,26 +2,30 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-const RECENT_WEEKS = 4;
-const EVENT_COUNT = 24;
+const RECENT_DAYS = 90;
+const EVENT_COUNT = 1000;
+const DENIAL_PROBABILITY = 0.05;
 
-function getRandomTimestampWithinLastWeeks(weeks) {
+function getRandomTimestampWithinLastDays(days) {
   const now = Date.now();
-  const earliest = now - weeks * 7 * 24 * 60 * 60 * 1000;
+  const earliest = now - days * 24 * 60 * 60 * 1000;
   const randomTime = earliest + Math.random() * (now - earliest);
 
   return new Date(randomTime);
 }
 
-function createRandomizedEvents(deviceId, count) {
+function getRandomResult() {
+  return Math.random() < DENIAL_PROBABILITY ? "DENIED" : "ACCEPTED";
+}
+
+function createRandomizedEvents(scannerIds, count) {
   const uids = ["BE:00:28:AF", "D4:F9:9A:10", "7C:AA:55:2E", "91:22:CD:FE"];
-  const results = ["ACCEPTED", "DENIED"];
 
   return Array.from({ length: count }, () => ({
     uid: uids[Math.floor(Math.random() * uids.length)],
-    result: results[Math.floor(Math.random() * results.length)],
-    occurredAt: getRandomTimestampWithinLastWeeks(RECENT_WEEKS),
-    deviceId,
+    result: getRandomResult(),
+    occurredAt: getRandomTimestampWithinLastDays(RECENT_DAYS),
+    deviceId: scannerIds[Math.floor(Math.random() * scannerIds.length)],
   }));
 }
 
@@ -37,7 +41,7 @@ async function seedDB() {
       {
         location: "Lab Door",
         specificLocation: "Room 302",
-        status: "DEGRADED",
+        status: "OFFLINE",
         authorization: "BASIC",
       },
       {
@@ -49,23 +53,23 @@ async function seedDB() {
     ],
   });
 
-  const scanner = await prisma.scanner.findFirst();
+  const scanners = await prisma.scanner.findMany({ select: { deviceId: true } });
+  const scannerIds = scanners.map((scanner) => scanner.deviceId);
 
   await prisma.event.createMany({
-    data: createRandomizedEvents(scanner.deviceId, EVENT_COUNT),
+    data: createRandomizedEvents(scannerIds, EVENT_COUNT),
   });
   
   await prisma.user.createMany({
     data: [
       {
         rfidUid: "aasjndaiusndia",
-        email: "ipchastain42@tntech.edu",
-        passwordHash: "Test Password"
+        name: "Trey Gannod",
+        accessLevel: "BASIC"
       },
       {
         rfidUid: "sufhbiubfiua",
-        email: "imprint_admin",
-        passwordHash: "test",
+        name: "Scrum Lord",
         accessLevel: "ADMIN"
       }
     ]

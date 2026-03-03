@@ -19,16 +19,16 @@ const getUtcDay = (value) => {
 };
 
 const getDateWindow = () => {
-  const toDate = new Date();
-  const fromDate = new Date(toDate);
-
-  fromDate.setUTCDate(fromDate.getUTCDate() - 364);
+  const year = new Date().getUTCFullYear();
 
   return {
-    from: fromDate.toISOString().slice(0, 10),
-    to: toDate.toISOString().slice(0, 10),
+    from: `${year}-01-01`,
+    to: `${year}-12-31`,
   };
 };
+
+const isWithinDateWindow = (day, dateWindow) =>
+  day >= dateWindow.from && day <= dateWindow.to;
 
 const HeroEventsCalendar = () => {
   const [events, setEvents] = useState([]);
@@ -85,7 +85,7 @@ const HeroEventsCalendar = () => {
     };
   }, []);
 
-  const dateWindow = useMemo(() => getDateWindow(), []);
+  const dateWindow = getDateWindow();
 
   const calendarData = useMemo(() => {
     const totalsByDay = new Map();
@@ -97,12 +97,18 @@ const HeroEventsCalendar = () => {
         return;
       }
 
+      if (!isWithinDateWindow(day, dateWindow)) {
+        return;
+      }
+
       totalsByDay.set(day, (totalsByDay.get(day) ?? 0) + 1);
     });
 
     return Array.from(totalsByDay.entries())
-      .map(([day, value]) => ({ day, value }))
-      .filter(({ day }) => day >= dateWindow.from && day <= dateWindow.to)
+      .map(([day, value]) => ({
+        day,
+        value,
+      }))
       .sort((a, b) => a.day.localeCompare(b.day));
   }, [dateWindow.from, dateWindow.to, events]);
 
@@ -185,10 +191,10 @@ const HeroEventsCalendar = () => {
                   : { top: 28, right: 28, bottom: 28, left: 36 }
               }
               yearSpacing={40}
-              monthBorderColor="oklch(var(--bc) / 0.15" 
+              monthBorderColor="oklch(var(--bc) / 0.15)"
               monthBorderWidth={2}
               dayBorderWidth={1}
-              dayBorderColor="oklch(var(--bc) / 0.15" 
+              dayBorderColor="oklch(var(--bc) / 0.15)"
               monthLegendOffset={8}
               monthLegendPosition="before"
               weekdayTicks={isCompact ? [1, 3, 5] : [0, 1, 2, 3, 4, 5, 6]}
