@@ -191,7 +191,7 @@ const StatsPannel = () => {
               <div className="flex-1 bg-base-300 h-2.5 rounded-full overflow-hidden">
                 <div
                   className="bg-primary h-full transition-all duration-700"
-                  style={{ width: `${Math.min(parseFloat(item.rate) * 10, 100)}%` }}
+                  style={{ width: `${Math.min(parseFloat(item.rate), 100)}%` }}
                 />
               </div>
               <span className="w-8 text-right font-mono font-bold">{item.rate}</span>
