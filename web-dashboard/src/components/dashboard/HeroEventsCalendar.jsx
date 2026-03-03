@@ -19,12 +19,11 @@ const getUtcDay = (value) => {
 };
 
 const getDateWindow = () => {
-  const toDate = new Date();
- const fromDate = new Date(Date.UTC(toDate.getUTCFullYear(), 0, 1));
+  const year = new Date().getFullYear();
 
   return {
-    from: fromDate.toISOString().slice(0, 10),
-    to: toDate.toISOString().slice(0, 10),
+    from: `${year}-01-01`,
+    to: `${year}-12-31`,
   };
 };
 
@@ -83,7 +82,7 @@ const HeroEventsCalendar = () => {
     };
   }, []);
 
-  const dateWindow = useMemo(() => getDateWindow(), []);
+  const dateWindow = getDateWindow();
 
   const calendarData = useMemo(() => {
     const totalsByDay = new Map();
