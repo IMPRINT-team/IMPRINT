@@ -69,21 +69,21 @@ const AdminEvents = () => {
             </div>
             <div className="divider divider-primary mx-3 mb-3"></div>
             <div className="flex justify-center h-full">
-                <div className="border-2 border-primary w-fit h-fit rounded-xl min-h-0 w-3/4">
+                <div className="border-2 border-primary w-fit h-fit rounded-xl min-h-0 w-4/5">
                     <table className="border border-primary border-collapse rounded-xl bg-base-100 shadow-sm overflow-hidden min-w-0 w-full">
                       <thead className="sticky top-0 bg-base-300 z-10">
                         <tr className=" border-b border-secondary uppercase">
-                          <th className="py-2 text-primary text-center align-middle text-sm">Event ID</th>
-                          <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Event Type</th>
-                          <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Occurred At</th>
+                          <th className="py-2 text-primary text-center align-middle text-sm">User ID</th>
+                          <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Location</th>
+                          <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Occurred</th>
                           <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Result</th>
                         </tr>
                       </thead>
                       <tbody className="bg-primary">
                         {events.map((event) => (
                           <tr key={event.id} className="bg-base-300 hover:bg-gradient-to-br hover:from-primary/10 hover:via-secondary/20 hover:to-neutral/10">
-                            <td className="text-center py-3">{event.id}</td>
-                            <td className="text-center py-3">{event.eventType}</td>
+                            <td className="text-center py-3">{event.user.rfidUid}</td>
+                            <td className="text-center py-3">{event.scanner.location}</td>
                             <td className="text-center py-3">{formatTime(event.occurredAt)}</td>
                             <td className="text-center py-3 px-2">
                               <ResultPill result={event.result} />
