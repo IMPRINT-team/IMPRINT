@@ -14,6 +14,9 @@ function UpdateScannerModal({ onClose, scanner }) {
       submitLabel="Update Scanner"
       onSubmit={updateScanner}
       initialData={scanner}
+      showStatus={false}
+      authorizationLabel="Scanner Group"
+      authorizationPlaceholder="-- Group --"
     />
   )
 }

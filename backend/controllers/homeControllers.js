@@ -112,12 +112,11 @@ export const createScanner = async (req, res) => {
 
 export const updateScanner = async (req, res) => {
     const scannerId = req.params.id;
-    const { location, specificLocation, status, authorization } = req.body;
+    const { location, specificLocation, authorization } = req.body;
 
     const updateData = {
         ...(location !== undefined ? { location } : {}),
         ...(specificLocation !== undefined ? { specificLocation } : {}),
-        ...(status !== undefined ? { status } : {}),
         ...(authorization !== undefined ? { authorization } : {}),
     };
 

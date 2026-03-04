@@ -8,7 +8,6 @@ const FOCUSABLE_SELECTOR =
 const createInitialState = (scanner) => ({
   location: scanner?.location ?? "",
   specificLocation: scanner?.specificLocation ?? "",
-  status: scanner?.status ?? "ONLINE",
   authorization: scanner?.authorization ?? "BASIC",
 });
 
@@ -162,22 +161,7 @@ const ScannerModal = ({
 
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="form-control">
-              <span className="label-text mb-1 text-sm font-medium">Status</span>
-              <select
-                className="select select-bordered"
-                value={formState.status}
-                onChange={(event) =>
-                  setFormState((current) => ({ ...current, status: event.target.value }))
-                }
-              >
-                <option value="ONLINE">Online</option>
-                <option value="DEGRADED">Degraded</option>
-                <option value="OFFLINE">Offline</option>
-              </select>
-            </label>
-
-            <label className="form-control">
-              <span className="label-text mb-1 text-sm font-medium">Authorization</span>
+              <span className="label-text mb-1 text-sm font-medium">Group</span>
               <select
                 className="select select-bordered"
                 value={formState.authorization}
@@ -215,7 +199,6 @@ ScannerModal.propTypes = {
     deviceId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     location: PropTypes.string,
     specificLocation: PropTypes.string,
-    status: PropTypes.string,
     authorization: PropTypes.string,
   }),
   isSaving: PropTypes.bool.isRequired,

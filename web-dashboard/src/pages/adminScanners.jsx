@@ -5,12 +5,27 @@ import AddScannerModal from './addScannerModal.jsx'
 import UpdateScannerModal from './updateScannerModal.jsx'
 import { StatusPill } from '../components/ui/StatusPill.jsx'
 import { scannerApi } from "../lib/scannerApi.js"
-import { testNewApi } from "../lib/testNewApi.js"
 import { Link } from "react-router-dom"
 
 const getScanners = async () => {
   const scannerData = await fetch(scannerApi.listUrl())
   return scannerData
+}
+
+const OFFLINE_TIMEOUT_MS = 3 * 60 * 1000
+
+const getScannerStatus = (updatedAt) => {
+  if (!updatedAt) {
+    return "OFFLINE"
+  }
+
+  const lastSeen = new Date(updatedAt).getTime()
+
+  if (Number.isNaN(lastSeen)) {
+    return "OFFLINE"
+  }
+
+  return Date.now() - lastSeen <= OFFLINE_TIMEOUT_MS ? "ONLINE" : "OFFLINE"
 }
 
 const baseLinkClasses =
@@ -25,15 +40,23 @@ const errLinkClasses =
 
 
 const formatTime = (value) => {
+  if (!value) {
+    return 'N/A'
+  }
+
   const date = new Date(value)
-  const formattedDate = date.toLocaleString('en-US', {
+
+  if (Number.isNaN(date.getTime())) {
+    return 'N/A'
+  }
+
+  return date.toLocaleString('en-US', {
     month: 'long',
     day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
     hour12: true,
   })
-  return formattedDate
 }
 
 const AdminScanners = () => {
@@ -49,26 +72,12 @@ const AdminScanners = () => {
       const scannerResponse = await getScanners()
       const data = await scannerResponse.json()
 
-      const scannersWithHealth = await Promise.all(
-        data.map(async (scanner) => {
-          try {
-            const healthResponse = await testNewApi.healthCheck(scanner.deviceId)
-            return {
-              ...scanner,
-              status: healthResponse.status === 'ok' && healthResponse.registered === 1
-                ? 'ONLINE'
-                : 'OFFLINE',
-            }
-          } catch {
-            return {
-              ...scanner,
-              status: 'OFFLINE',
-            }
-          }
-        })
-      )
+      const scannersWithHealthStatus = data.map((scanner) => ({
+        ...scanner,
+        status: getScannerStatus(scanner.updatedAt),
+      }))
 
-      setScanners(scannersWithHealth)
+      setScanners(scannersWithHealthStatus)
     } catch (err) {
       console.log(err)
     }
@@ -93,7 +102,12 @@ const AdminScanners = () => {
     }
 
     const filteredScanners = await scannerData.json()
-    return setScanners(filteredScanners)
+    const scannersWithHealthStatus = filteredScanners.map((scanner) => ({
+      ...scanner,
+      status: getScannerStatus(scanner.updatedAt),
+    }))
+
+    return setScanners(scannersWithHealthStatus)
   }
 
   async function deleteScanner(id) {
@@ -156,7 +170,7 @@ const AdminScanners = () => {
                     <td className="text-center py-3 px-2">
                       <StatusPill status={scanner.status} />
                     </td>
-                    <td className="text-center py-3">{formatTime(scanner.createdAt)}</td>
+                    <td className="text-center py-3">{formatTime(scanner.updatedAt)}</td>
                     <td className="text-center py-3">{scanner.authorization}</td>
                     <td className="text-center py-3">
                       <button type="button" id="btnUpdateScanner" className={`${baseLinkClasses} me-2`} onClick={() => openUpdateModal(scanner)}>Update Scanner</button>

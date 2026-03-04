@@ -20,6 +20,9 @@ function ScannerFormModal({
   submitLabel,
   onSubmit,
   initialData = EMPTY_SCANNER_DATA,
+  showStatus = true,
+  authorizationLabel = 'Scanner Authorization Level',
+  authorizationPlaceholder = '-- Auth Level --',
 }) {
   const [scannerData, setScannerData] = useState({
     ...EMPTY_SCANNER_DATA,
@@ -29,7 +32,7 @@ function ScannerFormModal({
   const isSubmitDisabled =
     !scannerData.location ||
     !scannerData.specificLocation ||
-    !scannerData.status ||
+    (showStatus && !scannerData.status) ||
     !scannerData.authorization
 
   async function handleSubmit(event) {
@@ -74,23 +77,25 @@ function ScannerFormModal({
           </div>
 
           <div className="inline-flex gap-5 mx-3">
-            <div className="form-control">
-              <span className="label-text text-base font-medium mb-2">Scanner Status</span>
-              <div className="relative">
-                <select
-                  className="input input-bordered py-3 text-base-content/50 focus:text-base-content focus:input-primary transition-colors duration-200"
-                  value={scannerData.status}
-                  onChange={(e) => setScannerData(prev => ({ ...prev, status: e.target.value }))}
-                >
-                  <option value="" className="text-base-content/50" disabled>-- Choose your status --</option>
-                  <option value="ONLINE" className="text-base-content">Online</option>
-                  <option value="OFFLINE" className="text-base-content">Offline</option>
-                </select>
+            {showStatus && (
+              <div className="form-control">
+                <span className="label-text text-base font-medium mb-2">Scanner Status</span>
+                <div className="relative">
+                  <select
+                    className="input input-bordered py-3 text-base-content/50 focus:text-base-content focus:input-primary transition-colors duration-200"
+                    value={scannerData.status}
+                    onChange={(e) => setScannerData(prev => ({ ...prev, status: e.target.value }))}
+                  >
+                    <option value="" className="text-base-content/50" disabled>-- Choose your status --</option>
+                    <option value="ONLINE" className="text-base-content">Online</option>
+                    <option value="OFFLINE" className="text-base-content">Offline</option>
+                  </select>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="form-control">
-              <span className="label-text text-base font-medium mb-2">Scanner Authorization Level</span>
+              <span className="label-text text-base font-medium mb-2">{authorizationLabel}</span>
               <div className="relative">
                 <select
                   name="AuthLevel"
@@ -99,7 +104,7 @@ function ScannerFormModal({
                   value={scannerData.authorization}
                   onChange={(e) => setScannerData(prev => ({ ...prev, authorization: e.target.value }))}
                 >
-                  <option value="" className="text-base-content/50" disabled>-- Auth Level --</option>
+                  <option value="" className="text-base-content/50" disabled>{authorizationPlaceholder}</option>
                   <option value="BASIC" className="text-base-content">Basic</option>
                   <option value="ADMIN" className="text-base-content">Admin</option>
                 </select>
