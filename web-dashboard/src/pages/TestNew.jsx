@@ -8,9 +8,6 @@ const TestNewPage = () => {
     rfidUid: "BE:00:28:AF",
     result: "ACCEPTED",
   });
-  const [healthCheckFormState, setHealthCheckFormState] = useState({
-    unregisteredScannerId: "",
-  });
   const [dummyScanners, setDummyScanners] = useState([]);
   const [responseData, setResponseData] = useState(null);
   const [removedScannerIds, setRemovedScannerIds] = useState([]);
@@ -105,11 +102,6 @@ const TestNewPage = () => {
     setEventFormState((current) => ({ ...current, [name]: value }));
   };
 
-  const onHealthCheckChange = (event) => {
-    const { name, value } = event.target;
-    setHealthCheckFormState((current) => ({ ...current, [name]: value }));
-  };
-
   const runEmulation = async ({ emulationType, values }) => {
     setError("");
     setResponseData(null);
@@ -141,7 +133,7 @@ const TestNewPage = () => {
     setResponseData(null);
     setActiveSubmit("health-check");
 
-    const scannerId = healthCheckFormState.unregisteredScannerId.trim() || `UNREGISTERED-${Date.now()}`;
+    const scannerId = crypto.randomUUID();
 
     try {
       const healthResponse = await testNewApi.healthCheck(scannerId);
@@ -175,6 +167,7 @@ const TestNewPage = () => {
           ];
         });
       }
+
     } catch (submitError) {
       setError(submitError.message);
     } finally {
@@ -253,17 +246,9 @@ const TestNewPage = () => {
               Section 2: Emulate an unregistered scanner health check
             </h2>
 
-            <label className="form-control md:col-span-2">
-              <span className="label-text">Unregistered scanner ID (optional)</span>
-              <input
-                className="input input-bordered"
-                name="unregisteredScannerId"
-                onChange={onHealthCheckChange}
-                placeholder="Custom ID for onboarding emulation"
-                type="text"
-                value={healthCheckFormState.unregisteredScannerId}
-              />
-            </label>
+            <p className="text-sm text-base-content/70 md:col-span-2">
+              Scanner ID is auto-generated as a UUID for each health-check request.
+            </p>
           </div>
 
           <div className="card-actions justify-end px-6 pb-6">

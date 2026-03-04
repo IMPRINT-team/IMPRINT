@@ -34,6 +34,17 @@ test("buildApiUrlWithBase and buildRootUrlWithBase generate environment-safe URL
   );
 });
 
+
+test("buildRootUrlWithBase maps api base to backend health endpoint on localhost", () => {
+  assert.equal(
+    buildRootUrlWithBase(
+      "http://localhost:8080/api",
+      "health?scannerId=550e8400-e29b-41d4-a716-446655440000",
+    ),
+    "http://localhost:8080/health?scannerId=550e8400-e29b-41d4-a716-446655440000",
+  );
+});
+
 test("testNewApi uses normalized URL helpers", () => {
   assert.equal(testNewApi.runUrl(), "/api/TestNew");
   assert.equal(
