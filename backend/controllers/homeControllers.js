@@ -223,6 +223,57 @@ export const getEvents = async (req, res) => {
     }
 }
 
+export const getEventBySearch = async (req, res) => {
+  try {
+    const value = req.query.value?.trim() || "";
+    const date = req.query.date || "";
+
+    const andFilters = [];
+
+    if (value !== "") {
+      const textOrFilters = [
+        { uid: { contains: value, mode: "insensitive" } },
+        { eventType: { contains: value, mode: "insensitive" } },
+        { result: { contains: value, mode: "insensitive" } },
+      ];
+
+      if (value.length === 36) {
+        textOrFilters.push({ id: value });
+        textOrFilters.push({ deviceId: value });
+      }
+
+      andFilters.push({ OR: textOrFilters });
+    }
+// TODO: Fix timezone mismatch.
+    if (date) {
+        let utcStart = new Date(date + "T00:00:00");
+        let utcEnd = new Date(date + "T23:59:59.999");
+
+        const localStart = utcStart.toISOString()
+        const localEnd = utcEnd.toISOString()
+            
+        andFilters.push({
+          occurredAt: {
+            gte: localStart,
+            lte: localEnd,
+          },
+        });
+}
+
+    const events = await prisma.event.findMany({
+      where: andFilters.length > 0 ? { AND: andFilters } : {},
+      orderBy: {
+        occurredAt: "desc",
+      },
+    });
+
+    res.status(200).json(events);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
 
 export const getUsers = async (req, res) => {
     try {

@@ -14,6 +14,7 @@ import {
     getUsers, 
     getUserByEmail,
     deleteScanner,
+    getEventBySearch,
     login, // New
     getOnboardingScanners,
     targetOnboardingScanner,
@@ -34,6 +35,7 @@ homeRouter.get("/search/specificLocation/:specificLocation", getScannersBySpecLo
 homeRouter.get("/search/authorization/:authorization", getScannersByAuthLevel);
 homeRouter.delete("/admin/scanners/:id", deleteScanner);
 homeRouter.get("/event", getEvents);
+homeRouter.get("/event/search", getEventBySearch);
 homeRouter.post("/event/scan", scan);
 homeRouter.post("/login", login); //Updated
 homeRouter.post("/user/register", addUser);// New

@@ -22,7 +22,9 @@ const ListeningModal = ({ isOpen, onClose, onRegisterSuccess }) => {
 
     const loadScanners = async () => {
       try {
-        const response = await fetch(scannerApi.listOnboardingUrl());
+        const response = await fetch(scannerApi.listOnboardingUrl(), {
+          cache: "no-store",
+        });
 
         if (!response.ok) {
           throw new Error("Unable to load onboarding scanners.");
@@ -56,6 +58,7 @@ const ListeningModal = ({ isOpen, onClose, onRegisterSuccess }) => {
     try {
       const response = await fetch(scannerApi.targetOnboardingUrl(scannerId), {
         method: "POST",
+        cache: "no-store",
         headers: {
           "Content-Type": "application/json",
         },
@@ -90,6 +93,7 @@ const ListeningModal = ({ isOpen, onClose, onRegisterSuccess }) => {
     try {
       const response = await fetch(scannerApi.registerOnboardingUrl(scannerId), {
         method: "POST",
+        cache: "no-store",
       });
 
       if (!response.ok) {
