@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+const devApiTarget = process.env.VITE_DEV_API_TARGET ?? 'http://localhost:8080'
+
 export default defineConfig({
   plugins: [react()],
   envPrefix: ['VITE_', 'CLERK_'],
@@ -8,7 +10,7 @@ export default defineConfig({
     host: '0.0.0.0', // Necessary for Dev Containers
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: devApiTarget,
         changeOrigin: true,
       },
     },
