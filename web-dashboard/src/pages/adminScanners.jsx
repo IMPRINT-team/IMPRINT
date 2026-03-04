@@ -1,10 +1,11 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import AddScannerModal from './addScannerModal.jsx'
 import UpdateScannerModal from './updateScannerModal.jsx'
 import { StatusPill } from '../components/ui/StatusPill.jsx'
 import { scannerApi } from "../lib/scannerApi.js"
+import { testNewApi } from "../lib/testNewApi.js"
 import { Link } from "react-router-dom"
 
 const getScanners = async () => {
@@ -43,19 +44,45 @@ const AdminScanners = () => {
   const [searchType, setSearchType] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
-  useEffect(() => {
-    const loadScanners = async () => {
-      try {
-        const scanners = await getScanners()
-        const data = await scanners.json()
-        setScanners(data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
+  const loadScanners = useCallback(async () => {
+    try {
+      const scannerResponse = await getScanners()
+      const data = await scannerResponse.json()
 
-    loadScanners()
+      const scannersWithHealth = await Promise.all(
+        data.map(async (scanner) => {
+          try {
+            const healthResponse = await testNewApi.healthCheck(scanner.deviceId)
+            return {
+              ...scanner,
+              status: healthResponse.status === 'ok' && healthResponse.registered === 1
+                ? 'ONLINE'
+                : 'OFFLINE',
+            }
+          } catch {
+            return {
+              ...scanner,
+              status: 'OFFLINE',
+            }
+          }
+        })
+      )
+
+      setScanners(scannersWithHealth)
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
+
+  useEffect(() => {
+    loadScanners()
+
+    const pollingInterval = setInterval(() => {
+      loadScanners()
+    }, 3000)
+
+    return () => clearInterval(pollingInterval)
+  }, [loadScanners])
 
   async function getBy() {
     let scannerData
