@@ -52,9 +52,13 @@ export async function runTestNewEmulation(prisma, payload, upsertSeen, logger = 
 
   const event = await prisma.event.create({
     data: {
-      uid: rfidUid,
+      userRfid: rfidUid,
       deviceId: scanner.deviceId,
       result,
+    },
+    include: {
+      scanner: true,
+      user: true,
     },
   });
 

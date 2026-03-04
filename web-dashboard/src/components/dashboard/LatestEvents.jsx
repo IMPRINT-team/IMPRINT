@@ -84,14 +84,14 @@ const LatestEvents = () => {
                 {/* Accent bar matches ScannerCard style */}
                 <span 
                   className={`h-8 w-1.5 shrink-0 rounded-full ${
-                    event.result === 'denied' ? 'bg-error/60' : 'bg-success/60'
+                    event.result === 'DENIED' ? 'bg-error/60' : 'bg-success/60'
                   }`} 
                   aria-hidden="true" 
                 />
 
                 <div className="flex min-w-0 flex-col gap-0.5">
                   <p className="truncate text-sm font-bold uppercase tracking-wide text-base-content">
-                    {event.eventType}
+                    {event.scanner?.specificLocation ?? event.scanner?.location ?? event.userRfid}
                   </p>
                   <div className="flex items-center">
                     <ResultPill result={event.result} />
