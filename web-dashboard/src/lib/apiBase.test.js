@@ -6,6 +6,7 @@ import {
   normalizeApiBaseUrl,
 } from "./apiBase.js";
 import { testNewApi } from "./testNewApi.js";
+import { scannerApi } from "./scannerApi.js";
 
 test("normalizeApiBaseUrl defaults to /api when unset", () => {
   assert.equal(normalizeApiBaseUrl(undefined), "/api");
@@ -50,5 +51,18 @@ test("testNewApi uses normalized URL helpers", () => {
   assert.equal(
     testNewApi.healthCheckUrl("scanner 1"),
     "/health?scannerId=scanner+1",
+  );
+});
+
+
+test("scannerApi onboarding URLs remain under /api/onboarding/scanners", () => {
+  assert.equal(scannerApi.listOnboardingUrl(), "/api/onboarding/scanners");
+  assert.equal(
+    scannerApi.targetOnboardingUrl("scanner 1"),
+    "/api/onboarding/scanners/scanner%201/target",
+  );
+  assert.equal(
+    scannerApi.registerOnboardingUrl("scanner 1"),
+    "/api/onboarding/scanners/scanner%201/register",
   );
 });

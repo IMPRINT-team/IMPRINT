@@ -141,13 +141,10 @@ const AdminEvents = () => {
                       </thead>
 
                       <tbody className="bg-primary">
-                        {events.map((event) => (
-                          <tr key={event.id} className="bg-base-300 hover:bg-gradient-to-br hover:from-primary/10 hover:via-secondary/20 hover:to-neutral/10">
-                            <td className="text-center py-3">{event.user.rfidUid}</td>
-                            <td className="text-center py-3">{event.scanner.location}</td>
-                            <td className="text-center py-3">{formatTime(event.occurredAt)}</td>
-                            <td className="text-center py-3 px-2">
-                              <ResultPill result={event.result} />
+                        {loading ? (
+                          <tr className="bg-base-300">
+                            <td colSpan="4" className="text-center py-6 text-base-content/70">
+                              Loading events...
                             </td>
                           </tr>
                         ) : events.length === 0 ? (
@@ -162,11 +159,9 @@ const AdminEvents = () => {
                               key={event.id}
                               className="bg-base-300 hover:bg-gradient-to-br hover:from-primary/10 hover:via-secondary/20 hover:to-neutral/10"
                             >
-                              <td className="text-center py-3">{event.id}</td>
-                              <td className="text-center py-3">{event.eventType}</td>
-                              <td className="text-center py-3">
-                                {formatTime(event.occurredAt)}
-                              </td>
+                              <td className="text-center py-3">{event.user?.rfidUid ?? 'N/A'}</td>
+                              <td className="text-center py-3">{event.scanner?.location ?? 'N/A'}</td>
+                              <td className="text-center py-3">{formatTime(event.occurredAt)}</td>
                               <td className="text-center py-3 px-2">
                                 <ResultPill result={event.result} />
                               </td>

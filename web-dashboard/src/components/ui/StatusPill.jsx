@@ -12,15 +12,16 @@ const resultVariantMap = {
 }
 
 export const StatusPill = ({ status }) => {
-  const variant = statusVariantMap[status] ?? 'warning'
+  const normalizedStatus = (status ?? 'UNKNOWN').toString().trim().toUpperCase()
+  const variant = statusVariantMap[normalizedStatus] ?? 'warning'
   return (
     <span
-      className={`inline-flex items-center justify-center rounded-full border px-2.5 py-1 text-center text-[9px] font-semibold leading-none tracking-[0.2em] ${statusPillVariants[variant]}`}
+      className={`inline-flex min-w-[5.5rem] items-center justify-center rounded-full border px-2.5 py-1 text-center text-[9px] font-semibold leading-none tracking-[0.2em] ${statusPillVariants[variant]}`}
       role="status"
-      aria-label={`Status: ${status}`}
+      aria-label={`Status: ${normalizedStatus}`}
       data-debug-label="StatusPill"
     >
-      {status}
+      {normalizedStatus}
     </span>
   )
 }

@@ -22,10 +22,26 @@ export const getScannerHealthResponse = async (prisma, scannerId, upsertSeen) =>
   });
 
   let targeted = 0;
+  let lastSeenAt = null;
 
   if (!scanner) {
     const scannerPresence = upsertSeen(scannerId);
     targeted = scannerPresence?.targeted ? 1 : 0;
+    lastSeenAt = scannerPresence?.lastSeenAt ?? Date.now();
+  } else {
+    const updatedScanner = await prisma.scanner.update({
+      where: {
+        deviceId: scannerId,
+      },
+      data: {
+        updatedAt: new Date(),
+      },
+      select: {
+        updatedAt: true,
+      },
+    });
+
+    lastSeenAt = updatedScanner.updatedAt;
   }
 
   return {
@@ -35,6 +51,7 @@ export const getScannerHealthResponse = async (prisma, scannerId, upsertSeen) =>
       database: "ok",
       registered: scanner ? 1 : 0,
       targeted,
+      lastSeenAt,
     },
   };
 };
