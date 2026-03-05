@@ -158,10 +158,10 @@ export const deleteScanner = async (req, res) => {
 }
 
 export const scan = async (req, res) => {
-    const { rfidUid, scannerId, result } = req.body;
+    const { rfidUid, scannerId, result = "ACCEPTED" } = req.body;
 
-    if(!rfidUid || !scannerId || !result) {
-        return res.status(400).json({success:false, error: "rfidUid and scannerId is required!"})
+    if(!rfidUid || !scannerId) {
+        return res.status(400).json({success:false, error: "rfidUid and scannerId are required!"})
     }
     
     try {
