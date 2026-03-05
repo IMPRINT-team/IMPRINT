@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model Scanner {
@@ -21,24 +21,26 @@ model Scanner {
 }
 
 model Event {
-  id          String   @id @default(uuid()) @db.Uuid
-  deviceId    String   @db.Uuid
-  uid         String
-  eventType   String   @default("scan")
-  occurredAt  DateTime @default(now())
-  result      String   @default("ACCEPTED")
+  id         String   @id @default(uuid()) @db.Uuid
+  deviceId   String   @db.Uuid
+  userRfid   String   
+  occurredAt DateTime @default(now())
+  result     String   @default("ACCEPTED")
 
-  scanner Scanner @relation(fields: [deviceId], references: [deviceId])
+  scanner    Scanner  @relation(fields: [deviceId], references: [deviceId])
+  user       User     @relation(fields: [userRfid], references: [rfidUid])
 
   @@index([occurredAt])
-  @@index([uid])
+  @@index([userRfid])
 }
 
 model User {
-  id           String    @id @default(uuid())
-  rfidUid      String    @unique
-  name        String?   @unique
-  accessLevel  String    @default("BASIC")
-  createdAt    DateTime  @default(now())
-  isRegistered Boolean   @default(false)
+  id           String   @id @default(uuid())
+  rfidUid      String   @unique
+  name         String?  @unique
+  accessLevel  String   @default("BASIC")
+  createdAt    DateTime @default(now())
+  isRegistered Boolean  @default(false)
+
+  events       Event[]
 }

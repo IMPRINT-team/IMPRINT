@@ -50,11 +50,25 @@ export async function runTestNewEmulation(prisma, payload, upsertSeen, logger = 
     };
   }
 
+  // Keep onboarding emulation resilient: ensure relation target exists.
+  await prisma.user.upsert({
+    where: { rfidUid },
+    update: {},
+    create: {
+      rfidUid,
+      isRegistered: false,
+    },
+  });
+
   const event = await prisma.event.create({
     data: {
-      uid: rfidUid,
+      userRfid: rfidUid,
       deviceId: scanner.deviceId,
       result,
+    },
+    include: {
+      scanner: true,
+      user: true,
     },
   });
 

@@ -12,7 +12,7 @@ import {
     addUser, 
     getEvents, 
     getUsers, 
-    getUserByEmail,
+    getUserByRfid,
     deleteScanner,
     getEventBySearch,
     login, // New
@@ -39,8 +39,9 @@ homeRouter.get("/event/search", getEventBySearch);
 homeRouter.post("/event/scan", scan);
 homeRouter.post("/login", login); //Updated
 homeRouter.post("/user/register", addUser);// New
+homeRouter.post("/user", addUser);
 homeRouter.get("/user", getUsers);
-homeRouter.get("/user/:email", getUserByEmail);
+homeRouter.get("/user/:rfidUid", getUserByRfid);
 // Onboarding endpoints are mounted on the existing /api home router.
 homeRouter.get("/onboarding/scanners", getOnboardingScanners);
 homeRouter.post("/onboarding/scanners/:scannerId/target", targetOnboardingScanner);

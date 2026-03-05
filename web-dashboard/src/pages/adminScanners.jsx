@@ -51,6 +51,13 @@ const AdminScanners = () => {
 
       const scannersWithHealth = await Promise.all(
         data.map(async (scanner) => {
+          if (!scanner.deviceId) {
+            return {
+              ...scanner,
+              status: 'OFFLINE',
+            }
+          }
+
           try {
             const healthResponse = await testNewApi.healthCheck(scanner.deviceId)
             return {
