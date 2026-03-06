@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import BaseModal from "./BaseModal.jsx"
 
 const baseLinkClasses =
@@ -11,24 +11,12 @@ const errLinkClasses =
   "hover:border-error/90 hover:bg-radial hover:from-error/60 hover:via-secondary/30 hover:to-error/60 hover:text-base-content " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
 
-function UserFormModal({ onClose, title, submitLabel, onSubmit, scannedRfidUid = "", isListeningForCard = false }) {
+function UserFormModal({ onClose, title, submitLabel, onSubmit }) {
   const [formData, setFormData] = useState({
     name: "",
     accessLevel: "",
     rfidUid: ""
   })
-
-
-  useEffect(() => {
-    if (!scannedRfidUid) {
-      return
-    }
-
-    setFormData(prev => ({
-      ...prev,
-      rfidUid: scannedRfidUid,
-    }))
-  }, [scannedRfidUid])
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -79,10 +67,6 @@ function UserFormModal({ onClose, title, submitLabel, onSubmit, scannedRfidUid =
             <option value="User">Basic</option>
           </select>
         </div>
-
-        <p className="text-sm text-base-content/70">
-          {isListeningForCard ? "Waiting for RFID card scan..." : "RFID card detected. You can continue editing details."}
-        </p>
 
         {/* Card ID */}
         <div className="form-control">
