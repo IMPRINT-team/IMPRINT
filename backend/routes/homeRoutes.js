@@ -7,6 +7,7 @@ import {
     getScannersBySpecLocation, 
     getScannersByAuthLevel,
     scan, 
+    getLatestScan,
     createScanner,
     updateScanner,
     addUser, 
@@ -38,6 +39,7 @@ homeRouter.delete("/admin/scanners/:id", deleteScanner);
 homeRouter.get("/event", getEvents);
 homeRouter.get("/event/search", getEventBySearch);
 homeRouter.post("/event/scan", scan);
+homeRouter.get("/scan/latest", getLatestScan);
 homeRouter.post("/login", login); //Updated
 homeRouter.post("/user/register", addUser);// New
 homeRouter.post("/user", addUser);
