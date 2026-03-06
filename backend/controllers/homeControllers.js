@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import { listActiveUnregistered, setTargeted, consume, upsertSeen } from "../services/unregisteredScannerPresence.js";
 import { runTestNewEmulation } from "../seeds/testNewEmulation.js";
 import { listActiveOnlineScanners } from "../services/onlineScannerPresence.js";
-import { getLatestScanEvent, setLatestScanEvent } from "../services/latestScanEvent.js";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -167,7 +166,7 @@ export const scan = async (req, res) => {
     }
     
     try {
-        const event = await prisma.event.create({
+        let event = await prisma.event.create({
             data: {
                 userRfid: rfidUid,
                 deviceId: scannerId,
@@ -178,25 +177,9 @@ export const scan = async (req, res) => {
                 user: true,
             },
         })
-        setLatestScanEvent(event);
         res.status(200).json(event)
     } catch (err) {
         res.status(500).json({success: false, error: err})
-    }
-}
-
-
-export const getLatestScan = async (req, res) => {
-    try {
-        const latest = getLatestScanEvent();
-
-        if (!latest) {
-            return res.status(404).json({ success: false, error: "No scan events available yet." });
-        }
-
-        res.status(200).json(latest);
-    } catch (err) {
-        res.status(500).json({ success: false, error: err });
     }
 }
 
