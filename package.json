@@ -6,7 +6,7 @@
     "web-dashboard"
   ],
   "scripts": {
-    "dev": "npm install && node scripts/sync-backend-env.cjs && npm run db:init -w backend && node backend/prisma/deleteDBData.js && node backend/seeds/seed.js && concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
+    "dev": "npm install && node scripts/sync-backend-env.cjs && npm run db:init -w backend && concurrently \"npm run dev -w backend\" \"npm run dev -w web-dashboard\"",
     "verify": "node scripts/verify.js",
     "db:generate": "npm run db:generate -w backend",
     "db:migrate": "npm run db:migrate -w backend",

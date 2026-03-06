@@ -1,35 +1,26 @@
-// 1. Use the named import
 import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcrypt'
 
-// 2. Instantiate the client directly here
 const prisma = new PrismaClient()
 
 async function main() {
-  const email = 'admin@imprint.com'
-  const password = 'admin'
+  const rfidUid = '999-999'
 
-  console.log(`Hashing password for ${email}...`)
-  
-  const salt = await bcrypt.genSalt(10)
-  const passwordHash = await bcrypt.hash(password, salt)
-
-  console.log('Upserting user...')
-  
-  // 3. Run the upsert
   const user = await prisma.user.upsert({
-    where: { email: email },
-    update: { passwordHash, accessLevel: 'ADMIN' },
-    create: {
-      email,
-      passwordHash,
-      rfidUid: '999-999', // Unique placeholder
+    where: { rfidUid },
+    update: {
+      name: 'Admin User',
       accessLevel: 'ADMIN',
-      isRegistered: true
+      isRegistered: true,
+    },
+    create: {
+      rfidUid,
+      name: 'Admin User',
+      accessLevel: 'ADMIN',
+      isRegistered: true,
     },
   })
 
-  console.log(`Admin user created/updated: ${user.email}`)
+  console.log(`Admin user created/updated: ${user.rfidUid}`)
 }
 
 main()

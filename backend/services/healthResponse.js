@@ -1,4 +1,4 @@
-export const getScannerHealthResponse = async (prisma, scannerId, upsertSeen) => {
+export const getScannerHealthResponse = async (prisma, scannerId, upsertSeen, upsertOnlineSeen) => {
   await prisma.$queryRaw`SELECT 1`;
 
   if (!scannerId) {
@@ -26,6 +26,8 @@ export const getScannerHealthResponse = async (prisma, scannerId, upsertSeen) =>
   if (!scanner) {
     const scannerPresence = upsertSeen(scannerId);
     targeted = scannerPresence?.targeted ? 1 : 0;
+  } else {
+    upsertOnlineSeen(scannerId);
   }
 
   return {

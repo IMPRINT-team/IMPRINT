@@ -7,16 +7,18 @@ import {
     getScannersBySpecLocation, 
     getScannersByAuthLevel,
     scan, 
+    getLatestScan,
     createScanner,
     updateScanner,
     addUser, 
     getEvents, 
     getUsers, 
-    getUserByEmail,
+    getUserByRfid,
     deleteScanner,
     getEventBySearch,
     login, // New
     getOnboardingScanners,
+    getOnlineScanners,
     targetOnboardingScanner,
     registerOnboardingScanner,
     testNew,
@@ -37,10 +39,13 @@ homeRouter.delete("/admin/scanners/:id", deleteScanner);
 homeRouter.get("/event", getEvents);
 homeRouter.get("/event/search", getEventBySearch);
 homeRouter.post("/event/scan", scan);
+homeRouter.get("/scan/latest", getLatestScan);
 homeRouter.post("/login", login); //Updated
 homeRouter.post("/user/register", addUser);// New
+homeRouter.post("/user", addUser);
 homeRouter.get("/user", getUsers);
-homeRouter.get("/user/:email", getUserByEmail);
+homeRouter.get("/user/:rfidUid", getUserByRfid);
+homeRouter.get("/online/scanners", getOnlineScanners);
 // Onboarding endpoints are mounted on the existing /api home router.
 homeRouter.get("/onboarding/scanners", getOnboardingScanners);
 homeRouter.post("/onboarding/scanners/:scannerId/target", targetOnboardingScanner);

@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
 import { listActiveUnregistered, setTargeted, consume, upsertSeen } from "../services/unregisteredScannerPresence.js";
 import { runTestNewEmulation } from "../seeds/testNewEmulation.js";
+import { listActiveOnlineScanners } from "../services/onlineScannerPresence.js";
+import { getLatestScanEvent, setLatestScanEvent } from "../services/latestScanEvent.js";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -16,10 +17,6 @@ const prisma = new PrismaClient({
         },
     },
 });
-
-async function hashPassword(password) {
-    return bcrypt.hash(password, 10);
-}
 
 export const getScanners = async (req, res) => {
     try {
@@ -163,48 +160,67 @@ export const deleteScanner = async (req, res) => {
 }
 
 export const scan = async (req, res) => {
-    const { rfidUid, scannerId, result } = req.body;
+    const { rfidUid, scannerId, result = "ACCEPTED" } = req.body;
 
-    if(!rfidUid || !scannerId || !result) {
-        return res.status(400).json({success:false, error: "rfidUid and scannerId is required!"})
+    if(!rfidUid || !scannerId) {
+        return res.status(400).json({success:false, error: "rfidUid and scannerId are required!"})
     }
     
     try {
-        let event = await prisma.event.create({
+        const event = await prisma.event.create({
             data: {
-                uid: rfidUid,
+                userRfid: rfidUid,
                 deviceId: scannerId,
                 result: result,
-            }
+            },
+            include: {
+                scanner: true,
+                user: true,
+            },
         })
+        setLatestScanEvent(event);
         res.status(200).json(event)
     } catch (err) {
         res.status(500).json({success: false, error: err})
     }
 }
 
-export const addUser = async (req, res) => {
-    const {email, password} = req.body;
 
-    if(!email || !password) {
-        return res.status(400).json({error: "Missing fields!"});
-    }
+export const getLatestScan = async (req, res) => {
+    try {
+        const latest = getLatestScanEvent();
 
-    const existing = await prisma.user.findUnique({
-        where: {
-            email: email
+        if (!latest) {
+            return res.status(404).json({ success: false, error: "No scan events available yet." });
         }
-    });
 
-    if (existing?.isRegistered) {
-        return res.status(400).json({success: false, error: "User already registered!"})
+        res.status(200).json(latest);
+    } catch (err) {
+        res.status(500).json({ success: false, error: err });
     }
+}
 
-    const passwordHash = await hashPassword(password);
+export const addUser = async (req, res) => {
+    const { rfidUid, name, accessLevel } = req.body;
+
+    if (!rfidUid) {
+        return res.status(400).json({ error: "rfidUid is required!" });
+    }
 
     try {
-        const user = await prisma.user.create({
-            data: {email, passwordHash, isRegistered: true}
+        const user = await prisma.user.upsert({
+            where: { rfidUid },
+            update: {
+                ...(name !== undefined ? { name } : {}),
+                ...(accessLevel !== undefined ? { accessLevel: accessLevel.toUpperCase() } : {}),
+                isRegistered: true,
+            },
+            create: {
+                rfidUid,
+                ...(name !== undefined ? { name } : {}),
+                ...(accessLevel !== undefined ? { accessLevel: accessLevel.toUpperCase() } : {}),
+                isRegistered: true,
+            },
         });
         res.status(200).json(user)
     } catch (err) {
@@ -215,6 +231,10 @@ export const addUser = async (req, res) => {
 export const getEvents = async (req, res) => {
     try {
         const events = await prisma.event.findMany({
+            include: {
+                scanner: true,
+                user: true,
+            },
             orderBy: [{occurredAt: 'desc'}, {id: 'asc'}]
         });
         res.status(200).json(events);
@@ -232,9 +252,11 @@ export const getEventBySearch = async (req, res) => {
 
     if (value !== "") {
       const textOrFilters = [
-        { uid: { contains: value, mode: "insensitive" } },
-        { eventType: { contains: value, mode: "insensitive" } },
+        { userRfid: { contains: value, mode: "insensitive" } },
         { result: { contains: value, mode: "insensitive" } },
+        { scanner: { location: { contains: value, mode: "insensitive" } } },
+        { scanner: { specificLocation: { contains: value, mode: "insensitive" } } },
+        { user: { name: { contains: value, mode: "insensitive" } } },
       ];
 
       if (value.length === 36) {
@@ -262,6 +284,10 @@ export const getEventBySearch = async (req, res) => {
 
     const events = await prisma.event.findMany({
       where: andFilters.length > 0 ? { AND: andFilters } : {},
+      include: {
+        scanner: true,
+        user: true,
+      },
       orderBy: {
         occurredAt: "desc",
       },
@@ -285,12 +311,12 @@ export const getUsers = async (req, res) => {
 }
 
 
-export const getUserByEmail = async (req, res) => {
+export const getUserByRfid = async (req, res) => {
     try {
-        const email = req.params.email;
+        const rfidUid = req.params.rfidUid;
         const user = await prisma.user.findUnique({
             where: {
-                email: email
+                rfidUid,
             }
         })
         res.status(200).json(user)
@@ -300,38 +326,24 @@ export const getUserByEmail = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-    const { email, password } = req.body;
+    const { rfidUid } = req.body;
 
-    if (!email || !password) {
-        return res.status(400).json({ error: "Email and password required" });
+    if (!rfidUid) {
+        return res.status(400).json({ error: "rfidUid required" });
     }
 
     try {
-        // 1. Find the user
         const user = await prisma.user.findUnique({
-            where: { email: email }
+            where: { rfidUid }
         });
 
         if (!user) {
             return res.status(401).json({ error: "Invalid credentials" });
         }
 
-        // 2. Check Password
-        // Handle cases where passwordHash might be null (seeded users)
-        const isMatch = user.passwordHash 
-            ? await bcrypt.compare(password, user.passwordHash) 
-            : false;
-
-        if (!isMatch) {
-            return res.status(401).json({ error: "Invalid credentials" });
-        }
-
-        // 3. Return Success
-        const { passwordHash, ...userData } = user;
-        void passwordHash;
         res.status(200).json({ 
             success: true, 
-            user: userData,
+            user,
             token: "mock-jwt-token-" + user.id 
         });
 
@@ -341,6 +353,23 @@ export const login = async (req, res) => {
     }
 }
 
+
+
+// List active registered scanners seen recently by the health endpoint.
+export const getOnlineScanners = async (req, res) => {
+    try {
+        const scanners = listActiveOnlineScanners()
+            .sort((a, b) => b.lastSeenAt - a.lastSeenAt)
+            .map(({ scannerId, lastSeenAt }) => ({
+                scannerId,
+                lastSeenAt,
+            }));
+
+        res.status(200).json(scanners);
+    } catch (err) {
+        res.status(500).json({success: false, error: err})
+    }
+}
 
 // List active unregistered scanners for the dashboard Listening modal.
 export const getOnboardingScanners = async (req, res) => {
