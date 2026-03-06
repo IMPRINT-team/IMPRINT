@@ -15,6 +15,12 @@ export default defineConfig({
         // Keep '/api' prefix when proxying: /api/foo -> http://backend:8080/api/foo
         rewrite: (path) => path,
       },
+      '/health': {
+        target: devApiTarget,
+        changeOrigin: true,
+        // Keep '/health' prefix when proxying: /health -> http://backend:8080/health
+        rewrite: (path) => path,
+      },
     },
     watch: {
       usePolling: true, // Helps Docker detect file changes
