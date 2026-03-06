@@ -107,7 +107,7 @@ async function isMigrationApplied(migrationName) {
   for (const check of checks) {
     if (check.type === "table") {
       const result = await prisma.$queryRaw`
-        SELECT to_regclass(${`"${check.table}"`}) AS table_name
+        SELECT to_regclass(${`"${check.table}"`})::text AS table_name
       `;
       const tableName = Array.isArray(result) ? result[0]?.table_name : null;
 
