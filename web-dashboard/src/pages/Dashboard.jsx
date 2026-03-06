@@ -19,6 +19,16 @@ const getScanners = async () => {
   return response.json();
 };
 
+const getOnlineScanners = async () => {
+  const response = await fetch(scannerApi.listOnlineUrl());
+
+  if (!response.ok) {
+    throw new Error("Unable to load online scanner status");
+  }
+
+  return response.json();
+};
+
 const Dashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSidebarPinned, setIsSidebarPinned] = useState(false);
@@ -41,16 +51,43 @@ const Dashboard = () => {
   }, [isSidebarHovered, isSidebarPinned]);
 
   useEffect(() => {
+    let isMounted = true;
+
     const loadScanners = async () => {
       try {
-        const data = await getScanners();
-        setScanners(data);
+        const [scannerList, onlineList] = await Promise.all([
+          getScanners(),
+          getOnlineScanners(),
+        ]);
+
+        if (!isMounted) {
+          return;
+        }
+
+        const onlineScannerIds = new Set(
+          onlineList
+            .map((scanner) => scanner?.scannerId)
+            .filter(Boolean),
+        );
+
+        setScanners(
+          scannerList.map((scanner) => ({
+            ...scanner,
+            status: onlineScannerIds.has(scanner.deviceId) ? "ONLINE" : "OFFLINE",
+          })),
+        );
       } catch (error) {
         console.error(error);
       }
     };
 
     loadScanners();
+    const intervalId = window.setInterval(loadScanners, 1000);
+
+    return () => {
+      isMounted = false;
+      window.clearInterval(intervalId);
+    };
   }, []);
 
   const handleSelectScanner = useCallback((scanner) => {

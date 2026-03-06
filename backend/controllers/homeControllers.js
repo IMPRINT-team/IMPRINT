@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { listActiveUnregistered, setTargeted, consume, upsertSeen } from "../services/unregisteredScannerPresence.js";
 import { runTestNewEmulation } from "../seeds/testNewEmulation.js";
+import { listActiveOnlineScanners } from "../services/onlineScannerPresence.js";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -335,6 +336,23 @@ export const login = async (req, res) => {
     }
 }
 
+
+
+// List active registered scanners seen recently by the health endpoint.
+export const getOnlineScanners = async (req, res) => {
+    try {
+        const scanners = listActiveOnlineScanners()
+            .sort((a, b) => b.lastSeenAt - a.lastSeenAt)
+            .map(({ scannerId, lastSeenAt }) => ({
+                scannerId,
+                lastSeenAt,
+            }));
+
+        res.status(200).json(scanners);
+    } catch (err) {
+        res.status(500).json({success: false, error: err})
+    }
+}
 
 // List active unregistered scanners for the dashboard Listening modal.
 export const getOnboardingScanners = async (req, res) => {

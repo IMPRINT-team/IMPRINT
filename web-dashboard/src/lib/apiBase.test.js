@@ -58,3 +58,8 @@ test("testNewApi uses normalized URL helpers", () => {
 test("scannerApi onboarding list URL remains under /api", () => {
   assert.equal(scannerApi.listOnboardingUrl(), "/api/onboarding/scanners");
 });
+
+
+test("scannerApi online list URL remains under /api", () => {
+  assert.equal(scannerApi.listOnlineUrl(), "/api/online/scanners");
+});
