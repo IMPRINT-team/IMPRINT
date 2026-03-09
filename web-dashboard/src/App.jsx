@@ -5,6 +5,7 @@ import { useThemeStore } from "./components/stores/useThemeStore.js";
 import Dashboard from "./pages/Dashboard.jsx";
 import Login from "./pages/Login.jsx";
 import PlaygroundPage from "./pages/playground/PlaygroundPage.jsx";
+import PresentationPage from "./pages/presentation/PresentationPage.jsx";
 import AdminEvents from "./pages/adminEvents.jsx";
 import AdminScanners from "./pages/adminScanners.jsx";
 import AdminUsers from "./pages/adminUsers.jsx";
@@ -22,6 +23,7 @@ const App = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/TestNew" element={<TestNewPage />} />
+      <Route path="/presentation" element={<PresentationPage />} />
 
       <Route
         path="/"

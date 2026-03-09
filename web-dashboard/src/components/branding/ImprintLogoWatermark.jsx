@@ -1,17 +1,13 @@
-import React from "react"
-import ImprintLogo from "./ImprintLogo.jsx"
+import React from "react";
+import ImprintLogo from "./ImprintLogo.jsx";
 
 const ImprintLogoWatermark = () => (
   <div
-    className="pointer-events-none absolute inset-0 flex items-center justify-center"
+    className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5"
     data-debug-label="ImprintLogoWatermark"
   >
-    <ImprintLogo
-      width={220}
-      height={220}
-      className="text-cyan-500/20"
-    />
+    <ImprintLogo className="w-[60rem] h-[60rem]" />
   </div>
-)
+);
 
-export default ImprintLogoWatermark
+export default ImprintLogoWatermark;
