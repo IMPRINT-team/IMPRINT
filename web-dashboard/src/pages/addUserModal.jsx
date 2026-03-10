@@ -5,7 +5,7 @@ import { buildApiUrl } from "../lib/apiBase.js"
 function AddUserModal({ onClose, data, setData }) {
 
   async function addUser(userData) {
-    const response = await fetch(buildApiUrl("user"), {
+    const response = await fetch(buildApiUrl("users"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -13,9 +13,13 @@ function AddUserModal({ onClose, data, setData }) {
       body: JSON.stringify(userData),
     })
 
-    const user = await response.json()
+    const body = await response.json()
 
-    setData(prev => [...prev, user])
+    if (!response.ok) {
+      throw new Error(body?.error ?? "Unable to create user.")
+    }
+
+    setData(prev => [...prev, body])
     onClose()
   }
 

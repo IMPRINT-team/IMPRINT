@@ -186,27 +186,35 @@ export const scan = async (req, res) => {
 export const addUser = async (req, res) => {
     const { rfidUid, name, accessLevel } = req.body;
 
-    if (!rfidUid) {
+    if (!rfidUid?.trim()) {
         return res.status(400).json({ error: "rfidUid is required!" });
     }
 
+    if (!name?.trim()) {
+        return res.status(400).json({ error: "name is required!" });
+    }
+
+    if (!accessLevel?.trim()) {
+        return res.status(400).json({ error: "accessLevel is required!" });
+    }
+
     try {
-        const user = await prisma.user.upsert({
-            where: { rfidUid },
-            update: {
-                ...(name !== undefined ? { name } : {}),
-                ...(accessLevel !== undefined ? { accessLevel: accessLevel.toUpperCase() } : {}),
-                isRegistered: true,
-            },
-            create: {
-                rfidUid,
-                ...(name !== undefined ? { name } : {}),
-                ...(accessLevel !== undefined ? { accessLevel: accessLevel.toUpperCase() } : {}),
+        // Create a brand-new registered user from scanner UID + admin form data.
+        const user = await prisma.user.create({
+            data: {
+                rfidUid: rfidUid.trim(),
+                name: name.trim(),
+                accessLevel: accessLevel.toUpperCase(),
                 isRegistered: true,
             },
         });
-        res.status(200).json(user)
+
+        res.status(201).json(user)
     } catch (err) {
+        if (err?.code === "P2002") {
+            return res.status(409).json({ success: false, error: "RFID UID already exists." })
+        }
+
         res.status(500).json({success: false, error: err})
     }
 }
