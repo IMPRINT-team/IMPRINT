@@ -1,61 +1,90 @@
 import React from "react";
-import { ClipboardList, MemoryStick, Users } from "lucide-react";
 
 const Slide3 = () => (
   <>
-    <div className="slide2-div1">
-      <h2 className="slide2-title">Interaction Problem</h2>
+    <div className="s2-div1">
+      <h2 className="s2-title">How IMPRINT Creates Value</h2>
     </div>
-    <div className="slide2-div2" aria-label="Shared Environment Interactions">
-      <Users className="slide2-icon" aria-hidden="true" />
-    </div>
-    <div className="slide2-div3">
-      <div className="slide2-description">
-        <p>Many shared environments require quick, reliable interactions such as:</p>
-        <ul>
-          <li>starting volunteer shifts</li>
-          <li>checking out equipment</li>
-          <li>logging event attendance</li>
-          <li>accessing restricted spaces</li>
-        </ul>
-        <p>These interactions are often handled with:</p>
-        <ul>
-          <li>manual sign-in sheets</li>
-          <li>disconnected software systems</li>
-          <li>inconsistent record keeping</li>
-        </ul>
+
+    <section className="s2-div2 s2-bullet-section" aria-label="Current Challenges">
+      <p className="s2-section-div1 s2-section-title">Current challenges</p>
+      <div className="s2-section-div2 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>manual sign-in sheets</span>
       </div>
-    </div>
-    <div className="slide2-div4" aria-label="Core Idea">
-      <MemoryStick className="slide2-icon" aria-hidden="true" />
-    </div>
-    <div className="slide2-div5">
-      <div className="slide2-description">
-        <p>Treat RFID taps as intentional interaction events.</p>
-        <p>Each scan produces an event describing:</p>
-        <ul>
-          <li>who</li>
-          <li>what device</li>
-          <li>where</li>
-          <li>when</li>
-          <li>what interaction</li>
-        </ul>
+      <div className="s2-section-div3 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>disconnected software systems</span>
       </div>
-    </div>
-    <div className="slide2-div6" aria-label="Event Outcomes">
-      <ClipboardList className="slide2-icon" aria-hidden="true" />
-    </div>
-    <div className="slide2-div7">
-      <div className="slide2-description">
-        <p>These events can drive:</p>
-        <ul>
-          <li>logging</li>
-          <li>automation</li>
-          <li>integrations</li>
-          <li>analytics</li>
-        </ul>
+      <div className="s2-section-div4 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>inconsistent record keeping</span>
       </div>
-    </div>
+      <div className="s2-section-div5 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>slow handoffs before work can even begin</span>
+      </div>
+    </section>
+
+    <section className="s2-div3 s2-bullet-section" aria-label="Core Model">
+      <p className="s2-section-div1 s2-section-title">Core model</p>
+      <div className="s2-section-div2 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>Treat RFID taps as intentional interaction events</span>
+      </div>
+      <div className="s2-section-div3 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>Each scan records: who + what device</span>
+      </div>
+      <div className="s2-section-div4 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>Each scan records: where + when</span>
+      </div>
+      <div className="s2-section-div5 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>Each scan records: what interaction</span>
+      </div>
+    </section>
+
+    <section className="s2-div4 s2-bullet-section" aria-label="What This Enables">
+      <p className="s2-section-div1 s2-section-title">What this enables</p>
+      <div className="s2-section-div2 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>volunteers can check in and go straight to work</span>
+      </div>
+      <div className="s2-section-div3 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>equipment checkout is fast and traceable</span>
+      </div>
+      <div className="s2-section-div4 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>attendance and access events are logged in real time</span>
+      </div>
+      <div className="s2-section-div5 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>teams get automation-ready event history</span>
+      </div>
+    </section>
+
+    <section className="s2-div5 s2-bullet-section" aria-label="Value">
+      <p className="s2-section-div1 s2-section-title">Value at the end of the day</p>
+      <div className="s2-section-div2 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>less admin overhead</span>
+      </div>
+      <div className="s2-section-div3 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>faster starts for people on the ground</span>
+      </div>
+      <div className="s2-section-div4 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>higher trust in operational records</span>
+      </div>
+      <div className="s2-section-div5 s2-bullet-row">
+        <span className="s2-bullet-marker">-</span>
+        <span>better decisions from clean interaction data</span>
+      </div>
+    </section>
   </>
 );
 
