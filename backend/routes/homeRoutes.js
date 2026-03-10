@@ -41,6 +41,7 @@ homeRouter.post("/event/scan", scan);
 homeRouter.post("/login", login); //Updated
 homeRouter.post("/user/register", addUser);// New
 homeRouter.post("/user", addUser);
+homeRouter.post("/users", addUser);
 homeRouter.get("/user", getUsers);
 homeRouter.get("/user/:rfidUid", getUserByRfid);
 homeRouter.get("/online/scanners", getOnlineScanners);
