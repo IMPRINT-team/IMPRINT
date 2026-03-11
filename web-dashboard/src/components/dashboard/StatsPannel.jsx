@@ -4,6 +4,10 @@ import { scannerApi } from "../../lib/scannerApi.js";
 import { eventApi } from "../../lib/eventApi.js";
 
 const OFFLINE_STATUSES = new Set(["OFFLINE", "NO POWER", "DEGRADED"]);
+const REFRESH_INTERVAL_MS = 15_000;
+
+const normalizeScannerId = (scanner) =>
+  scanner.deviceId ?? scanner.id ?? scanner.scannerId ?? scanner._id ?? "";
 
 const formatHour = (dateValue) => {
   const date = new Date(dateValue);
@@ -28,32 +32,51 @@ const StatsPannel = () => {
 
   useEffect(() => {
     let isMounted = true;
+    let refreshTimer;
 
-    const loadStats = async () => {
-      setIsLoading(true);
+    const loadStats = async ({ showLoading = false } = {}) => {
+      if (showLoading) {
+        setIsLoading(true);
+      }
+
       setLoadError("");
 
       try {
-        const [scannerResponse, events] = await Promise.all([
+        const [scannerResponse, onlineScannerResponse, events] = await Promise.all([
           fetch(scannerApi.listUrl()),
+          fetch(scannerApi.listOnlineUrl()),
           eventApi.getEvents(),
         ]);
 
-        if (!scannerResponse.ok) {
+        if (!scannerResponse.ok || !onlineScannerResponse.ok) {
           throw new Error("Unable to load scanners.");
         }
 
-        const scanners = await scannerResponse.json();
+        const [scanners, onlineScanners] = await Promise.all([
+          scannerResponse.json(),
+          onlineScannerResponse.json(),
+        ]);
 
         if (!isMounted) {
           return;
         }
 
+        const onlineScannerIds = new Set(onlineScanners.map((scanner) => normalizeScannerId(scanner)));
+
         const normalizedDownScanners = scanners
-          .filter((scanner) => OFFLINE_STATUSES.has((scanner.status ?? "").toUpperCase()))
+          .filter((scanner) => {
+            const scannerId = normalizeScannerId(scanner);
+            const status = (scanner.status ?? "").toUpperCase();
+
+            return OFFLINE_STATUSES.has(status) || (scannerId && !onlineScannerIds.has(scannerId));
+          })
           .map((scanner) => ({
-            id: scanner.deviceId,
-            name: scanner.name ?? scanner.location ?? scanner.specificLocation ?? scanner.deviceId,
+            id: normalizeScannerId(scanner),
+            name:
+              scanner.name ??
+              scanner.location ??
+              scanner.specificLocation ??
+              normalizeScannerId(scanner),
             location: scanner.specificLocation ?? scanner.location ?? "Unknown",
             status: scanner.status,
           }));
@@ -87,16 +110,20 @@ const StatsPannel = () => {
           setLoadError("Unable to load dashboard stats.");
         }
       } finally {
-        if (isMounted) {
+        if (isMounted && showLoading) {
           setIsLoading(false);
         }
       }
     };
 
-    loadStats();
+    loadStats({ showLoading: true });
+    refreshTimer = window.setInterval(() => {
+      loadStats();
+    }, REFRESH_INTERVAL_MS);
 
     return () => {
       isMounted = false;
+      window.clearInterval(refreshTimer);
     };
   }, []);
 
