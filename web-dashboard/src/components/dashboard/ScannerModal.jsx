@@ -12,6 +12,12 @@ const createInitialState = (scanner) => ({
   authorization: scanner?.authorization ?? "BASIC",
 });
 
+const baseLinkClasses =
+  "rounded-xl border border-primary/30 bg-base-100 px-3 py-3 text-left transition-all duration-200 " +
+  "hover:border-primary/90 hover:bg-gradient-to-br hover:from-primary/20 hover:via-secondary/10 hover:to-base-200 hover:text-base-content " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
+
+
 const ScannerModal = ({
   isOpen,
   scanner = null,
@@ -160,21 +166,8 @@ const ScannerModal = ({
             />
           </label>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="form-control">
-              <span className="label-text mb-1 text-sm font-medium">Status</span>
-              <select
-                className="select select-bordered"
-                value={formState.status}
-                onChange={(event) =>
-                  setFormState((current) => ({ ...current, status: event.target.value }))
-                }
-              >
-                <option value="ONLINE">Online</option>
-                <option value="DEGRADED">Degraded</option>
-                <option value="OFFLINE">Offline</option>
-              </select>
-            </label>
+          <div className="grid gap-4">
+            
 
             <label className="form-control">
               <span className="label-text mb-1 text-sm font-medium">Authorization</span>
@@ -197,7 +190,7 @@ const ScannerModal = ({
             <button type="button" className="btn btn-ghost" onClick={onClose} disabled={isSaving}>
               Close
             </button>
-            <button type="submit" className="btn btn-primary" disabled={isSaving}>
+            <button type="submit" className={`btn ${baseLinkClasses}`} disabled={isSaving}>
               {isSaving ? "Saving..." : "Save changes"}
             </button>
           </div>

@@ -102,7 +102,7 @@ const AdminEvents = () => {
 
     return(
         
-        <div className="min-h-dvh bg-gradient-to-r from-base-100/30 to-primary/30 pt-2">
+        <div className="min-h-dvh bg-gradient-to-r from-base-100/30 to-primary/10 pt-2">
             <div className="grid grid-cols-[1fr_2fr] items-center my-3 mt-4">
                 <div className="flex align-middle justify-start ms-2">
                     <Link type="button" className={baseLinkClasses} to="/dashboard">

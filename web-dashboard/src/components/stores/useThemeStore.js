@@ -6,10 +6,10 @@ const listeners = new Set();
 
 const getStoredTheme = () => {
   if (typeof window === "undefined") {
-    return "dracula";
+    return "autumn";
   }
 
-  return window.localStorage.getItem(STORAGE_KEY) || "dracula";
+  return window.localStorage.getItem(STORAGE_KEY) || "autumn";
 };
 
 let snapshot = {

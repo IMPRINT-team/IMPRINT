@@ -17,16 +17,16 @@ const formatTime = (value) => {
 
 const LatestEvents = () => {
   const [events, setEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     let isCancelled = false;
     const loadEvents = async () => {
-      setIsLoading(true);
       setError(null);
       try {
         const data = await eventApi.getEvents();
+        setTimeout(loadEvents, 2000);
         if (!isCancelled) setEvents(Array.isArray(data) ? data : []);
       } catch (loadError) {
         if (!isCancelled) {

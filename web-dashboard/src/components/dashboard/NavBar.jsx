@@ -16,7 +16,7 @@ import ImprintLogo from "../branding/ImprintLogo.jsx";
 import ThemeSelector from "./ThemeSelector.jsx";
 
 const baseLinkClasses =
-  "rounded-xl border border-transparent bg-base-100 px-3 py-3 text-left transition-all duration-500 " +
+  "rounded-xl border border-transparent bg-base-100 dashboard-panel-gradient px-3 py-3 text-left transition-all duration-500 " +
   "hover:border-primary/30 hover:bg-gradient-to-br hover:from-primary/20 hover:via-secondary/10 hover:to-base-200 hover:text-base-content " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
@@ -24,7 +24,6 @@ const navItems = [
   { to: "/admin/users", label: "Users", icon: Users },
   { to: "/admin/scanners", label: "Scanners", icon: MemoryStick },
   { to: "/admin/events", label: "Events", icon: ClipboardList },
-  { to: "/TestNew", label: "TestNew", icon: TestTubeDiagonal },
 ];
 
 const labelTransitionClasses =
@@ -115,7 +114,7 @@ const NavBar = ({
 
       {/* Mobile Drawer */}
       <aside
-        className="relative hidden h-full min-h-0 rounded-2xl border border-primary/40 bg-base-100/90 shadow-xl backdrop-blur lg:flex lg:flex-col"
+        className="relative hidden h-full min-h-0 rounded-2xl border border-primary/40 shadow-xl dashboard-panel-gradient lg:flex lg:flex-col"
         onMouseEnter={() => !isPinned && onHoverChange(true)}
         onMouseLeave={() => !isPinned && onHoverChange(false)}
       >
@@ -194,7 +193,7 @@ const NavBar = ({
 
       {/* Desktop Sidebar */}
       <aside
-        className="relative hidden h-full min-h-0 rounded-2xl border border-primary/40 bg-base-100/90 shadow-xl backdrop-blur lg:flex lg:flex-col"
+        className="relative hidden h-full min-h-0 rounded-2xl border border-primary/40 shadow-xl dashboard-panel-gradient lg:flex lg:flex-col"
         onMouseEnter={() => !isPinned && onHoverChange(true)}
         onMouseLeave={() => !isPinned && onHoverChange(false)}
       >

@@ -149,7 +149,6 @@ const AdminScanners = () => {
                 <tr className=" border-b border-secondary uppercase">
                   <th className="py-2 text-primary text-center align-middle text-sm">General Area</th>
                   <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Specific Location</th>
-                  <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Status</th>
                   <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Last Seen</th>
                   <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Authorization</th>
                   <th className="py-2 text-primary text-center align-middle pe-2 text-sm">Actions</th>
@@ -160,9 +159,6 @@ const AdminScanners = () => {
                   <tr key={scanner.deviceId} className="hover:bg-gradient-to-br hover:from-primary/10 hover:via-secondary/20 hover:to-neutral/10">
                     <td className="text-center py-3">{scanner.location}</td>
                     <td className="text-center py-3">{scanner.specificLocation}</td>
-                    <td className="text-center py-3 px-2">
-                      <StatusPill status={scanner.status} />
-                    </td>
                     <td className="text-center py-3">{formatTime(scanner.createdAt)}</td>
                     <td className="text-center py-3">{scanner.authorization}</td>
                     <td className="text-center py-3">

@@ -36,7 +36,7 @@ const AdminUsers = () => {
 
   return (
     <>
-      <div className="min-h-dvh bg-gradient-to-r from-base-100/30 to-primary/30 pt-2">
+      <div className="min-h-dvh bg-gradient-to-r from-base-100/30 to-primary/10 pt-2">
         <div className="flex items-center justify-between mb-6 gap-4 mt-2 mx-4">
           
           {/* Back Button */}

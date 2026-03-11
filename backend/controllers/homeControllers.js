@@ -166,6 +166,14 @@ export const scan = async (req, res) => {
     }
     
     try {
+        await prisma.user.upsert({
+            where: { rfidUid },
+            update: {},
+            create: {
+                rfidUid,
+                isRegistered: false,
+            },
+        });
         let event = await prisma.event.create({
             data: {
                 userRfid: rfidUid,
@@ -179,6 +187,12 @@ export const scan = async (req, res) => {
         })
         res.status(200).json(event)
     } catch (err) {
+        if (err?.code === "P2003") {
+            return res.status(400).json({
+                success: false,
+                error: "Scan could not be recorded because the scannerId is not registered.",
+            });
+        }
         res.status(500).json({success: false, error: err})
     }
 }
