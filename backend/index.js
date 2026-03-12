@@ -1,11 +1,37 @@
-const http = require("http");
-const path = require("path");
+import express from "express";
+import { PrismaClient } from "@prisma/client";
+import dotenv from "dotenv";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+import homeRouter from "./routes/homeRoutes.js";
+import createHealthRouter from "./routes/healthRoutes.js";
 
-require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const repoEnvPath = path.resolve(__dirname, "..", ".env");
 
-const { prisma } = require("./db/prisma");
+dotenv.config({ path: repoEnvPath });
 
+const app = express();
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error("DATABASE_URL must be set for backend runtime");
+}
+
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: databaseUrl,
+    },
+  },
+});
 const port = process.env.PORT || 8080;
+const host = process.env.HOST || "0.0.0.0";
+
+app.use(express.json());
+app.use(cors());
 
 async function connectToDatabase() {
   try {
@@ -16,12 +42,11 @@ async function connectToDatabase() {
   }
 }
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ status: "ok", service: "imprint-backend" }));
-});
+app.use(createHealthRouter(prisma));
+app.use("/api", homeRouter);
+app.use("/", homeRouter);
 
-server.listen(port, () => {
-  console.log(`Backend listening on port ${port}`);
-  void connectToDatabase();
+app.listen(port, host, () => {
+  console.log(`Backend listening on http://${host}:${port}`);
+  connectToDatabase();
 });

@@ -1,0 +1,40 @@
+Name,Description,List,Labels
+logging scan times with ID: 5,"As a system auditor, I want every RFID scan event to persist the card UID, scanner ID, and server-received timestamp so that IMPRINT can provide a reliable, queryable audit trail.
+
+Estimated time to implement: {5}",Product Backlog,
+Admin Page: 3,"As an IMPRINT administrator, I want a centralized web-dashboard admin page so that I can manage cards, scanners, and monitor platform health from one place.
+
+Estimated time to implement: {3}",Product Backlog,
+Secure Login: 2,"As a dashboard user, I want secure authentication so that IMPRINT access to RFID and scanner data remains protected.
+
+Estimated time to implement: {2}",Product Backlog,
+Wrong Username/Password Messages,"As a dashboard user, I want clear and accessible login failure messages so that I can correct credential mistakes quickly without exposing sensitive details.
+
+Estimated time to implement: {2}",Product Backlog,
+Device Authentication: 2,"As an IMPRINT developer, I want each scanner to authenticate with a unique device secret so that only trusted hardware can submit RFID scans.
+
+Estimated time to implement: {2}",Product Backlog,
+Export data as a csv,"As an operations manager, I want to export scan logs as CSV so that I can analyze RFID activity outside the dashboard.
+
+Estimated time to implement: {3}",Product Backlog,
+Firmware - Provisioning QR flow,"As a field technician, I want to provision an IMPRINT scanner from a QR payload so that device setup is repeatable and low-friction.
+
+Estimated time to implement: {5}",Product Backlog,
+Auth Logging Policy: redact secrets,"As a security engineer, I want IMPRINT auth logs to redact secrets and personal data so that observability remains useful without leaking sensitive information.
+
+Estimated time to implement: {2}",Product Backlog,
+Retention Policy: purge job,"As a DevOps engineer, I want an automated retention job for IMPRINT logs so that storage stays controlled and policy-compliant.
+
+Estimated time to implement: {2}",Product Backlog,
+Adjust NavBar to be a drawer,"As a mobile dashboard user, I want the navigation to collapse into a drawer so that IMPRINT pages remain usable on small screens.
+
+Estimated time to implement: {2}",Sprint Backlog,
+Events Graph,"As an analyst, I want an events graph in the web dashboard so that I can quickly understand RFID scan trends over time.
+
+Estimated time to implement: {3}",Sprint Backlog,
+Chart with Calendar that shows heat map,"As a site manager, I want a calendar heatmap of scan volume so that I can identify unusually high or low RFID activity days.
+
+Estimated time to implement: {5}",In Progress,
+Feature: Secure Account Creation,"As a new IMPRINT admin user, I want a secure account creation flow so that dashboard access starts with safe credential handling and validation.
+
+Estimated time to implement: {3}",Complete,

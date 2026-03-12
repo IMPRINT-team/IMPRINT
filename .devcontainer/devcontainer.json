@@ -1,12 +1,33 @@
 {
   "name": "IMPRINT Dev Environment",
-  "dockerComposeFile": ["../docker-compose.yml"],
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
   "service": "app",
+  "runServices": [
+    "postgres",
+    "backend"
+  ],
+  "shutdownAction": "stopCompose",
   "workspaceFolder": "/workspace",
-  "customizations": {
-    "vscode": {
-      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+
+  "forwardPorts": [8080, 5173],
+  "portsAttributes": {
+    "8080": {
+      "label": "IMPRINT Backend API",
+      "onAutoForward": "notify"
+    },
+    "5173": {
+      "label": "IMPRINT Web Dashboard (Vite)",
+      "onAutoForward": "openBrowserOnce"
     }
   },
-  "postCreateCommand": "npm install && cp .env.example .env"
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+      ]
+    }
+  },
+  "postCreateCommand": "npm run dev"
 }

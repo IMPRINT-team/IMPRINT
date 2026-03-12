@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -7,26 +8,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Device {
-  id         String   @id @default(uuid()) @db.Uuid
-  deviceId   String   @unique
-  lastSeenAt DateTime?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model Scanner {
+  deviceId         String   @id @default(uuid()) @db.Uuid
+  specificLocation String   @unique
+  location         String
+  status           String   @default("ONLINE")
+  createdAt        DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt        DateTime @updatedAt
+  authorization    String   @default("BASIC")
 
   events Event[]
 }
 
 model Event {
   id         String   @id @default(uuid()) @db.Uuid
-  deviceId   String
-  uid        String
-  eventType  String   @default("scan")
+  deviceId   String   @db.Uuid
+  userRfid   String   
   occurredAt DateTime @default(now())
+  result     String   @default("ACCEPTED")
 
-  device Device @relation(fields: [deviceId], references: [deviceId])
+  scanner    Scanner  @relation(fields: [deviceId], references: [deviceId])
+  user       User     @relation(fields: [userRfid], references: [rfidUid])
 
   @@index([occurredAt])
-  @@index([deviceId])
-  @@index([uid])
+  @@index([userRfid])
+}
+
+model User {
+  id           String   @id @default(uuid())
+  rfidUid      String   @unique
+  name         String?  @unique
+  accessLevel  String   @default("BASIC")
+  createdAt    DateTime @default(now())
+  isRegistered Boolean  @default(false)
+
+  events       Event[]
 }
