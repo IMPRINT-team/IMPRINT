@@ -29,6 +29,15 @@ Under the "BACKEND" section you need to update "const char* BACKEND_HEALTH_BASE_
 
 
 
+## Parts guide
+https://www.amazon.com/dp/B0BXKMGSG6?ref=ppx_yo2ov_dt_b_fed_asin_title / RGB LED
+https://www.amazon.com/dp/B0D8BBPV2S?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1 / Buzzer 
+https://www.amazon.com/dp/B07VLDSYRW?ref=ppx_yo2ov_dt_b_fed_asin_title / RFID scanner
+https://www.amazon.com/ELEGOO-ESP-WROOM-32-Development-Bluetooth-Microcontroller/dp/B0D8T53CQ5/ref=sr_1_4?crid=2JHGEL2HTXHVT&dib=eyJ2IjoiMSJ9.y6g-0itK9757cAALPv8ROjZMLABy3y0V00ME9yq1mYbIBHv3HnuEN8yitRQFUgRy1otAgJ2cz5g56oUcIK6S2OVGb4Y5R5ryA7SRoYv080SxZekkqrNH28oDlkY5wCfrO_nQ-_dXddtOUw3mKtU9viTzJg_Rbwp56UVD-fJh9HSu3C_W4ODpPh6gYw1H2tvAsQxIjfb1D9EYxA_IjI_7F7owN7nhLh5sr0kVf3WMnXtCA-FPn88pkR_dP05AEntOLWMIygTnNSMQ_PzEUkKItHeieF6yUrYu2ejkM7mMItA.Qfr9VGi1y5E7eY16uc0KFMTKIn1T8UuLaYZu1B0JHNg&dib_tag=se&keywords=esp32&qid=1773282843&s=electronics&sprefix=esp32%2Celectronics%2C166&sr=1-4 / ESP32
+https://www.amazon.com/dp/B09VKYLYN7?ref=ppx_yo2ov_dt_b_fed_asin_title / board and wires
+
+
+
 ## Suggested Contents
 - Device setup instructions and pin mappings.
 - Firmware binaries and flashing guides.
