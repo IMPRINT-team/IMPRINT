@@ -17,8 +17,7 @@ const baseLinkClasses =
 const AdminUsers = () => {
   const [showAddModal, setShowAddModal] = useState(false)
   const [users, setUsers] = useState([])
-  const [searchType, setSearchType] = useState("")
-  const [searchValue, setSearchValue] = useState("")
+
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -44,37 +43,6 @@ const AdminUsers = () => {
             <Link className={baseLinkClasses} to="/dashboard">
               <ArrowLeft />
             </Link>
-          </div>
-
-          {/* Search Section (Styled Identical to Scanners) */}
-          <div className="flex justify-center align-middle">
-            <select
-              className="select border border-primary/30 rounded-lg"
-              value={searchType}
-              onChange={(e) => setSearchType(e.target.value)}
-            >
-              <option value="">Show All Users</option>
-              <option value="rfidUid">Card ID</option>
-              <option value="name">Name</option>
-              <option value="accessLevel">Group</option>
-            </select>
-
-            <label className="label mx-3">Specific Search:</label>
-
-            <input
-              type="text"
-              className="input form-control border border-primary/30"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              placeholder="Type the user information"
-            />
-
-            <button
-              type="button"
-              className={`${baseLinkClasses} mx-3`}
-            >
-              Search
-            </button>
           </div>
 
           {/* Add User Button */}
