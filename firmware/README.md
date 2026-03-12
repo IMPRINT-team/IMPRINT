@@ -26,7 +26,10 @@ Under the "BACKEND" section you need to update "const char* BACKEND_HEALTH_BASE_
 
 
 ## Light Guide
-
+A red flash means the device is not connecting to the backend 
+A purple flash means the device is targeted by the user
+A orange flash means the device is registered by the user
+A green flash means the device is connected to the users dashboard
 
 
 ## Parts guide
